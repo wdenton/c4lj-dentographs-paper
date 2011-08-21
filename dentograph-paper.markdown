@@ -14,6 +14,8 @@ Here are two checkerboard dentographs that compare the holdings of the Toronto a
 
 ![Animated TPL/SFPL comparison checkerboard dentograph](images/animated-tpl-sfpl-comparison.gif)
 
+!!!TODO Separate back into two side-by-side separate images
+
 <p class="caption">Figure 1. Checkerboard dentograph comparing the Toronto and San Francisco Public Libraries</p>
 
 Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
