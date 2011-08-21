@@ -1,0 +1,537 @@
+/*  
+Theme Name: c4lj
+Theme URI: http://journal.code4lib.org
+Description: A theme developed for the Code4Lib Journal
+Version: 2.0
+Author: Jonathan Brinley
+Author URI: http://xplus3.net/
+
+*/
+
+/* Reset some borders, margins, and padding */
+body, h1, h2, h3, h4, h5, h6, img, ol, ul, li, p, div {
+	border-width: 0;
+	border-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* COLORS *****************************************/
+
+
+#content h2, #commentform label, #content h2.author {
+	color: #000000;
+}
+
+#content .entry pre {
+	background-color: #EEEEEE;
+	border-color: #DDDDDD;
+}
+
+/**************************************************/
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 1em;
+	background-color: #FFFFFF;
+}
+h1 {
+  color: #522D24;
+  line-height: 1;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	color: #522D24;
+}
+
+a:visited {
+  color: #522D24;
+}
+
+a:link:hover, a:visited:hover {
+	text-decoration: underline;
+}
+
+ul {
+	margin: 1em 0;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+li {
+	padding: .1em 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+#page {
+	position: relative;
+	min-width: 69em;
+  max-width: 84em;
+}
+
+/* HEADER *********************************/
+#header {
+	width: 100%;
+	margin-bottom: -1em;
+  margin-left: 0.6em;
+}
+
+#header h1 {
+	font-size: 250%;
+	margin: 0.4em 0;
+	color: #522D24;
+}
+#header h1 a {
+  position: relative;
+  z-index: 110;
+}
+
+#header h1 a:hover {
+	text-decoration: none;
+}
+
+#header h2 {
+	font-size: 100%;
+	margin: 1em 8.6em 0.5em 0;
+  text-align: right;
+  position: relative;
+  right: 0;
+  top: 1.25em;
+  color: #522D24;
+  font-weight: normal;
+}
+
+/* SIDEBARS ***************************************/
+
+#meta {
+	width: 14em;
+}
+
+#meta {
+	float: left;
+	clear: left;
+  margin-top: 2em;
+  margin-left: 0.6em;
+}
+
+#meta h2 {
+	margin: .1em 0;
+	font-size: 125%;
+}
+
+#meta #about h2 {
+	display: none;
+}
+
+#meta ul {
+	margin-top: .1em;
+}
+
+#about {
+	position: absolute;
+	top: 0.2em;
+	right: 8em;
+  text-align: right;
+  margin-left: 15em;
+  padding-left: 3em;
+  width: 48em; /* don't overlap with header */
+	color: black;
+	line-height: 150%;
+	z-index: 100;
+}
+/*#about a {
+	color: black;
+  text-decoration: underline;
+}
+#about a:hover {
+  color: #522D24;
+}*/
+
+#about ul {
+	float: right;
+	margin: 0;
+}
+
+#about ul li{
+	float: left;
+	padding-left: 2em;
+}
+
+#forauthors {
+	padding-top: .75em;
+}
+
+#searchform div {
+	margin-bottom: 1.75em;
+}
+
+#searchform #s {
+	width: 95%;
+}
+
+#searchform #searchsubmit {
+	background-color: #ffffff;
+	color: #522D24;
+	font-size: 1.25em;
+	font-weight: bold;
+}
+
+/*#searchform, #archives, #forauthors {
+  position: relative;
+	z-index: 90;
+}*/
+
+
+/* PAGE BODY **************************************/
+
+#content {
+	position: relative;
+	min-width: 33em;
+  max-width: 58em;
+	min-height: 300px;
+	padding: 0 8em 2em 3em;
+	margin: 0 0 0 15em;
+	z-index: 1;
+}
+
+#content h1 {
+	margin: 0.25em 0 .1em;
+  padding-top: 0.5em;
+  border-top: 3px solid #522D24;
+	font-size: 200%;
+	font-weight: bold;
+  color: #522D24;
+}
+
+#content h2 {
+	font-size: 125%;
+	font-weight: bold;
+}
+
+#content h3 {
+	font-size: 125%;
+	font-weight: bold;
+}
+
+#content h4 {
+	font-size: 100%;
+	font-weight: bold;
+}
+
+#content h5 {
+	font-size: 90%;
+	font-weight: bold;
+}
+
+#content h6 {
+	font-size: 80%;
+	font-weight: bold;
+}
+
+#content img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	max-width: 100%;
+}
+
+#content .Z3988 img {
+  display: inline;
+  margin: 0;
+  padding: 0 2px;
+}
+
+#content ul {
+	list-style-type: square;
+	margin-left: 2em;
+}
+#content ol {
+	margin-left: 2em;
+}
+#content li {
+	margin-top: 0.75em;
+}
+
+#content p {
+	margin: 0.75em 0 1em 0;
+}
+
+#content .aligncenter {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#content .alignleft {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+#content .alignright {
+  float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+#content blockquote {
+}
+
+#content blockquote cite {
+	font-size: 90%;
+	padding-left: 2em;
+}
+
+#content .entry {
+	margin: 2em 0 0 5px;
+	font-size: 1.2em;
+}
+
+.entry #byline {
+  margin-left: -5px;
+  font-weight: bold;
+  font-size: 115%;
+}
+
+#content .entry p, #content .entry li {
+	line-height: 1.35em;
+}
+
+#content .entry pre {
+	overflow-x: auto;
+	border-width: 2px;
+	border-style: solid;
+	margin: 0;
+}
+
+#content .entry pre .dp-highlighter {
+	width: 100%;
+	margin: 0 !important;
+	overflow: visible;
+}
+
+/* ARTICLES ********************************/
+
+#content .abstract {
+	font-style: italic;
+	line-height: 1.25em;
+	font-size: 1.1em;
+  text-align: justify;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+#content .abstract em, #content .abstract cite {
+	font-style: normal;
+}
+
+#content .abstract a:link, #content .entry a:link {
+  color: #2F6E7F;
+}
+#content .abstract a:visited, #content .entry a:visited {
+  color: #5E9CAE;
+}
+#meta a:link, #meta a:visited {
+  color: #2F6E7F;
+}
+
+#content .article .entry {
+	margin-bottom: 3em;
+}
+
+#content .entry h2, #content .entry h3, #content .entry h4, #content .entry h5, #content .entry h6 {
+  margin-left: -5px;
+  margin-top: 1em;
+}
+#content .entry h2 {
+	margin-top: 2em;
+  border-bottom: 3px solid #000000;
+}
+#content .entry h3 {
+	margin-top: 1.5em;
+}
+
+#content .article .entry h2.abouttheauthor {
+  margin-top: 3em;
+}
+
+#content .editlink {
+  float: left;
+  margin: 0 2em 0 0;
+}
+
+.article #issueDesignation {
+	text-align: left;
+  margin-bottom: 0.5em;
+}
+
+#content .sidebar {
+	background-color: #eeeeee;
+	border-color: #000000;
+	border-width: 2px;
+	border-style: solid;
+	padding: 1.5em;
+}
+
+#content .sidebar h2, #content .sidebar h3, #content .sidebar h4, #content .sidebar h5, #content .sidebar h6 {
+	text-indent: 0;
+	margin-top: 0.5em;
+}
+
+#content .entry th, #content .entry td {
+	padding: 0.25em;
+  border: 1px solid #000000;
+}
+#content .entry .no-border th, #content .entry .no-border td {
+  border: none;
+}
+#content .entry th {
+  background-color: #D3D3D3;
+}
+
+/* PAGES ******************************/
+
+#content .page h1.pagetitle {
+  margin-top: 1em;
+  margin-bottom: -0.5em;
+  padding-top: 0;
+  border-top-style: none;
+}
+
+/* CATEGORIES ******************************/
+
+#content.listpage h1.pagetitle {
+  margin-top: -0.75em;
+  border-bottom: 3px solid #522D24;
+  border-top: 0px solid transparent;
+  padding-top: 0;
+  margin-top: -0.5em;
+  position: relative;
+  z-index: 200;
+}
+
+#content.listpage .article .articletitle {
+	padding-top: 1em;
+	margin:0;
+  font-size: 135%;
+}
+#content.listpage .article .abstract {
+	font-style: normal;
+  margin: 0 1em;
+  width: auto;
+}
+#content.listpage .article .abstract em, #content.listpage .article .abstract cite {
+	font-style: italic;
+}
+#content.listpage .article .author {
+	margin: 0.5em 1em;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 1.25em;
+	font-size: 1.1em;
+}
+
+
+/* COMMENTS *****************************/
+
+#content ol.commentlist {
+	margin: 1em 0;
+	padding: 0 1.75em;
+}
+
+#content ol.commentlist li {
+	margin: 1em;
+}
+
+#content ol.commentlist li cite {
+	font-style: normal;
+  font-size: 100%;
+  padding: 0;
+}
+#content ol.commentlist li .commentheader {
+  margin-top: 0;
+}
+
+ol.commentlist li .commentbody {
+  padding: 1em;
+}
+ol.commentlist li.oddcomment .commentbody {
+	background-color: #EDEDE5; /* light grey */
+}
+
+/* COMMENT FORM *************************/
+#commentform textarea {
+	width: 60%;
+}
+
+#commentform label {
+	font-size: 90%;
+}
+
+/* FOOTER *******************************/
+#footer {
+	position: relative; 
+	clear: both;
+  margin: 0.5em 0 0 15em;
+  padding-left: 3em;
+  padding-right: 8em;
+	min-width: 33em;
+  max-width: 58em;
+}
+
+#footer p#login {
+  float: left;
+  padding-top: 10px;
+	text-align: left;
+}
+
+#footer p#copyright {
+	text-align: right;
+  padding-top: 7px;
+	border-top: 3px solid #522D24;
+}
+
+/* Syntax Highlighter *******************/
+.geshi ol {
+  margin-left: 0 !important;
+}
+
+.geshi li {
+  margin-top: 0 !important;
+  line-height: 1 !important;
+}
+
+.caption {
+  text-align: center;
+}
+
+/* Archives */
+#content.listpage .issue .issuetitle {
+  border-bottom: 3px solid #522D24;
+}
+#content.listpage .issue .issuetitle a:link, #content.listpage .issue .issuetitle a:visited {
+  color: #522D24;
+}
+#content.listpage .issue .issuetitle a:hover {
+  text-decoration: none;
+}
+#content.listpage .issue .titlelist {
+  list-style-type: none;
+}
+#content.listpage .issue .titlelist .articletitle {
+  margin: 0;
+  font-size: 100%;
+}
+#content.listpage .issue .titlelist .articletitle a {
+  color: #522D24;
+}
+#content.listpage .issue .titlelist .author {
+  font-weight: normal;
+  margin: 0 0 0 2em;
+}

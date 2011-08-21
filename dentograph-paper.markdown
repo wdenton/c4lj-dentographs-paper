@@ -1,0 +1,468 @@
+<h1 class="articletitle">On Dentographs, A New Method of Visualizing Library Collections</h1>
+
+<div class="abstract">
+
+A dentograph is a compact visualization of a library's holding, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to compare two or more collections, within or across libraries. This paper describes how to build them, with examples and code.
+
+</div>
+
+By William Denton &lt;<wtd@pobox.com>&gt;
+
+# Introduction
+
+Here are two checkerboard dentographs that compare the holdings of the Toronto and San Francisco Public Libraries. 
+
+![Animated TPL/SFPL comparison checkerboard dentograph](images/animated-tpl-sfpl-comparison.gif)
+
+<p class="caption">Figure 1. Checkerboard dentograph comparing the Toronto and San Francisco Public Libraries</p>
+
+Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
+
+When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) shows how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) (American literature in English), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. 
+
+Later I will describe is mountain dentographs, best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of the library collections of three Canadian universities: the University of Toronto, York University, and the University of Prince Edward Island.
+
+![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")
+
+!!!TODO Regenerate with bigger titles and visible letters.
+
+<p class="caption">Figure 2. Mountain dentographs of U Toronto, York U and U Prince Edward Island libraries</p>
+
+!!!TODO Handle Gabriel's comment: "Also, members of the committee grew more interested in the article as we discussed among ourselves the practical applications of dentograms for libraries -- especially within a consortial context, where one could use these visualizations to compare and attempt to dovetail collections. I'm sure you've envisioned a number of other uses well. Because dentograms are a new idea, I think we'll catch the eyes of more readers if we're explicit about ways in which they're (and problems they solve) up front, then get into the tech nitty-gritty afterward."
+
+# Mathematics and LIS
+
+!!!TODO Expand, briefly, on this.  I intend to write a complete paper about this.
+
+* Classification schemes as mathematical functions
+* What kinds of functions are LC and DDC
+* LC : {books at Library of Congress} --> [A--ZA 1--9999]
+* DDC : {universe of knowledge} --> (0,1000)
+
+# Getting ready: R and the code and data
+
+!!!TODO Explain briefly about what R is (and RStudio) and where to download them.
+
+All of the code and datasets are available at [http://github.com/wdenton/c4lj-dentograph](http://github.com/wdenton/c4lj-dentograph). Every command-line or R code snippet is reproducible.
+
+!!!TODO Create GitHub repository, upload code and data.  (Or put data sets in YorkSpace?)
+
+# Call numbers
+
+We need call numbers to generate dentographs.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research.  
+
+Luckily there is a very large and easily accessible open data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three in particular:
+
+* [San Francisco Public Library MARC records](http://www.archive.org/details/SanFranPL01) (1 of 16) (Dewey Decimal Classification, Dec 2010)
+* [Toronto Public Library MARC records](http://www.archive.org/details/marc_toronto_public_library) (DDC, April 2010)
+* [University of Toronto MARC records](http://www.archive.org/details/marc_university_of_toronto) (LCC, Feb 2008)
+
+Two libraries supplied data to me on request, which I use later to compare to U Toronto:
+
+* [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.
+* [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  (We use LCC.)
+
+## Extracting data from MARC
+
+Dealing with a large set of MARC records can be painful. There are so many ways that a library can customize its data for its individual needs that writing one script to extract call numbers from any of the Open Library dumps became tedious and complicated.  In the end I found it was much easier and faster to run `yaz-marcdump` on all the files, pick out the one MARC field I needed, and then process those lines to pick out the call numbers and store them in a text file. I'll show how I did this with the Toronto Public Library (TPL) data.
+
+The goal of operating on the TPL catalogue records is to extract every numerical call number in the range (0 < number < 1000). This will leave us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
+
+Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file:
+
+    $ yaz-marcdump /data/dentographs/tpl/OL.20100104.* | grep ^090 > tpl-090.txt
+    $ wc -l tpl-090.txt
+    2210126 tpl-090.txt
+    $ head -5 tpl-090.txt
+    090    $a FICTION ROB
+    090    $a FEATURE AIK
+    090    $a 614.59939 REP
+    090    $a 614.59939 R25
+    090    $a 598.29729 FFR
+
+`extract-tpl-ddc-from-090.rb` pulls out the numerical Dewey call numbers, ignoring "FICTION AIK" and any ISBNs that might be stored in the $a.
+
+    $ ./extract-tpl-ddc-from-090.rb < tpl-090.txt > tpl-ddc-numbers.txt
+    $ head -3 tpl-ddc-number.txt
+    614.59939 
+    614.59939 
+    598.29729 
+
+Of course, any direct method of pulling DDC numbers from a library management system would be much easier than all this, but some processing and cleanup will probably still be necessary, AACR and MARC being what they are.
+
+Extracting LC call numbers from the University of Toronto records is much the same, as we will see below, but with the advantage that fiction is also classified, so we will end up with a list of call numbers covering everything in the collection. Everything, that is, with a proper LC call number: special schemes for government documents, audio and video, maps, and the like must be left out.
+
+# Checkerboard dentographs
+
+The Dewey Decimal Classification is nicely suited to visualization because of its rigidity.  The hundreds define the ten top-level classes: [Computer science, information and general works (0xx)](http://dewey.info/class/0/2009/08/about.en), [Philosophy and psychology (1xx)](http://dewey.info/class/1/2009/08/about.en), [Religion (2xx)](http://dewey.info/class/2/2009/08/about.en), [Social sciences (3xx)](http://dewey.info/class/3/2009/08/about.en), [Language (4xx)](http://dewey.info/class/4/2009/08/about.en), [Science (5xx)](http://dewey.info/class/5/2009/08/about.en), [Technology (6xx)](http://dewey.info/class/6/2009/08/about.en), [Arts and recreation (7xx)](http://dewey.info/class/7/2009/08/about.en), [Literature (8xx)](http://dewey.info/class/8/2009/08/about.en), and [History and geography (9xx)](http://dewey.info/class/9/2009/08/about.en).  Each hundred is divided into ten tens and each ten into ten ones, within with the decimal expansions can go much farther.
+
+We can divide up a Dewey collection into these hundreds, tens, ones, and even decimals, in various ways, and each leads to a dentograph of different granularity, complexity, and visual informativeness.  To do these Dewey dentographs we will use the `levelplot` command in R.
+
+## One-by-one
+
+The most basic Dewey dentograph shows the collection broken down to the tens: the ten hundreds are broken down into ten tens each, making a 10x10 grid with 100 squares.  I call this a one-by-one Dewey checkerboard dentograph, because it uses one number of importance on each side of the grid.
+
+To build the one-by-one we need to pick out the hundreds and tens from our list of call numbers. `make-one-by-one-data.rb` in the repository does this.  Run the script on the file of all call numbers and generate a text file of pairs of numbers (compare these numbers to the ones above):
+
+    $ ./make-one-by-one-data.rb tpl-ddc-numbers.txt > tpl-one-by-one.txt
+    $ head -3 tpl-one-by-one.txt
+    6 1
+    6 1
+    5 9
+
+Now, finally, the preprocessing is done and we are ready to begin our work in R.  This is often how work with R is done: another language is used to clean and prepare the data before it is loaded. R has text manipulation tools, but that is not its main strength, and if you are comfortable in a scripting language then you will probably find it easier to massage your data with it.
+
+It only takes four commands in R to generate a raw, unadorned checkerboard dentograph.  One: load the `lattice` library, which provides the `levelplot` command. Two: load the data. Three: turn that data into a table.  Four: generate a levelplot from the table.
+
+    > library(lattice)
+    > tpl.one.by.one <- read.table("tpl-one-by-one.txt")
+    > tpl.one.by.one.table <- table(tpl.one.by.one)
+    > levelplot(tpl.one.by.one.table)
+
+![TPL checkerboard dentograph, one-by-one](images/tpl-one-by-one.png)
+
+<p class="caption">Figure 3. Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph</p>
+
+We'll make that look nicer, but first, let's look into the data structures a little more.  The `head` command in R is much like the Unix command, but instead of showing the first few lines in a file it shows the first few elements in a data structure.  The numbers here are the same as above, but R has converted them into two columns and many rows.
+
+    > head(tpl.one.by.one)
+      V1 V2
+    1  6  1
+    2  6  1
+    3  5  9
+    4  3  6
+    5  3  6
+    6  9  7
+    > ncol(tpl.one.by.one)
+    [1] 2
+    > nrow(tpl.one.by.one)
+    [1] 1567335
+
+The table command "uses the cross-classifying factors to build a contingency table of the counts at each combination of factor levels", according to the ?table help file. In other words, with our Dewey data, it will build a 10x10 table that counts how many times each pair of numbers appears in the tpl.one.by.one data frame. 
+
+    > tpl.one.by.one.table
+       V2
+    V1      0     1     2     3     4     5     6     7     8     9
+      0 11650 19798 10252  1453    21   456  1298  4558   589   737
+      1   739   915  1664  6568   815 15102   398  4877  2100  4195
+      2  2654   878  5250  4988  3531  1524  5460  4637 11114 15444
+      3 59651  1518 34410 72512 25499 32268 50150 24547 20434 20608
+      4  1474  2696 13660  1945  3789  1044  1756   386   521 12275
+      5  8263  5973  5263  5503  3740 11873  1794  8390  3995 17280
+      6  2416 43044 40288 19575 28349 35310  5787  3150  6262  6194
+      7 18959 10985 13398  9678 27158 18833  4966  8888 30130 62094
+      8 18952 94201 81223 13222 18066  5326  8640  1447  3207 40253
+      9  7630 72559 41904  7235 63764 19765  5691 67263  2654  1987
+
+For example, the value of the (3, 5) entry in this table is 32,268.  This means that "3 5" appeared 32,268 times in the data file.  We can confirm this at the command line:
+
+    $ grep -c "3 5" tpl-one-by-one.txt 
+    32268
+
+The Toronto Public Library has 32,268 items classified in the 350s (Public administration and military science).
+
+Now we can make a prettier dentograph. There is a huge number of ways to customize graphs and charts in R. I won't go into many details here, because most of the commands will be self-explanatory when you see them and then look at the generated image.  Two things about this next snippet: I create a function `palette` that I use in the levelplot command to change the colours used, and the scales parameter lets me customize what appears on the axes, defining some new labels and rotating them where necessary.
+
+    > palette <- colorRampPalette(c("#eeeeee", "purple")) # Prepare a better colour palette
+    > levelplot(tpl.one.by.one.table, 
+        col.regions = palette, 
+        xlab = "Hundreds", 
+        ylab="Tens", 
+        main = "TPL one-by-one dentograph", 
+        scales=(x=list(rot=90, at=seq(1, 10), 
+          labels=c("General 0xx", "Philosophy, psychology 1xx", 
+            "Religion 2xx", "Social sciences 3xx", "Language 4xx",  
+	    "Science 5xx", "Technology 6xx", "Arts 7xx",  
+ 	    "Literature 8xx", "History, geography 9xx"), 
+          y=list(rot=0, at=seq(1, 10), labels=10*seq(0, 9))))
+      )
+
+![TPL checkerboard dentograph, one by one, labelled](images/tpl-one-by-one-labelled.png)
+
+<p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
+
+!!!TODO Regenerate, with proper title
+
+!!!TODO Look at this graph a bit and talk about it.  Note the strong line up the 300s, and the comparatively weaker line up the 400s.
+
+## One-by-two
+
+The next step is to go further into the numbers. Let's make a one-by-two checkerboard dentograph, again with the hundreds on the x-axis, but the tens and ones on the y-axis.  This will be a 10x100 matrix.
+
+`make-one-by-two-data.rb` can be used just as above to generate `tpl-one-by-two.txt`, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:
+
+    > levelplot(tpl.one.by.two.table, 
+        col.regions = palette, 
+        xlab = "Hundreds", 
+        ylab="Tens and Ones", 
+        main = "TPL one-by-two dentograph", 
+        scales=(x=list(at=seq(1, 10, by = 2), labels=seq(0, 9, by =2),  
+        y=list(rot = 0, at=seq(11, 100, by=10), labels=paste (seq(1, 9), "0", sep="")))))
+
+![TPL Dewey one-by-two checkerboard dentograph](images/tpl-one-by-two.png)
+
+!!!TODO Regenerate with proper title
+
+<p class="caption">Figure 5. Toronto Public Library one-by-two checkerboard dentograph</p>
+
+It's interesting how the hundreds form columns that run up the image (the 300s stand out again, for example), but perhaps there is both too little and too much here to be very useful.
+
+## Two-by-two
+
+Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  The same process is used here as for the one-by-one graph. `make-two-by-two-data.rb` will generate the file of pairs of numbers we need:
+
+    $ ./make-two-by-two-data.rb tpl-ddc-numbers.txt > tpl-two-by-two.txt
+
+Then in R, again the data is loaded in and levelplot run.  Here, to make it a little clearer about where the numbers fall, a grid of dashed lines is added (the way that this is done with lattice graphics, with a function declared and separate commands run within it, can be a little confusing):
+
+    > tpl.two.by.two <- read.table("tpl-two-by-two.txt")
+    > tpl.two.by.two.table <- table(tpl.two.by.two)
+    > levelplot(tpl.two.by.two.table, 
+        col.regions = palette, 
+        main="TPL two-by-two dentograph", 
+        xlab="Hundreds and Tens", 
+        ylab="Tens and Decimals", 
+        scales=(x=list(at=seq(1,100, by=10), labels=paste(seq(0, 9), "0", sep=""))), 
+        panel=function(...){ 
+          panel.levelplot(...); 
+          panel.abline(h=seq(11,99, by=10), lty="dashed", col="light grey"); 
+          panel.abline(v=seq(11,99, by=10), lty="dashed", col="light grey") }
+       )
+
+!!!TODO Try this with panel.grid
+
+![TPL checkerboard dentograph, tens by decimals](images/tpl-two-by-two.png)
+
+<p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
+
+Here again we see the 300s as much stronger than the 400s.  The darkest colours, representing the deepest parts of the collections, are even more visible now in the 800s. Three strong lines in the 900s have emerged: the 910s (Geography and travel), 940s (History of Europe) and 970s (History of North America), which matches the deep colouration those squares have in the one-by-one dentograph.
+
+Where, at this level, are the most items, and how many are there?
+
+    > which(tpl.two.by.two.table == max(tpl.two.by.two.table), arr.ind=TRUE)
+       row col
+    82  83  40
+    > max(tpl.two.by.two.table)
+    [1] 29409
+
+There are 29,409 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9.  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.
+
+!!!TODO Look up what Dewey 823.9 is.  (823 is English fiction.)
+
+## Comparing two Dewey collections
+
+Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Online it's also possible to turn them into an animated GIF, flickering back and forth from one collection to the other, and the differences in breadth and depth become even more obvious.  
+
+When doing a comparison like this we must make sure the same z-axis scale is used for both collections.  In this example I'll show how to create the Toronto Public Library/San Francisco Public Library comparison shown in the introduction, including how to fix the scales so that the numbers are fairly compared between the two.  We already have the tpl.one.by.one.table in memory, so we begin by adding the SFPL data.
+
+!!!TODO Show commands to generate data?  Just leave file in repository?
+
+    > sfpl.one.by.one <- read.table("sfpl-one-by-one.txt")
+    > sfpl.one.by.one.table <- table(sfpl.one.by.one)
+    > max(tpl.one.by.one.table)
+    [1] 94201
+    > which(tpl.one.by.one.table == max(tpl.one.by.one.table), arr.ind=TRUE)
+      row col
+    8   9   2
+    > max(sfpl.one.by.one.table)
+    [1] 11417
+    > which(sfpl.one.by.one.table == max(sfpl.one.by.one.table), arr.ind=TRUE)
+      row col
+    9  10   2
+
+The deepest part of the TPL collection at the tens level is the 810s (row 9 is the 800s, column 2 is the 10s), with 94,201 items.  The deepest part of the SFPL collection is in the 910s (row 10, column 2) with 11,417 items.  
+
+!!!TODO Better filename in snippet
+
+    > levelplot(tpl.one.by.one.table, 
+        col.regions = palette(50), cuts = 49, 
+        main = "Toronto Public Library", 
+        xlab = "Hundreds", ylab = "Tens", 
+        at = 2000*seq(1:50))
+    > savePlot(filename="tpl-compare.png", type="png")
+    > levelplot(sfpl.one.by.one.table, 
+        col.regions = palette(50), cuts = 49, 
+        main = "San Francisco Public Library", 
+        xlab = "Hundreds", ylab = "Tens", 
+        at = 2000*seq(1:50))
+    > savePlot(filename="sfpl-compare.png", type="png")
+
+The `at` parameter sets out where the cuts on the z-axis will happen. It is not necessary for a one-collection checkerboard dentograph, because R will work out what is right.  When comparing two collections, however, it is needed so that the colour schemes match up and show the same levels of collection depth in absolute and not just relative terms.  Here we force R to use a scale from 0 to 100,000, with 50 colour gradations (49 cuts) along the way.  Next, save this image, then do another image for the SFPL data, forcing it to the same scale:
+
+Back at the command line, `convert` from ImageMagick turns the two images into one:
+
+    $ convert -loop 0 -delay 100 tpl-compare.png sfpl-compare.png animated-tpl-sfpl-comparison.gif
+
+![Animated TPL/SFPL comparison checkerboard dentograph](images/animated-tpl-sfpl-comparison.gif)
+
+<p class="caption">Figure 7. Animated comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
+
+# Mountain dentographs
+
+!!!TODO Explain briefly what this is, perhaps that it's my initial conception for what a dentograph should look like.
+
+The Library of Congress Classification can't be fitted into a rigid structure like Dewey's. LCC call numbers can begin with one, two or three letters, which is manageable, but instead of being laid out neatly from 0 to 999 the numbers can range from a maximum of 9 (in LH, "College and school magazines and papers") to 9999 (six classes outside of law, the first being BX, "Christian denominations"). Instead of trying to fit LCC call numbers to some Procrustean bed, we can leave them as they are in a mountain dentograph.
+
+I am going to ignore everything classified in K (law) in what follows. There are 156 subdivisions in K (ending with KZD, "Space law. Law of outer space") and to keep the dentographs simpler I simply remove all K numbers in processing. My apologies to any law librarians reading this.
+
+## Processing call numbers
+
+I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information so the call number extraction will be a little different.  We'll extract the 949s with `yaz-marcdump` as before, but then run `949-extractifier.rb` to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and processing 5,414,215 proper LC call numbers are left. (`utoronto-949.txt.gz` is in the repository, so you can skip the first line here, but run `gunzip utoronto-949.txt.gz` to uncompress it.)
+
+    $ yaz-marcdump /data/dentographs/utoronto/uToronto.mrc | grep ^949 > utoronto-949.txt
+    $ wc -l utoronto-949.txt 
+    6787653 utoronto-949.txt
+    $ head -2 utoronto-949.txt
+    949    $a AC1 .H32 N4 $w LC $c 1 $i 31761016601411 $d 17/4/2003 $e 17/4/2003 $l STACKS $m ROBARTS $n 2 $r Y $s Y $t BOOK $u 26/8/1992
+    949    $a AC1 [Online resource 47903] $w LC $c 1 $i 2-2001 $l ONLINE $m E_RESOURCE $r Y $s Y $t E_RESOURCE $u 7/2/2008
+    $ ./949-extractifier.rb utoronto-949.txt > utoronto-branch-call-number.txt
+    $ wc -l utoronto-branch-call-number.txt
+    5414215 utoronto-branch-call-number.txt
+    $ head -2 utoronto-branch-call-number.txt
+    ROBARTS:AC 1
+    E_RESOURCE:AC 1
+
+Before using the branch information, let's look at U Toronto's entire collection. For this, we just want the call numbers, and it's easy to pull them out with `cut`.  But before we can turn all of those call numbers into a mountain dentograph we need to turn the class letters into numbers. What we want is a 3D graph where the class letters (AC, AE, AG, ..., ZA) run along the x-axis, the numbers run along the y-axis, and the z-axis shows the number of items at the call number. To make this happen, the class letters need to be turned into numbers. `convert-lc-to-numbers.rb` does this by using a map file to convert AC -> 1, AE -> 2, ..., ZA -> 212. The x-axis in all our LCC mountain dentographs will run from 1 to 212.
+
+!!!TODO  Explain that we need to fix width and depth in different ways for LC and DDC, to make sure that the base is comparable across libraries
+
+    $ cut -d":" -f2 utoronto-branch-call-number.txt > utoronto-call-number.txt
+    $ ./convert-lc-to-numbers.rb utoronto-call-number.txt > utoronto-mountain-data.txt
+
+It's now simple to visualize this data with the `persp` command in R. You'll see one standout high peak. We can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science books. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.
+
+    > utoronto <- read.table("utoronto-mountain-data.txt")
+    > utoronto.table <- table(utoronto)
+    > persp(utoronto.table, theta = -5, phi = 20,
+        scale = TRUE, border = NA, axes = F,
+        box = F, col = "cyan", shade = 0.5,
+        main = "U Toronto")
+    > max(utoronto.table)
+    [1] 19748
+    > which(utoronto.table == max(utoronto.table), arr.ind=TRUE)
+        row col
+    140 141  77
+
+Next we'll use a command-line R script to compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call-number files for both are in the repository.)  We will need to scale the z-axis across collections just as we did with the Dewey checkerboard dentographs before. Here with `persp` that's done with `zlim`.  The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. This script, `dentograph.R`, is in the repository:
+
+    #!/usr/bin/env Rscript
+
+    # Usage: dentograph.R mountain-data.txt filename.png "Library Name"
+    
+    args         <- commandArgs(TRUE)
+    datafile     <- args[1]
+    output       <- args[2]
+    library_name <- args[3]
+    
+    png(filename=output, height=1600, width=1600, units="px")
+    
+    d <- read.table(datafile)
+    table <- table(d)
+    x <- 1:nrow(table)
+    y <- 1:ncol(table)
+    res <- persp(x, y, table, zlim = c(0,20000),
+            theta = -5, phi = 20,
+            scale = TRUE,
+            border = NA,
+            axes = F,
+            box = F,
+            col = "cyan",
+            shade = 0.5,
+            main = library_name)
+    
+    # Label x-axis with class letters
+    xpoints = read.csv("x-axis-labels.csv")
+    for (i in 1:nrow(xpoints)) {
+      points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", pch = xpoints$Label[i], cex = 1)
+    }
+
+The x-axis labelling done at the bottom of the script reads in a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph easier to decipher, but it can still be hard to tell what's where.  
+
+After running the script on the three sets of data you can view each dentograph on its own as a large image. Two ImageMagick commands will put them together into the smaller side-by-side comparison seen in the introduction.
+
+    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain-scaled.png "U Toronto"
+    $ dentograph.R york-mountain-data.txt york-mountain-scaled.png "York"
+    $ dentograph.R upei-mountain-data.txt upei-mountain-scaled.png "U PEI"
+    $ convert +append utoronto-mountain-scaled.png york-mountain-scaled.png upei-mountain-scaled.png mountain-comparison-horizontal.png
+    $ convert -resize 800 mountain-comparison-horizontal.png mountain-comparison-horizontal-smaller.png
+
+![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")
+
+<p class="caption">Figure 8. U Toronto, York U and U PEI compared</p>
+
+## Comparing branches
+
+[University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The two biggest are Robarts, for arts, humanities and social sciences, and Gerstein, for science.  Comparing those two will show how starkly different their holdings are.
+
+First we'll grep the Robarts and Gerstein holdings from the full list.  We'll need to edit dentograph.R to change the scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number if just under 10,000 in both branches, so change the zlim parameter to c(1,10000) to reflect that.  Instead of showing the holdings side-by-side, we'll turn them into an animated GIF.
+
+    $ grep ^ROBARTS utoronto-branch-call-number.txt | cut -d":" -f 2 > utoronto-robarts-call-number.txt
+    $ grep ^GERSTEIN utoronto-branch-call-number.txt | cut -d":" -f 2 > utoronto-gerstein-call-number.txt
+    $ sort utoronto-robarts-call-number.txt | uniq -c | sort -rn | head -1
+        9574 PG 3476
+    $ sort utoronto-gerstein-call-number.txt | uniq -c | sort -rn | head -1
+        9482 QA 76  
+    $ # Edit dentograph.R to change the zlim parameter to c(1,10000)
+    $ convert-lc-to-numbers.rb utoronto-robarts-call-number.txt > utoronto-robarts-mountain-data.txt
+    $ convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt > utoronto-gerstein-mountain-data.txt
+    $ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "U Toronto: Robarts"
+    $ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "U Toronto: Gerstein"
+    $ convert -loop 0 -delay 150 utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branch-comparison.gif
+
+![Animated comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branch-comparison-smaller.gif "Mountain dentographs of U Toronto branches Robarts and Gerstein")
+
+<p class="caption">Figure 9. U Toronto's Robarts and Gerstein branches compared</p>
+
+Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (Q stops at 510 and QA (mathematics) at 939, for example).  
+
+# Future directions
+
+!!!TODO Finish this
+
+It would be nice to fly around inside this mountain dentograph, and be able to see what the peaks indicate as you go by, perhaps with little flags or labels on the mountains.  It's possible to make an interactive version but R is not as advanced as Processing or other tools for real game-like behaviour.  Perhaps it would be possible to run around a library's collection in a system built for a gaming platform?
+
+persp3d is a 3D version of persp that allows you to rotate and zoom the image. The arguments are the same but the experience is very different. Try it.
+
+    > library(rgl)
+    > persp3d(utoronto.table, theta = -5, phi = 20,
+        scale = TRUE, border = NA, axes = F,
+        box = F, col = "cyan", shade = 0.5,
+        main = "U Toronto")
+
+!!!TODO show interactive version, maybe in an embedded video?
+
+Labelling high points.  Being able to move around inside the dentograph, fly around inside it.
+
+Conspectus lists.  Dentographs only measure how many books are in the collection, not their quality.  How to compare to conspectus lists?  What about comparing to lists of the necessary books to meet collections levels 0-5?  Could colour code to show whether or not a collection met undergraduate/grad/PhD levels.  That would require a list of books that make up the basic collection at those levels, and then you'd compare your library's holdings to that list.  So that's a different kind of dentograph.
+
+Conspectus slice idea: show where things meet a certain level or where they fall short
+
+## Other forms of dentographs
+
+Treemaps.  See treemap history in R history, and documentation.
+
+# Known problems
+
+If things in the collection aren't classified, they don't get shown.  For example none of York's eResources are classified properly, they're all ELECTRONIC, so they are completely missing.
+
+!!!TODO Check if it's none or just 99%.
+
+Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.
+
+FICTION ROB and other non-Dewey or LC classifications don't work.
+
+# Tools and links
+
+* [R](http://www.r-project.org/)
+* [RStudio](http://www.rstudio.org/)
+* `yaz-marcdump` from the [YAZ](https://www.indexdata.com/yaz) toolkit
+* `convert` and `resize` from [ImageMagick](http://www.imagemagick.org/)
+
+# References
+
+* Collection of links: http://jeromyanglim.blogspot.com/2009/06/learning-r-for-researchers-in.html
+* [R Cookbook](http://oreilly.com/catalog/9780596809164) by Paul Teetor and [R In a Nutshell](http://oreilly.com/catalog/9780596801717) by Joseph Adler, both from O'Reilly Media
+* [R Programming](http://en.wikibooks.org/wiki/R_Programming) wikibook is under development
+
+
+
