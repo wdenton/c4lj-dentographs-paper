@@ -80,7 +80,7 @@ Visual inspection of the TPL MARC records from the Internet Archive is easily do
     090    $a 614.59939 R25
     090    $a 598.29729 FFR
 
-`extract-tpl-ddc-from-090.rb` pulls out the numerical Dewey call numbers, ignoring "FICTION AIK" and any ISBNs that might be stored in the $a.
+[`extract-tpl-ddc-from-090.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/extract-tpl-ddc-from-090.rb) pulls out the numerical Dewey call numbers, ignoring "FICTION AIK" and any ISBNs that might be stored in the $a.
 
     $ ./extract-tpl-ddc-from-090.rb < tpl-090.txt > tpl-ddc-numbers.txt
     $ head -3 tpl-ddc-number.txt
@@ -102,7 +102,7 @@ We can divide up a Dewey collection into these hundreds, tens, ones, and even de
 
 The most basic Dewey dentograph shows the collection broken down to the tens: the ten hundreds are broken down into ten tens each, making a 10x10 grid with 100 squares.  I call this a one-by-one Dewey checkerboard dentograph, because it uses one number of importance on each side of the grid.
 
-To build the one-by-one we need to pick out the hundreds and tens from our list of call numbers. `make-one-by-one-data.rb` in the repository does this.  Run the script on the file of all call numbers and generate a text file of pairs of numbers (compare these numbers to the ones above):
+To build the one-by-one we need to pick out the hundreds and tens from our list of call numbers. [`make-one-by-one-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-one-data.rb) in the repository does this.  Run the script on the file of all call numbers and generate a text file of pairs of numbers (compare these numbers to the ones above):
 
     $ ./make-one-by-one-data.rb tpl-ddc-numbers.txt > tpl-one-by-one.txt
     $ head -3 tpl-one-by-one.txt
@@ -189,7 +189,7 @@ Now we can make a prettier dentograph. There is a huge number of ways to customi
 
 The next step is to go further into the numbers. Let's make a one-by-two checkerboard dentograph, again with the hundreds on the x-axis, but the tens and ones on the y-axis.  This will be a 10x100 matrix.
 
-`make-one-by-two-data.rb` can be used just as above to generate `tpl-one-by-two.txt`, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:
+[`make-one-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-two-data.rb) can be used just as above to generate `tpl-one-by-two.txt`, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:
 
     > levelplot(tpl.one.by.two.table, 
         col.regions = palette, 
@@ -209,7 +209,7 @@ It's interesting how the hundreds form columns that run up the image (the 300s s
 
 ## Two-by-two
 
-Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  The same process is used here as for the one-by-one graph. `make-two-by-two-data.rb` will generate the file of pairs of numbers we need:
+Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  The same process is used here as for the one-by-one graph. [`make-two-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-two-by-two-data.rb) will generate the file of pairs of numbers we need:
 
     $ ./make-two-by-two-data.rb tpl-ddc-numbers.txt > tpl-two-by-two.txt
 
@@ -307,7 +307,7 @@ I am going to ignore everything classified in K (law) in what follows. There are
 
 ## Processing call numbers
 
-I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information so the call number extraction will be a little different.  We'll extract the 949s with `yaz-marcdump` as before, but then run `949-extractifier.rb` to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and processing 5,414,215 proper LC call numbers are left. (`utoronto-949.txt.gz` is in the repository, so you can skip the first line here, but run `gunzip utoronto-949.txt.gz` to uncompress it.)
+I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information so the call number extraction will be a little different.  We'll extract the 949s with `yaz-marcdump` as before, but then run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and processing 5,414,215 proper LC call numbers are left. (`utoronto-949.txt.gz` is in the repository, so you can skip the first line here, but run `gunzip utoronto-949.txt.gz` to uncompress it.)
 
     $ yaz-marcdump /data/dentographs/utoronto/uToronto.mrc | grep ^949 > utoronto-949.txt
     $ wc -l utoronto-949.txt 
@@ -343,7 +343,7 @@ It's now simple to visualize this data with the `persp` command in R. You'll see
         row col
     140 141  77
 
-Next we'll use a command-line R script to compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call-number files for both are in the repository.)  We will need to scale the z-axis across collections just as we did with the Dewey checkerboard dentographs before. Here with `persp` that's done with `zlim`.  The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. This script, `dentograph.R`, is in the repository:
+Next we'll use a command-line R script to compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call-number files for both are in the repository.)  We will need to scale the z-axis across collections just as we did with the Dewey checkerboard dentographs before. Here with `persp` that's done with `zlim`.  The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. This script, [`dentograph.R`](https://github.com/wdenton/c4lj-dentographs/blob/master/dentograph.R), is in the repository:
 
     #!/usr/bin/env Rscript
 
