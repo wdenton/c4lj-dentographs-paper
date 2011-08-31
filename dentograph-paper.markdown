@@ -34,6 +34,8 @@ Later I will describe is mountain dentographs, best used for the Library of Cong
 
 # Mathematics and LIS
 
+Classification schemes are mathematical functions.  XXX defines a function as YYY.  
+
 !!!TODO Expand, briefly, on this.  I intend to write a complete paper about this.
 
 * Classification schemes as mathematical functions
@@ -43,21 +45,24 @@ Later I will describe is mountain dentographs, best used for the Library of Cong
 
 # Getting ready: R and the code and data
 
-!!!TODO Explain briefly about what R is (and RStudio) and where to download them.
+All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.
 
-All of the code and datasets are available at [http://github.com/wdenton/c4lj-dentograph](http://github.com/wdenton/c4lj-dentograph). Every command-line or R code snippet is reproducible.
+All of the code and datasets in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command-line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` means its from the command line and `>` means its from R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
 
-!!!TODO Create GitHub repository, upload code and data.  (Or put data sets in YorkSpace?)
+To make a local copy of the repository, run this at the command line:
+
+    $ git clone http://github.com/wdenton/c4lj-dentographs
+    $ cd c4lj-dentographs
+
+The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Change Working Directory in the menu bar.
 
 # Call numbers
 
-We need call numbers to generate dentographs.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research.  
+We need call numbers to generate dentographs.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a very large and easily accessible open data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three here:
 
-Luckily there is a very large and easily accessible open data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three in particular:
-
-* [San Francisco Public Library MARC records](http://www.archive.org/details/SanFranPL01) (1 of 16) (Dewey Decimal Classification, Dec 2010)
-* [Toronto Public Library MARC records](http://www.archive.org/details/marc_toronto_public_library) (DDC, April 2010)
-* [University of Toronto MARC records](http://www.archive.org/details/marc_university_of_toronto) (LCC, Feb 2008)
+* [San Francisco Public Library MARC records](http://www.archive.org/details/SanFranPL01) (1 of 16; search for the others) (Dewey Decimal Classification)
+* [Toronto Public Library MARC records](http://www.archive.org/details/marc_toronto_public_library) (DDC)
+* [University of Toronto MARC records](http://www.archive.org/details/marc_university_of_toronto) (Library of Congress Classification)
 
 Two libraries supplied data to me on request, which I use later to compare to U Toronto:
 
@@ -70,9 +75,9 @@ Dealing with a large set of MARC records can be painful. There are so many ways 
 
 The goal of operating on the TPL catalogue records is to extract every numerical call number in the range (0 < number < 1000). This will leave us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
 
-Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file:
+Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, [tpl-090.txt.gz](https://github.com/wdenton/c4lj-dentographs/blob/master/tpl-090.txt.gz) is in the GitHub repository, but to recreate it yourself you would run get the files, run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt` and skip the first of the following commands.)
 
-    $ yaz-marcdump /data/dentographs/tpl/OL.20100104.* | grep ^090 > tpl-090.txt
+    $ gunzip tpl-090.txt.gz
     $ wc -l tpl-090.txt
     2210126 tpl-090.txt
     $ head -5 tpl-090.txt
@@ -430,8 +435,6 @@ persp3d is a 3D version of persp that allows you to rotate and zoom the image. T
         scale = TRUE, border = NA, axes = F,
         box = F, col = "cyan", shade = 0.5,
         main = "U Toronto")
-
-!!!TODO show interactive version, maybe in an embedded video?
 
 Labelling high points.  Being able to move around inside the dentograph, fly around inside it.
 
