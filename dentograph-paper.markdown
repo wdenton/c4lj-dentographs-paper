@@ -12,11 +12,9 @@ By William Denton &lt;<wtd@pobox.com>&gt;
 
 Here are two checkerboard dentographs that compare the holdings of the Toronto and San Francisco Public Libraries. 
 
-![Animated TPL/SFPL comparison checkerboard dentograph](images/animated-tpl-sfpl-comparison.gif)
+![TPL and SFPL comparison checkerboard dentograph](images/tpl-sfpl-comparison.png)
 
-!!!TODO Separate back into two side-by-side separate images
-
-<p class="caption">Figure 1. Checkerboard dentograph comparing the Toronto and San Francisco Public Libraries</p>
+<p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
 Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
 
@@ -306,11 +304,9 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
 
 # Mountain dentographs
 
-!!!TODO Explain briefly what this is, perhaps that it's my initial conception for what a dentograph should look like.
+The Library of Congress Classification can't be fitted into a rigid structure like Dewey has. LCC call numbers can begin with one, two or three letters, which is manageable, but instead of being laid out neatly from 0 to 999 the numbers can range from a maximum of 9 (in LH, "College and school magazines and papers") to 9999 (six classes outside of law, the first being BX, "Christian denominations"). Instead of trying to fit LCC call numbers to some Procrustean bed to make a checkerboard dentograph, we can leave them as they are in a mountain dentograph. Mountain dentographs are three-dimensional, with the LCC class letters on the x-axis, the numbers on the y-axis, and the item counts on the z-axis.  They look like very orderly mountain ranges.
 
-The Library of Congress Classification can't be fitted into a rigid structure like Dewey's. LCC call numbers can begin with one, two or three letters, which is manageable, but instead of being laid out neatly from 0 to 999 the numbers can range from a maximum of 9 (in LH, "College and school magazines and papers") to 9999 (six classes outside of law, the first being BX, "Christian denominations"). Instead of trying to fit LCC call numbers to some Procrustean bed, we can leave them as they are in a mountain dentograph.
-
-I am going to ignore everything classified in K (law) in what follows. There are 156 subdivisions in K (ending with KZD, "Space law. Law of outer space") and to keep the dentographs simpler I simply remove all K numbers in processing. My apologies to any law librarians reading this.
+In the examples that follow I am going to ignore everything classified in K (law) in what follows. There are 156 subdivisions in K (ending with KZD, "Space law. Law of outer space") and to keep the dentographs simpler I simply remove all K numbers in processing. My apologies to any law librarians reading this.
 
 ## Processing call numbers
 
