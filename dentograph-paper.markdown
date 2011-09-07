@@ -461,6 +461,7 @@ FICTION ROB and other non-Dewey or LC classifications don't work.
 
 # References
 
+* [How to Learn R](http://www.inside-r.org/howto/how-learn-r)
 * Collection of links: http://jeromyanglim.blogspot.com/2009/06/learning-r-for-researchers-in.html
 * [R Cookbook](http://oreilly.com/catalog/9780596809164) by Paul Teetor and [R In a Nutshell](http://oreilly.com/catalog/9780596801717) by Joseph Adler, both from O'Reilly Media
 * [R Programming](http://en.wikibooks.org/wiki/R_Programming) wikibook is under development
