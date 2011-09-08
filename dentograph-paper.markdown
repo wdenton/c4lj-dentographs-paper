@@ -6,7 +6,7 @@ A dentograph is a compact visualization of a library's holding, built on the ide
 
 </div>
 
-By William Denton &lt;<wtd@pobox.com>&gt;
+By William Denton &lt;wtd@pobox.com&gt;
 
 # Introduction
 
