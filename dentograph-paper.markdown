@@ -240,7 +240,7 @@ Then in R, again the data is loaded in and levelplot run.  Here, to make it a li
 
 !!!TODO Try this with panel.grid
 
-![TPL checkerboard dentograph, tens by decimals](images/tpl-two-by-two.png)
+![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png)
 
 <p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
 
