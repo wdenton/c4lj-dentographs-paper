@@ -220,7 +220,7 @@ It's interesting how the hundreds form columns that run up the image (the 300s s
 
 Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  The same process is used here as for the one-by-one graph. [`make-two-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-two-by-two-data.rb) will generate the file of pairs of numbers we need:
 
-    $ ./make-two-by-two-data.rb tpl-ddc-numbers.txt > tpl-two-by-two.txt
+    $ ruby make-two-by-two-data.rb tpl-ddc-numbers.txt > tpl-two-by-two.txt
 
 Then in R, again the data is loaded in and levelplot run.  Here, to make it a little clearer about where the numbers fall, a grid of dashed lines is added (the way that this is done with lattice graphics, with a function declared and separate commands run within it, can be a little confusing):
 
@@ -322,7 +322,7 @@ I'll use the University of Toronto MARC records from the Internet Archive in thi
     $ head -2 utoronto-949.txt
     949    $a AC1 .H32 N4 $w LC $c 1 $i 31761016601411 $d 17/4/2003 $e 17/4/2003 $l STACKS $m ROBARTS $n 2 $r Y $s Y $t BOOK $u 26/8/1992
     949    $a AC1 [Online resource 47903] $w LC $c 1 $i 2-2001 $l ONLINE $m E_RESOURCE $r Y $s Y $t E_RESOURCE $u 7/2/2008
-    $ ./949-extractifier.rb utoronto-949.txt > utoronto-branch-call-number.txt
+    $ ruby 949-extractifier.rb utoronto-949.txt > utoronto-branch-call-number.txt
     $ wc -l utoronto-branch-call-number.txt
     5414215 utoronto-branch-call-number.txt
     $ head -2 utoronto-branch-call-number.txt
@@ -334,7 +334,7 @@ Before using the branch information, let's look at U Toronto's entire collection
 !!!TODO  Explain that we need to fix width and depth in different ways for LC and DDC, to make sure that the base is comparable across libraries
 
     $ cut -d":" -f2 utoronto-branch-call-number.txt > utoronto-call-number.txt
-    $ ./convert-lc-to-numbers.rb utoronto-call-number.txt > utoronto-mountain-data.txt
+    $ ruby convert-lc-to-numbers.rb utoronto-call-number.txt > utoronto-mountain-data.txt
 
 It's now simple to visualize this data with the `persp` command in R. You'll see one standout high peak. We can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science books. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.
 
