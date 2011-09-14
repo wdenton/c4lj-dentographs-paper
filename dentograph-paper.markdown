@@ -184,7 +184,7 @@ Now we can make a prettier dentograph. There is a huge number of ways to customi
           y=list(rot=0, at=seq(1, 10), labels=10*seq(0, 9))))
       )
 
-![TPL checkerboard dentograph, one by one, labelled](images/tpl-one-by-one-dentograph.png)
+![Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-dentograph.png)
 
 <p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
 
@@ -210,9 +210,7 @@ Then in R:
         scales=(x=list(at=seq(1, 10, by = 2), labels=seq(0, 9, by =2),  
         y=list(rot = 0, at=seq(11, 100, by=10), labels=paste (seq(1, 9), "0", sep="")))))
 
-![TPL Dewey one-by-two checkerboard dentograph](images/tpl-one-by-two.png)
-
-!!!TODO Regenerate with proper title
+![Toronto Public Library one-by-two checkerboard dentograph](images/tpl-one-by-two-dentograph.png)
 
 <p class="caption">Figure 5. Toronto Public Library one-by-two checkerboard dentograph</p>
 
