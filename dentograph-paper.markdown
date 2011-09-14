@@ -85,9 +85,11 @@ Visual inspection of the TPL MARC records from the Internet Archive is easily do
     090    $a 614.59939 R25
     090    $a 598.29729 FFR
 
-[`extract-tpl-ddc-from-090.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/extract-tpl-ddc-from-090.rb) pulls out the numerical Dewey call numbers, ignoring "FICTION AIK" and any ISBNs that might be stored in the $a.
+[`extract-tpl-ddc-from-090.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/extract-tpl-ddc-from-090.rb) pulls out the numerical Dewey call numbers, ignoring everything else, such as "FICTION AIK" or "M" or ISBNs that might be stored in the $a.  645,244 090 fields end up being cast aside.
 
-    $ ./extract-tpl-ddc-from-090.rb < tpl-090.txt > tpl-ddc-numbers.txt
+    $ ruby extract-tpl-ddc-from-090.rb < tpl-090.txt > tpl-ddc-numbers.txt
+    $ wc -l tpl-ddc-numbers.txt
+    1564882 tpl-ddc-numbers.txt
     $ head -3 tpl-ddc-number.txt
     614.59939 
     614.59939 
@@ -109,7 +111,7 @@ The most basic Dewey dentograph shows the collection broken down to the tens: th
 
 To build the one-by-one we need to pick out the hundreds and tens from our list of call numbers. [`make-one-by-one-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-one-data.rb) in the repository does this.  Run the script on the file of all call numbers and generate a text file of pairs of numbers (compare these numbers to the ones above):
 
-    $ ./make-one-by-one-data.rb tpl-ddc-numbers.txt > tpl-one-by-one.txt
+    $ ruby make-one-by-one-data.rb tpl-ddc-numbers.txt > tpl-one-by-one.txt
     $ head -3 tpl-one-by-one.txt
     6 1
     6 1
@@ -141,30 +143,30 @@ We'll make that look nicer, but first, let's look into the data structures a lit
     > ncol(tpl.one.by.one)
     [1] 2
     > nrow(tpl.one.by.one)
-    [1] 1567335
+    [1] 1564666
 
 The table command "uses the cross-classifying factors to build a contingency table of the counts at each combination of factor levels", according to the ?table help file. In other words, with our Dewey data, it will build a 10x10 table that counts how many times each pair of numbers appears in the tpl.one.by.one data frame. 
 
     > tpl.one.by.one.table
        V2
     V1      0     1     2     3     4     5     6     7     8     9
-      0 11650 19798 10252  1453    21   456  1298  4558   589   737
-      1   739   915  1664  6568   815 15102   398  4877  2100  4195
-      2  2654   878  5250  4988  3531  1524  5460  4637 11114 15444
-      3 59651  1518 34410 72512 25499 32268 50150 24547 20434 20608
-      4  1474  2696 13660  1945  3789  1044  1756   386   521 12275
-      5  8263  5973  5263  5503  3740 11873  1794  8390  3995 17280
-      6  2416 43044 40288 19575 28349 35310  5787  3150  6262  6194
-      7 18959 10985 13398  9678 27158 18833  4966  8888 30130 62094
-      8 18952 94201 81223 13222 18066  5326  8640  1447  3207 40253
-      9  7630 72559 41904  7235 63764 19765  5691 67263  2654  1987
+      0 11648 19793 10232  1453    21   456  1298  4547   589   737
+      1   738   915  1661  6566   815 15094   398  4877  2100  4193
+      2  2654   878  5245  4987  3526  1523  5457  4636 11107 15440
+      3 59634  1518 34402 72476 25494 32259 50131 24536 20430 20600
+      4  1471  2694 13608  1943  3786  1044  1755   383   516 12257
+      5  8261  5968  5262  5499  3740 11867  1792  8387  3994 17269
+      6  2412 43022 40281 19564 28335 35299  5786  3149  6261  6193
+      7 18948 10984 13396  9673 27130 18819  4962  8883 30110 62074
+      8 18840 93554 80340 13161 17987  5302  8613  1421  3155 40156
+      9  7625 72508 41884  7230 63727 19756  5688 67239  2652  1987
 
-For example, the value of the (3, 5) entry in this table is 32,268.  This means that "3 5" appeared 32,268 times in the data file.  We can confirm this at the command line:
+For example, the value of the (3, 5) entry in this table is 32,259.  This means that "3 5" appeared 32,259 times in the data file.  We can confirm this at the command line:
 
     $ grep -c "3 5" tpl-one-by-one.txt 
     32268
 
-The Toronto Public Library has 32,268 items classified in the 350s (Public administration and military science).
+The Toronto Public Library has 32,259 items classified in the 350s ("Public administration and military science").
 
 Now we can make a prettier dentograph. There is a huge number of ways to customize graphs and charts in R. I won't go into many details here, because most of the commands will be self-explanatory when you see them and then look at the generated image.  Two things about this next snippet: I create a function `palette` that I use in the levelplot command to change the colours used, and the scales parameter lets me customize what appears on the axes, defining some new labels and rotating them where necessary.
 
@@ -182,20 +184,24 @@ Now we can make a prettier dentograph. There is a huge number of ways to customi
           y=list(rot=0, at=seq(1, 10), labels=10*seq(0, 9))))
       )
 
-![TPL checkerboard dentograph, one by one, labelled](images/tpl-one-by-one-labelled.png)
+![TPL checkerboard dentograph, one by one, labelled](images/tpl-one-by-one-dentograph.png)
 
 <p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
-
-!!!TODO Regenerate, with proper title
 
 !!!TODO Look at this graph a bit and talk about it.  Note the strong line up the 300s, and the comparatively weaker line up the 400s.
 
 ## One-by-two
 
-The next step is to go further into the numbers. Let's make a one-by-two checkerboard dentograph, again with the hundreds on the x-axis, but the tens and ones on the y-axis.  This will be a 10x100 matrix.
+The next step is to go further into the numbers. Let's make a one-by-two checkerboard dentograph, again with the hundreds on the x-axis, but the tens and ones on the y-axis.  This will be a 10x100 matrix.  The process is the same as above, but using [`make-one-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-two-data.rb) to prepare the data:
 
-[`make-one-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-two-data.rb) can be used just as above to generate `tpl-one-by-two.txt`, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:
+    $ ruby make-one-by-two-data.rb tpl-ddc-numbers.txt > tpl-one-by-two.txt
 
+Then in R:
+
+ can be used just as above to generate `tpl-one-by-two.txt`, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:
+
+    > tpl.one.by.two <- read.table("tpl-one-by-two.txt")
+    > tpl.one.by.two.table <- table(tpl.one.by.two)
     > levelplot(tpl.one.by.two.table, 
         col.regions = palette, 
         xlab = "Hundreds", 

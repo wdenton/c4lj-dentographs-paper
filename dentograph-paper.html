@@ -93,9 +93,11 @@ $ head -5 tpl-090.txt
 090    $a 598.29729 FFR
 </code></pre>
 
-<p><a href="https://github.com/wdenton/c4lj-dentographs/blob/master/extract-tpl-ddc-from-090.rb"><code>extract-tpl-ddc-from-090.rb</code></a> pulls out the numerical Dewey call numbers, ignoring "FICTION AIK" and any ISBNs that might be stored in the $a.</p>
+<p><a href="https://github.com/wdenton/c4lj-dentographs/blob/master/extract-tpl-ddc-from-090.rb"><code>extract-tpl-ddc-from-090.rb</code></a> pulls out the numerical Dewey call numbers, ignoring everything else, such as "FICTION AIK" or "M" or ISBNs that might be stored in the $a.  645,244 090 fields end up being cast aside.</p>
 
-<pre><code>$ ./extract-tpl-ddc-from-090.rb &lt; tpl-090.txt &gt; tpl-ddc-numbers.txt
+<pre><code>$ ruby extract-tpl-ddc-from-090.rb &lt; tpl-090.txt &gt; tpl-ddc-numbers.txt
+$ wc -l tpl-ddc-numbers.txt
+1564882 tpl-ddc-numbers.txt
 $ head -3 tpl-ddc-number.txt
 614.59939 
 614.59939 
@@ -118,7 +120,7 @@ $ head -3 tpl-ddc-number.txt
 
 <p>To build the one-by-one we need to pick out the hundreds and tens from our list of call numbers. <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-one-data.rb"><code>make-one-by-one-data.rb</code></a> in the repository does this.  Run the script on the file of all call numbers and generate a text file of pairs of numbers (compare these numbers to the ones above):</p>
 
-<pre><code>$ ./make-one-by-one-data.rb tpl-ddc-numbers.txt &gt; tpl-one-by-one.txt
+<pre><code>$ ruby make-one-by-one-data.rb tpl-ddc-numbers.txt &gt; tpl-one-by-one.txt
 $ head -3 tpl-one-by-one.txt
 6 1
 6 1
@@ -152,7 +154,7 @@ $ head -3 tpl-one-by-one.txt
 &gt; ncol(tpl.one.by.one)
 [1] 2
 &gt; nrow(tpl.one.by.one)
-[1] 1567335
+[1] 1564666
 </code></pre>
 
 <p>The table command "uses the cross-classifying factors to build a contingency table of the counts at each combination of factor levels", according to the ?table help file. In other words, with our Dewey data, it will build a 10x10 table that counts how many times each pair of numbers appears in the tpl.one.by.one data frame. </p>
@@ -160,25 +162,25 @@ $ head -3 tpl-one-by-one.txt
 <pre><code>&gt; tpl.one.by.one.table
    V2
 V1      0     1     2     3     4     5     6     7     8     9
-  0 11650 19798 10252  1453    21   456  1298  4558   589   737
-  1   739   915  1664  6568   815 15102   398  4877  2100  4195
-  2  2654   878  5250  4988  3531  1524  5460  4637 11114 15444
-  3 59651  1518 34410 72512 25499 32268 50150 24547 20434 20608
-  4  1474  2696 13660  1945  3789  1044  1756   386   521 12275
-  5  8263  5973  5263  5503  3740 11873  1794  8390  3995 17280
-  6  2416 43044 40288 19575 28349 35310  5787  3150  6262  6194
-  7 18959 10985 13398  9678 27158 18833  4966  8888 30130 62094
-  8 18952 94201 81223 13222 18066  5326  8640  1447  3207 40253
-  9  7630 72559 41904  7235 63764 19765  5691 67263  2654  1987
+  0 11648 19793 10232  1453    21   456  1298  4547   589   737
+  1   738   915  1661  6566   815 15094   398  4877  2100  4193
+  2  2654   878  5245  4987  3526  1523  5457  4636 11107 15440
+  3 59634  1518 34402 72476 25494 32259 50131 24536 20430 20600
+  4  1471  2694 13608  1943  3786  1044  1755   383   516 12257
+  5  8261  5968  5262  5499  3740 11867  1792  8387  3994 17269
+  6  2412 43022 40281 19564 28335 35299  5786  3149  6261  6193
+  7 18948 10984 13396  9673 27130 18819  4962  8883 30110 62074
+  8 18840 93554 80340 13161 17987  5302  8613  1421  3155 40156
+  9  7625 72508 41884  7230 63727 19756  5688 67239  2652  1987
 </code></pre>
 
-<p>For example, the value of the (3, 5) entry in this table is 32,268.  This means that "3 5" appeared 32,268 times in the data file.  We can confirm this at the command line:</p>
+<p>For example, the value of the (3, 5) entry in this table is 32,259.  This means that "3 5" appeared 32,259 times in the data file.  We can confirm this at the command line:</p>
 
 <pre><code>$ grep -c "3 5" tpl-one-by-one.txt 
 32268
 </code></pre>
 
-<p>The Toronto Public Library has 32,268 items classified in the 350s (Public administration and military science).</p>
+<p>The Toronto Public Library has 32,259 items classified in the 350s ("Public administration and military science").</p>
 
 <p>Now we can make a prettier dentograph. There is a huge number of ways to customize graphs and charts in R. I won't go into many details here, because most of the commands will be self-explanatory when you see them and then look at the generated image.  Two things about this next snippet: I create a function <code>palette</code> that I use in the levelplot command to change the colours used, and the scales parameter lets me customize what appears on the axes, defining some new labels and rotating them where necessary.</p>
 
@@ -197,11 +199,9 @@ V1      0     1     2     3     4     5     6     7     8     9
   )
 </code></pre>
 
-<p><img src="images/tpl-one-by-one-labelled.png" alt="TPL checkerboard dentograph, one by one, labelled" title="" /></p>
+<p><img src="images/tpl-one-by-one-dentograph.png" alt="TPL checkerboard dentograph, one by one, labelled" title="" /></p>
 
 <p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
-
-<p>!!!TODO Regenerate, with proper title</p>
 
 <p>!!!TODO Look at this graph a bit and talk about it.  Note the strong line up the 300s, and the comparatively weaker line up the 400s.</p>
 
