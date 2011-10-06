@@ -12,7 +12,7 @@ By William Denton &lt;wtd@pobox.com&gt;
 
 Here are two checkerboard dentographs that compare the holdings of the Toronto and San Francisco Public Libraries. 
 
-![TPL and SFPL comparison checkerboard dentograph](images/tpl-sfpl-comparison.png)
+![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
@@ -297,15 +297,24 @@ The deepest part of the TPL collection at the tens level is the 810s (row 9 is t
         at = 2000*seq(1:50))
     > savePlot(filename="comparison-sfpl.png", type="png")
 
-The `at` parameter sets out where the cuts on the z-axis will happen. It is not necessary for a one-collection checkerboard dentograph, because R will work out what is right.  When comparing two collections, however, it is needed so that the colour schemes match up and show the same levels of collection depth in absolute and not just relative terms.  Here we force R to use a scale from 0 to 100,000, with 50 colour gradations (49 cuts) along the way.  Next, save this image, then do another image for the SFPL data, forcing it to the same scale:
+The `at` parameter sets out where the cuts on the z-axis will happen. It is not necessary for a one-collection checkerboard dentograph, because R will work out what is right.  When comparing two collections, however, it is needed so that the colour schemes match up and show the same levels of collection depth in absolute and not just relative terms.  Here we force R to use a scale from 0 to 100,000, with 50 colour gradations (49 cuts) along the way.
 
 Back at the command line, `convert` from ImageMagick turns the two images into one:
 
-    $ convert -loop 0 -delay 100 tpl-compare.png sfpl-compare.png animated-tpl-sfpl-comparison.gif
+    $ convert +append comparison-tpl.png comparison-sfpl.png comparison-tpl-to-sfpl-large.png
+    $ convert -resize 800 comparison-tpl-to-sfpl-large.png comparison-tpl-to-sfpl.png
 
-![Animated TPL/SFPL comparison checkerboard dentograph](images/animated-tpl-sfpl-comparison.gif)
+![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
 
-<p class="caption">Figure 7. Animated comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
+<p class="caption">Figure 7. Comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
+
+They can also be turned into an animated GIF, which makes it easier to see the differences on a screen:
+
+    $ convert -loop 0 -delay 100 comparison-tpl.png comparison-sfpl.png comparison-tpl-to-sfpl-animated.gif
+
+![Animated TPL/SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl-animated.gif)
+
+<p class="caption">Figure 8. Animated comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
 
 # Mountain dentographs
 
