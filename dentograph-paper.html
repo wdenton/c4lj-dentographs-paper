@@ -259,7 +259,7 @@ V1      0     1     2     3     4     5     6     7     8     9
 
 <p>!!!TODO Try this with panel.grid</p>
 
-<p><img src="images/tpl-two-by-two.png" alt="TPL checkerboard dentograph, tens by decimals" title="" /></p>
+<p><img src="images/tpl-two-by-two-dentograph.png" alt="Toronto Public Library two-by-two checkerboard dentograph" title="" /></p>
 
 <p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
 
@@ -271,10 +271,10 @@ V1      0     1     2     3     4     5     6     7     8     9
    row col
 82  83  40
 &gt; max(tpl.two.by.two.table)
-[1] 29409
+[1] 29366
 </code></pre>
 
-<p>There are 29,409 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9.  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.</p>
+<p>There are 29,366 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9.  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.</p>
 
 <p>!!!TODO Look up what Dewey 823.9 is.  (823 is English fiction.)</p>
 
@@ -282,14 +282,18 @@ V1      0     1     2     3     4     5     6     7     8     9
 
 <p>Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Online it's also possible to turn them into an animated GIF, flickering back and forth from one collection to the other, and the differences in breadth and depth become even more obvious.  </p>
 
-<p>When doing a comparison like this we must make sure the same z-axis scale is used for both collections.  In this example I'll show how to create the Toronto Public Library/San Francisco Public Library comparison shown in the introduction, including how to fix the scales so that the numbers are fairly compared between the two.  We already have the tpl.one.by.one.table in memory, so we begin by adding the SFPL data.</p>
+<p>When doing a comparison like this we must make sure the same z-axis scale is used for both collections.  In this example I'll show how to create the Toronto Public Library/San Francisco Public Library comparison shown in the introduction, including how to fix the scales so that the numbers are fairly compared between the two.  We already have the tpl.one.by.one.table in memory, so we begin by adding the SFPL data.  SFPL call numbers are in the <code>sfpl-ddc-call-numbers.txt.gz</code> file so they just need to be extracted and then processed at the command line:</p>
 
-<p>!!!TODO Show commands to generate data?  Just leave file in repository?</p>
+<pre><code>$ gunzip sfpl-ddc-call-numbers.txt.gz
+$ ruby make-one-by-one-data.rb sfpl-ddc-call-numbers.txt &gt; sfpl-one-by-one.txt
+</code></pre>
+
+<p>And now in R:</p>
 
 <pre><code>&gt; sfpl.one.by.one &lt;- read.table("sfpl-one-by-one.txt")
 &gt; sfpl.one.by.one.table &lt;- table(sfpl.one.by.one)
 &gt; max(tpl.one.by.one.table)
-[1] 94201
+[1] 93554
 &gt; which(tpl.one.by.one.table == max(tpl.one.by.one.table), arr.ind=TRUE)
   row col
 8   9   2
@@ -302,20 +306,18 @@ V1      0     1     2     3     4     5     6     7     8     9
 
 <p>The deepest part of the TPL collection at the tens level is the 810s (row 9 is the 800s, column 2 is the 10s), with 94,201 items.  The deepest part of the SFPL collection is in the 910s (row 10, column 2) with 11,417 items.  </p>
 
-<p>!!!TODO Better filename in snippet</p>
-
 <pre><code>&gt; levelplot(tpl.one.by.one.table, 
     col.regions = palette(50), cuts = 49, 
     main = "Toronto Public Library", 
     xlab = "Hundreds", ylab = "Tens", 
     at = 2000*seq(1:50))
-&gt; savePlot(filename="tpl-compare.png", type="png")
+&gt; savePlot(filename="comparison-tpl.png", type="png")
 &gt; levelplot(sfpl.one.by.one.table, 
     col.regions = palette(50), cuts = 49, 
     main = "San Francisco Public Library", 
     xlab = "Hundreds", ylab = "Tens", 
     at = 2000*seq(1:50))
-&gt; savePlot(filename="sfpl-compare.png", type="png")
+&gt; savePlot(filename="comparison-sfpl.png", type="png")
 </code></pre>
 
 <p>The <code>at</code> parameter sets out where the cuts on the z-axis will happen. It is not necessary for a one-collection checkerboard dentograph, because R will work out what is right.  When comparing two collections, however, it is needed so that the colour schemes match up and show the same levels of collection depth in absolute and not just relative terms.  Here we force R to use a scale from 0 to 100,000, with 50 colour gradations (49 cuts) along the way.  Next, save this image, then do another image for the SFPL data, forcing it to the same scale:</p>
