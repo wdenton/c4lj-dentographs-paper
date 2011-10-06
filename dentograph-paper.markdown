@@ -320,11 +320,11 @@ They can also be turned into an animated GIF, which makes it easier to see the d
 
 The Library of Congress Classification can't be fitted into a rigid structure like Dewey has. LCC call numbers can begin with one, two or three letters, which is manageable, but instead of being laid out neatly from 0 to 999 the numbers can range from a maximum of 9 (in LH, "College and school magazines and papers") to 9999 (six classes outside of law, the first being BX, "Christian denominations"). Instead of trying to fit LCC call numbers to some Procrustean bed to make a checkerboard dentograph, we can leave them as they are in a mountain dentograph. Mountain dentographs are three-dimensional, with the LCC class letters on the x-axis, the numbers on the y-axis, and the item counts on the z-axis.  They look like very orderly mountain ranges.
 
-In the examples that follow I am going to ignore everything classified in K (law) in what follows. There are 156 subdivisions in K (ending with KZD, "Space law. Law of outer space") and to keep the dentographs simpler I simply remove all K numbers in processing. My apologies to any law librarians reading this.
+To keep things simpler I am going to ignore everything classified in K (law) in the following examples. There are 156 subdivisions in K (ending with KZD, "Space law. Law of outer space") and to keep the dentographs simpler I simply remove all K numbers in processing. My apologies to any law librarians reading this.
 
 ## Processing call numbers
 
-I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information so the call number extraction will be a little different.  We'll extract the 949s with `yaz-marcdump` as before, but then run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and processing 5,414,215 proper LC call numbers are left. (`utoronto-949.txt.gz` is in the repository, so you can skip the first line here, but run `gunzip utoronto-949.txt.gz` to uncompress it.)
+Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  We'll extract the 949s with `yaz-marcdump` as before, but then run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and processing 5,414,215 proper LC call numbers are left. (`utoronto-949.txt.gz` is in the repository, so you can skip the first line here, but run `gunzip utoronto-949.txt.gz` to uncompress it.)
 
     $ yaz-marcdump /data/dentographs/utoronto/uToronto.mrc | grep ^949 > utoronto-949.txt
     $ wc -l utoronto-949.txt 
@@ -405,7 +405,7 @@ After running the script on the three sets of data you can view each dentograph 
 
 ![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")
 
-<p class="caption">Figure 8. U Toronto, York U and U PEI compared</p>
+<p class="caption">Figure 9. U Toronto, York U and U PEI compared</p>
 
 ## Comparing branches
 
@@ -428,7 +428,7 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  We'll ne
 
 ![Animated comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branch-comparison-smaller.gif "Mountain dentographs of U Toronto branches Robarts and Gerstein")
 
-<p class="caption">Figure 9. U Toronto's Robarts and Gerstein branches compared</p>
+<p class="caption">Figure 10. U Toronto's Robarts and Gerstein branches compared</p>
 
 Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (Q stops at 510 and QA (mathematics) at 939, for example).  
 
