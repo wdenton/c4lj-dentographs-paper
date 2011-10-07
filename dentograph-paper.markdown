@@ -10,7 +10,7 @@ By William Denton &lt;wtd@pobox.com&gt;
 
 # Introduction
 
-Here are two checkerboard dentographs that compare the holdings of the Toronto and San Francisco Public Libraries. 
+These two checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries:
 
 ![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
 
@@ -324,9 +324,9 @@ To keep things simpler I am going to ignore everything classified in K (law) in 
 
 ## Processing call numbers
 
-Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  We'll extract the 949s with `yaz-marcdump` as before, but then run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and processing 5,414,215 proper LC call numbers are left. (`utoronto-949.txt.gz` is in the repository, so you can skip the first line here, but run `gunzip utoronto-949.txt.gz` to uncompress it.)
+Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with `yaz-marcdump` as above (`yaz-marcdump uToronto.mrc | grep ^949 > utoronto-949.txt`) but to save time and disk space I've done this and the data file (`utoronto-949.txt.gz`) is in the repository.  We'll run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left. 
 
-    $ yaz-marcdump /data/dentographs/utoronto/uToronto.mrc | grep ^949 > utoronto-949.txt
+    $ gunzip utoronto-949.txt.gz
     $ wc -l utoronto-949.txt 
     6787653 utoronto-949.txt
     $ head -2 utoronto-949.txt
@@ -339,11 +339,9 @@ Once again we need to find, clean and process call numbers. I'll use the Univers
     ROBARTS:AC 1
     E_RESOURCE:AC 1
 
-Before using the branch information, let's look at U Toronto's entire collection. For this, we just want the call numbers, and it's easy to pull them out with `cut`.  But before we can turn all of those call numbers into a mountain dentograph we need to turn the class letters into numbers. What we want is a 3D graph where the class letters (AC, AE, AG, ..., ZA) run along the x-axis, the numbers run along the y-axis, and the z-axis shows the number of items at the call number. To make this happen, the class letters need to be turned into numbers. `convert-lc-to-numbers.rb` does this by using a map file to convert AC -> 1, AE -> 2, ..., ZA -> 212. The x-axis in all our LCC mountain dentographs will run from 1 to 212.
+Let's look at U Toronto's entire collection before doing any branch dentographs. For this, we want all the call numbers regardless of branch, and it's easy to pull that out with `cut`.  But before we can turn all those call numbers into a mountain dentograph we need to turn the class letters into numbers. We want to make a 3D graph where the class letters (AC, AE, AG, ..., ZA) run along the x-axis, the numbers run along the y-axis, and the z-axis shows the number of items at the call number. To make this happen, the class letters need to be turned into numbers. `convert-lc-to-numbers.rb` does this by using a map file to convert AC -> 1, AE -> 2, ..., ZA -> 212. The x-axis in all our LCC mountain dentographs will run from 1 to 212. `convert-lc-to-numbers.rb` does this, and by doing so ensures that the x-axis is the same width for all libraries. The script also adds in points along the y-axis from (0,0) to (0,10000), ensuring that the graph has the same depth for all libraries. If the width and depth were not forced to be the same for all collections, it would be impossible to compare them visually: F or Q would end up in different places.
 
-!!!TODO  Explain that we need to fix width and depth in different ways for LC and DDC, to make sure that the base is comparable across libraries
-
-    $ cut -d":" -f2 utoronto-branch-call-number.txt > utoronto-call-number.txt
+    $ cut -d ":" -f 2 utoronto-branch-call-number.txt > utoronto-call-number.txt
     $ ruby convert-lc-to-numbers.rb utoronto-call-number.txt > utoronto-mountain-data.txt
 
 It's now simple to visualize this data with the `persp` command in R. You'll see one standout high peak. We can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science books. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.
