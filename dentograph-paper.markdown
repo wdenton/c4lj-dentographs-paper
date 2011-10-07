@@ -45,7 +45,7 @@ Classification schemes are mathematical functions.  XXX defines a function as YY
 
 All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.
 
-All of the code and datasets in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command-line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` means its from the command line and `>` means its from R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
+All of the code and datasets in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command-line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` means it's from the command line and `>` means it's from R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
 
 To make a local copy of the repository, run this at the command line:
 
