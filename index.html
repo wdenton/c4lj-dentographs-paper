@@ -60,7 +60,7 @@ A dentograph is a compact visualization of a library's holding, built on the ide
 
 <p>All of the graphics here will be generated with <a href="http://www.r-project.org/">R</a>, which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing <a href="http://www.rstudio.org/">RStudio</a>, a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.</p>
 
-<p>All of the code and datasets in this paper are available at <a href="http://github.com/wdenton/c4lj-dentographs">http://github.com/wdenton/c4lj-dentographs</a>. Every command-line or R code snippet is reproducible. There are two kinds of snippets of code below: <code>$</code> means it's from the command line and <code>&gt;</code> means it's from R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. </p>
+<p>All of the code and datasets in this paper are available at <a href="http://github.com/wdenton/c4lj-dentographs">http://github.com/wdenton/c4lj-dentographs</a>. Every command line or R code snippet is reproducible. There are two kinds of snippets of code below: <code>$</code> is at the command line and <code>&gt;</code> is in R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. </p>
 
 <p>To make a local copy of the repository, run this at the command line:</p>
 
@@ -72,7 +72,7 @@ $ cd c4lj-dentographs
 
 <h1>Call numbers</h1>
 
-<p>We need call numbers to generate dentographs.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a very large and easily accessible open data source on the web: <a href="http://www.archive.org/details/ol_data">MARC records some libraries have uploaded to the Internet Archive</a> to help the <a href="http://openlibrary.org/">Open Library</a>. A number of libraries have made their data available, and I use three here:</p>
+<p>To generate dentographs we need call numbers.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a very large and easily accessible open data source on the web: <a href="http://www.archive.org/details/ol_data">MARC records some libraries have uploaded to the Internet Archive</a> to help the <a href="http://openlibrary.org/">Open Library</a>. A number of libraries have made their data available, and I use three here:</p>
 
 <ul>
 <li><a href="http://www.archive.org/details/SanFranPL01">San Francisco Public Library MARC records</a> (1 of 16; search for the others) (Dewey Decimal Classification)</li>
@@ -80,7 +80,7 @@ $ cd c4lj-dentographs
 <li><a href="http://www.archive.org/details/marc_university_of_toronto">University of Toronto MARC records</a> (Library of Congress Classification)</li>
 </ul>
 
-<p>Two libraries supplied data to me on request, which I use later to compare to U Toronto:</p>
+<p>Two libraries supplied data to me on request, which I will use later to compare to U Toronto:</p>
 
 <ul>
 <li><a href="http://www.upei.ca/">University of Prince Edward Island</a> provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.</li>

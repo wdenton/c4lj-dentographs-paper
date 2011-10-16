@@ -45,7 +45,7 @@ Classification schemes are mathematical functions.  XXX defines a function as YY
 
 All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.
 
-All of the code and datasets in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command-line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` means it's from the command line and `>` means it's from R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
+All of the code and datasets in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
 
 To make a local copy of the repository, run this at the command line:
 
@@ -56,13 +56,13 @@ The last step is to set your R working directory to this same `c4lj-dentographs`
 
 # Call numbers
 
-We need call numbers to generate dentographs.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a very large and easily accessible open data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three here:
+To generate dentographs we need call numbers.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a very large and easily accessible open data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three here:
 
 * [San Francisco Public Library MARC records](http://www.archive.org/details/SanFranPL01) (1 of 16; search for the others) (Dewey Decimal Classification)
 * [Toronto Public Library MARC records](http://www.archive.org/details/marc_toronto_public_library) (DDC)
 * [University of Toronto MARC records](http://www.archive.org/details/marc_university_of_toronto) (Library of Congress Classification)
 
-Two libraries supplied data to me on request, which I use later to compare to U Toronto:
+Two libraries supplied data to me on request, which I will use later to compare to U Toronto:
 
 * [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.
 * [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  (We use LCC.)
@@ -324,7 +324,7 @@ To keep things simpler I am going to ignore everything classified in K (law) in 
 
 ## Processing call numbers
 
-Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with `yaz-marcdump` as above (`yaz-marcdump uToronto.mrc | grep ^949 > utoronto-949.txt`) but to save time and disk space I've done this and the data file (`utoronto-949.txt.gz`) is in the repository.  We'll run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left. 
+Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with `yaz-marcdump` as above (`yaz-marcdump uToronto.mrc | grep ^949 > utoronto-949.txt`) but to save time and disk space I've done this and the data file (`utoronto-949.txt.gz`) is in the repository.  We'll run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.
 
     $ gunzip utoronto-949.txt.gz
     $ wc -l utoronto-949.txt 
