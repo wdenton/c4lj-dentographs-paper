@@ -39,11 +39,15 @@ Classification schemes are mathematical functions.  XXX defines a function as YY
 * LC : {books at Library of Congress} --> [A--ZA 1--9999]
 * DDC : {universe of knowledge} --> (0,1000)
 
-# Getting ready: R and the code and data
+# Getting ready
+
+## R
 
 All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.
 
-All of the code and datasets in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
+## The code
+
+All of the code in this paper is available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
 
 To make a local copy of the repository, run this at the command line:
 
@@ -51,6 +55,12 @@ To make a local copy of the repository, run this at the command line:
     $ cd c4lj-dentographs
 
 The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Set Working Directory in the menu bar.
+
+## The data
+
+[Data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available in my library's institutional repository.  Download the !!! four files there to the `c4lj-dentographs` directory.  They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
+
+    $ gunzip utoronto-949.txt.gz
 
 # Call numbers
 
@@ -71,9 +81,8 @@ Dealing with a large set of MARC records can be painful. There are so many ways 
 
 The goal of operating on the TPL catalogue records is to extract every numerical call number in the range (0 < number < 1000). This will leave us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
 
-Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, [tpl-090.txt.gz](https://github.com/wdenton/c4lj-dentographs/blob/master/tpl-090.txt.gz) is in the GitHub repository, but to recreate it yourself you would run get the files, run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt` and skip the first of the following commands.)
+Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, `tpl-090.txt` is one of the data files available, but to recreate it yourself you would get the files, run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt`.)
 
-    $ gunzip tpl-090.txt.gz
     $ wc -l tpl-090.txt
     2210126 tpl-090.txt
     $ head -5 tpl-090.txt
@@ -214,7 +223,7 @@ It's interesting how the hundreds form columns that run up the image (the 300s s
 
 ## Two-by-two
 
-Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  The same process is used here as for the one-by-one graph. [`make-two-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-two-by-two-data.rb) will generate the file of pairs of numbers we need:
+Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  [`make-two-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-two-by-two-data.rb) will generate the file of pairs of numbers we need:
 
     $ ruby make-two-by-two-data.rb tpl-ddc-numbers.txt > tpl-two-by-two.txt
 
@@ -256,9 +265,8 @@ There are 29,366 items at (83, 40) in the table, but the way R counts rows and c
 
 Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Online it's also possible to turn them into an animated GIF, flickering back and forth from one collection to the other, and the differences in breadth and depth become even more obvious.  
 
-When doing a comparison like this we must make sure the same z-axis scale is used for both collections.  In this example I'll show how to create the Toronto Public Library/San Francisco Public Library comparison shown in the introduction, including how to fix the scales so that the numbers are fairly compared between the two.  We already have the tpl.one.by.one.table in memory, so we begin by adding the SFPL data.  SFPL call numbers are in the `sfpl-ddc-call-numbers.txt.gz` file so they just need to be extracted and then processed at the command line:
+When doing a comparison like this we must make sure the same z-axis scale is used for both collections.  In this example I'll show how to create the Toronto Public Library/San Francisco Public Library comparison shown in the introduction, including how to fix the scales so that the numbers are fairly compared between the two.  We already have the tpl.one.by.one.table in memory, so we begin by adding the SFPL data.  SFPL call numbers are in the `sfpl-ddc-call-numbers.txt` data file.
 
-    $ gunzip sfpl-ddc-call-numbers.txt.gz
     $ ruby make-one-by-one-data.rb sfpl-ddc-call-numbers.txt > sfpl-one-by-one.txt
 
 And now in R:
@@ -318,9 +326,8 @@ To keep things simpler I am going to ignore everything classified in K (law) in 
 
 ## Processing call numbers
 
-Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with `yaz-marcdump` as above (`yaz-marcdump uToronto.mrc | grep ^949 > utoronto-949.txt`) but to save time and disk space I've done this and the data file (`utoronto-949.txt.gz`) is in the repository.  We'll run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.
+Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with `yaz-marcdump` as above (`yaz-marcdump uToronto.mrc | grep ^949 > utoronto-949.txt`) but to save time I've done this and put the results in the `utoronto-949.txt` data file.  We'll run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.
 
-    $ gunzip utoronto-949.txt.gz
     $ wc -l utoronto-949.txt 
     6787653 utoronto-949.txt
     $ head -2 utoronto-949.txt
@@ -421,9 +428,15 @@ Gerstein, the science library, is almost entirely concentrated in Q (Science) an
 
 Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library's collection is in the Internet Archive, but call number files for both are in the repository.)  
 
-!!! Explain that U of T is the biggest in the country.  Give some numbers to show why the dentographs look the way they do.
+First some basic numbers about the universities and their libraries.  (Enrolment numbers are total students as of fall 2010, taken from the [Association of Universities and Colleges of Canada's Enrolment by University page](http://www.aucc.ca/canadian-universities/facts-and-stats/tuition-by-university/?page_id=6210)):
 
-The maximum value in U Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
+* University of Toronto is the biggest university in Canada with 78,900 students, and its library system is also the biggest, with [about 11,350,000 "bookform" items in its collection](http://www.library.utoronto.ca/library/aboutlibraries/annualreport/2010/table2b.pdf) as of April 2010.
+* York University has 54,600 students and its library reports [almost 2,500,000 print volumes in its collection](http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf) as of April 2010.
+* University of Prince Edward Island has 4,590 students, and its [2007-2008 library annual report](http://library.upei.ca/sites/all/files/Library%20Annual%20Report%202007-2008%20_1.pdf) says it had about 370,000 books and ebooks (print books are not separated out).
+
+Two large universities with large collections and one small one with a smaller collection.  If we generate dentographs for them, what will we be able to tell at a glance?
+
+The following commands will generate the dentographs. Before running them, not that the maximum value in U Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
 
     $ gunzip york-call-number.txt.gz upei-call-number.txt.gz
     $ ruby convert-lc-to-numbers.rb york-call-number.txt > york-mountain-data.txt
