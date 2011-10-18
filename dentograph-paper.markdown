@@ -457,11 +457,9 @@ University ranking reports usually have small sections about the libraries, givi
 
 # Future directions
 
-!!!TODO Finish this
+!!! Introductory sentence.
 
-It would be nice to fly around inside this mountain dentograph, and be able to see what the peaks indicate as you go by, perhaps with little flags or labels on the mountains.  It's possible to make an interactive version but R is not as advanced as Processing or other tools for real game-like behaviour.  Perhaps it would be possible to run around a library's collection in a system built for a gaming platform?
-
-persp3d is a 3D version of persp that allows you to rotate and zoom the image. The arguments are the same but the experience is very different. Try it.
+Being three-dimensional, there are more possibilities for the mountain dentographs.  Perhaps in some other language such as Processing, or on some kind of gaming platform, it would be possible to fly around inside the mountain dentograph, exploring the collection and seeing flags or labels on the mountains to identify what LC number or subject they represent.  In R some interactivity is possible with the `persp3d` command, which makes it possible to rotate and zoom the image.  The arguments are the same but the experience is very different from `persp`.  Run this to try it:
 
     > library(rgl)
     > persp3d(utoronto.table, theta = -5, phi = 20,
@@ -469,7 +467,15 @@ persp3d is a 3D version of persp that allows you to rotate and zoom the image. T
         box = F, col = "cyan", shade = 0.5,
         main = "U Toronto")
 
-Labelling high points.  Being able to move around inside the dentograph, fly around inside it.
+Perhaps a two-dimensional representation of LCC would work better than three, with something closer to a checkerboard.  LCC is so sprawling and varied a classification that it would probably work best not to map it directly but to make clusters and show the depth of the collection in each cluster.  For example, the University of Toronto dentographs show a strong line along BX (Christian Denominations).  Within that, there are actually only five main sections: 
+
+* 1-9.5: Church unity. Ecumenical movement. Interdenominational cooperation
+* 100-189: Eastern churches. Oriental churches
+* 200-756: Orthodox Eastern Church
+* 800-4795: Catholic Church
+* 4800-9999: Protestantism
+
+A mapping like this reduces BX from a range of 10,000 possibilities to just five, and the differences at different kinds of theological schools or religious universities would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.
 
 Conspectus lists.  Dentographs only measure how many books are in the collection, not their quality.  How to compare to conspectus lists?  What about comparing to lists of the necessary books to meet collections levels 0-5?  Could colour code to show whether or not a collection met undergraduate/grad/PhD levels.  That would require a list of books that make up the basic collection at those levels, and then you'd compare your library's holdings to that list.  So that's a different kind of dentograph.
 
