@@ -342,7 +342,7 @@ Let's look first at U Toronto's entire collection. For this, we want all the cal
     $ cut -d ":" -f 2 utoronto-branch-call-number.txt > utoronto-call-number.txt
     $ ruby convert-lc-to-numbers.rb utoronto-call-number.txt > utoronto-mountain-data.txt
 
-It's now simple to visualize this data with the `persp` command in R. You'll see one standout high peak. We can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.
+It's now simple to visualize this data with the `persp` command in R.  (theta and phi set the angles the graph is seen at: you can adjust them to move your point of view left/right and up/down.)
 
     > utoronto <- read.table("utoronto-mountain-data.txt")
     > utoronto.table <- table(utoronto)
@@ -356,9 +356,15 @@ It's now simple to visualize this data with the `persp` command in R. You'll see
         row col
     140 141  77
 
-## Comparing libraries
+![Unlabelled mountain dentograph of the University of Toronto](images/utoronto-mountain-unlabelled.png)
 
-Next we'll use an R script to compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call number files for both are in the repository.)  We will need to force the z-axis to the same scale across collections, just as we did with the Dewey checkerboard dentographs. With `persp` that is done with `zlim`.  The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. This script, [`dentograph.R`](https://github.com/wdenton/c4lj-dentographs/blob/master/dentograph.R), is in the repository:
+<p class="caption">Figure 9. Unlabelled mountain dentograph of the University of Toronto</p>
+
+You'll see one standout high peak. As shown with `max`, we can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.
+
+## A script for mountain dentographs
+
+The next two examples will be easier with an R script that we can run at the command line.  R comes with a program sensibly called `Rscript` that lets you run a file of R commands as a script without running R itself.  This script, [`dentograph.R`](https://github.com/wdenton/c4lj-dentographs/blob/master/dentograph.R), is in the repository.  It takes arguments on the command line that determine what datafile it's reading, what file it should output, and what title it should give to the image. The dimensions of the output image are set with `png`. The `persp` command is run again, but with two differences compared to before.  First, we will need to force the z-axis to the same scale across collections, just as we did with the Dewey checkerboard dentographs, and with `persp` that is done with `zlim`.  Second, the `persp` object is stored in `res` so that we can label the x-axis.  The script reads in a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph easier to decipher, but it can still be hard to tell what's where.  
 
     #!/usr/bin/env Rscript
 
@@ -375,7 +381,7 @@ Next we'll use an R script to compare the U Toronto collection to the libraries 
     table <- table(d)
     x <- 1:nrow(table)
     y <- 1:ncol(table)
-    res <- persp(x, y, table, zlim = c(0,20000),
+    res <- persp(x, y, table, zlim = c(0,10000),
             theta = -5, phi = 20,
             scale = TRUE,
             border = NA,
@@ -391,25 +397,11 @@ Next we'll use an R script to compare the U Toronto collection to the libraries 
       points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", pch = xpoints$Label[i], cex = 1)
     }
 
-The x-axis labelling done at the bottom of the script reads in a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph easier to decipher, but it can still be hard to tell what's where.  
-
-After running the script on the three sets of data you can view each dentograph on its own as a large image. Two ImageMagick commands will put them together into the smaller side-by-side comparison seen in the introduction.
-
-    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain-scaled.png "U Toronto"
-    $ dentograph.R york-mountain-data.txt york-mountain-scaled.png "York"
-    $ dentograph.R upei-mountain-data.txt upei-mountain-scaled.png "U PEI"
-    $ convert +append utoronto-mountain-scaled.png york-mountain-scaled.png upei-mountain-scaled.png mountain-comparison-horizontal.png
-    $ convert -resize 800 mountain-comparison-horizontal.png mountain-comparison-horizontal-smaller.png
-
-![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")
-
-<p class="caption">Figure 9. U Toronto, York U and U PEI compared</p>
-
 ## Comparing branches
 
 [University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The two biggest are Robarts, for arts, humanities and social sciences, and Gerstein, for science.  Comparing those two will show how starkly different their holdings are.
 
-First we'll grep the Robarts and Gerstein holdings from the full list.  We'll need to edit dentograph.R to change the scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number if just under 10,000 in both branches, so change the zlim parameter to c(1,10000) to reflect that.  Instead of showing the holdings side-by-side, we'll turn them into an animated GIF.
+First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure `dentograph.R` knows the proper scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches, and that's what the script has in the version in the repository, so it is set to be used.
 
     $ grep ^ROBARTS utoronto-branch-call-number.txt | cut -d":" -f 2 > utoronto-robarts-call-number.txt
     $ grep ^GERSTEIN utoronto-branch-call-number.txt | cut -d":" -f 2 > utoronto-gerstein-call-number.txt
@@ -417,18 +409,35 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  We'll ne
         9574 PG 3476
     $ sort utoronto-gerstein-call-number.txt | uniq -c | sort -rn | head -1
         9482 QA 76  
-    $ # Edit dentograph.R to change the zlim parameter to c(1,10000)
     $ convert-lc-to-numbers.rb utoronto-robarts-call-number.txt > utoronto-robarts-mountain-data.txt
     $ convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt > utoronto-gerstein-mountain-data.txt
     $ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "U Toronto: Robarts"
     $ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "U Toronto: Gerstein"
-    $ convert -loop 0 -delay 150 utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branch-comparison.gif
+    $ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branches.png
 
-![Animated comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branch-comparison-smaller.gif "Mountain dentographs of U Toronto branches Robarts and Gerstein")
+[![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-<p class="caption">Figure 10. U Toronto's Robarts and Gerstein branches compared</p>
+<p class="caption">Figure 11. U Toronto's Robarts and Gerstein branches compared</p>
 
-Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (Q stops at 510 and QA (mathematics) at 939, for example).  
+Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (mathematics) at 939).  
+
+## Comparing libraries
+
+Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call number files for both are in the repository.)  
+
+After running the script on the three sets of data you can view each dentograph on its own as a large image. Two ImageMagick commands will put them together into the smaller side-by-side comparison seen in the introduction.
+
+The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. 
+
+    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain-scaled.png "U Toronto"
+    $ dentograph.R york-mountain-data.txt york-mountain-scaled.png "York"
+    $ dentograph.R upei-mountain-data.txt upei-mountain-scaled.png "U PEI"
+    $ convert +append utoronto-mountain-scaled.png york-mountain-scaled.png upei-mountain-scaled.png mountain-comparison-horizontal.png
+    $ convert -resize 800 mountain-comparison-horizontal.png mountain-comparison-horizontal-smaller.png
+
+[![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")](images/mountain-comparison-horizontal.png)
+
+<p class="caption">Figure 10. U Toronto, York U and U PEI compared</p>
 
 # Future directions
 

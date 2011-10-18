@@ -55,7 +55,7 @@ A dentograph is a compact visualization of a library's holding, built on the ide
 $ cd c4lj-dentographs
 </code></pre>
 
-<p>The last step is to set your R working directory to this same <code>c4lj-dentographs</code> directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Change Working Directory in the menu bar.</p>
+<p>The last step is to set your R working directory to this same <code>c4lj-dentographs</code> directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Set Working Directory in the menu bar.</p>
 
 <h1>Call numbers</h1>
 
@@ -274,9 +274,7 @@ V1      0     1     2     3     4     5     6     7     8     9
 [1] 29366
 </code></pre>
 
-<p>There are 29,366 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9.  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.</p>
-
-<p>!!!TODO Look up what Dewey 823.9 is.  (823 is English fiction.)</p>
+<p>There are 29,366 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9 (!!! WHAT).  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.</p>
 
 <h2>Comparing two Dewey collections</h2>
 
@@ -349,7 +347,7 @@ $ convert -resize 800 comparison-tpl-to-sfpl-large.png comparison-tpl-to-sfpl.pn
 
 <h2>Processing call numbers</h2>
 
-<p>Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with <code>yaz-marcdump</code> as above (<code>yaz-marcdump uToronto.mrc | grep ^949 &gt; utoronto-949.txt</code>) but to save time and disk space I've done this and the data file (<code>utoronto-949.txt.gz</code>) is in the repository.  We'll run <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb"><code>949-extractifier.rb</code></a> to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left. </p>
+<p>Once again we need to find, clean and process call numbers. I'll use the University of Toronto MARC records from the Internet Archive in this example. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with <code>yaz-marcdump</code> as above (<code>yaz-marcdump uToronto.mrc | grep ^949 &gt; utoronto-949.txt</code>) but to save time and disk space I've done this and the data file (<code>utoronto-949.txt.gz</code>) is in the repository.  We'll run <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb"><code>949-extractifier.rb</code></a> to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.</p>
 
 <pre><code>$ gunzip utoronto-949.txt.gz
 $ wc -l utoronto-949.txt 
@@ -371,7 +369,7 @@ E_RESOURCE:AC 1
 $ ruby convert-lc-to-numbers.rb utoronto-call-number.txt &gt; utoronto-mountain-data.txt
 </code></pre>
 
-<p>It's now simple to visualize this data with the <code>persp</code> command in R. You'll see one standout high peak. We can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.</p>
+<p>It's now simple to visualize this data with the <code>persp</code> command in R.  (theta and phi set the angles the graph is seen at: you can adjust them to move your point of view left/right and up/down.)</p>
 
 <pre><code>&gt; utoronto &lt;- read.table("utoronto-mountain-data.txt")
 &gt; utoronto.table &lt;- table(utoronto)
@@ -386,9 +384,15 @@ $ ruby convert-lc-to-numbers.rb utoronto-call-number.txt &gt; utoronto-mountain-
 140 141  77
 </code></pre>
 
-<h2>Comparing libraries</h2>
+<p><img src="images/utoronto-mountain-unlabelled.png" alt="Unlabelled mountain dentograph of the University of Toronto" title="" /></p>
 
-<p>Next we'll use an R script to compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call number files for both are in the repository.)  We will need to force the z-axis to the same scale across collections, just as we did with the Dewey checkerboard dentographs. With <code>persp</code> that is done with <code>zlim</code>.  The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. This script, <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/dentograph.R"><code>dentograph.R</code></a>, is in the repository:</p>
+<p class="caption">Figure 9. Unlabelled mountain dentograph of the University of Toronto</p>
+
+<p>You'll see one standout high peak. As shown with <code>max</code>, we can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: computer science. LCC is so limited in how it can accommodate books about computer science that it has to cram almost all of them into this number. It's the highest peak in every library I've looked at.</p>
+
+<h2>A script for mountain dentographs</h2>
+
+<p>The next two examples will be easier with an R script that we can run at the command line.  R comes with a program sensibly called <code>Rscript</code> that lets you run a file of R commands as a script without running R itself.  This script, <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/dentograph.R"><code>dentograph.R</code></a>, is in the repository.  It takes arguments on the command line that determine what datafile it's reading, what file it should output, and what title it should give to the image. The dimensions of the output image are set with <code>png</code>. The <code>persp</code> command is run again, but with two differences compared to before.  First, we will need to force the z-axis to the same scale across collections, just as we did with the Dewey checkerboard dentographs, and with <code>persp</code> that is done with <code>zlim</code>.  Second, the <code>persp</code> object is stored in <code>res</code> so that we can label the x-axis.  The script reads in a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph easier to decipher, but it can still be hard to tell what's where.  </p>
 
 <pre><code>#!/usr/bin/env Rscript
 
@@ -405,7 +409,7 @@ d &lt;- read.table(datafile)
 table &lt;- table(d)
 x &lt;- 1:nrow(table)
 y &lt;- 1:ncol(table)
-res &lt;- persp(x, y, table, zlim = c(0,20000),
+res &lt;- persp(x, y, table, zlim = c(0,10000),
         theta = -5, phi = 20,
         scale = TRUE,
         border = NA,
@@ -422,9 +426,38 @@ for (i in 1:nrow(xpoints)) {
 }
 </code></pre>
 
-<p>The x-axis labelling done at the bottom of the script reads in a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph easier to decipher, but it can still be hard to tell what's where.  </p>
+<h2>Comparing branches</h2>
+
+<p><a href="http://www.library.utoronto.ca/">University of Toronto Libraries</a> is a large system, with over fifty branches. The two biggest are Robarts, for arts, humanities and social sciences, and Gerstein, for science.  Comparing those two will show how starkly different their holdings are.</p>
+
+<p>First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure <code>dentograph.R</code> knows the proper scale of the z-axis to suit these collections. The classic <code>sort | uniq -c | sort -rn</code> pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches, and that's what the script has in the version in the repository, so it is set to be used.</p>
+
+<pre><code>$ grep ^ROBARTS utoronto-branch-call-number.txt | cut -d":" -f 2 &gt; utoronto-robarts-call-number.txt
+$ grep ^GERSTEIN utoronto-branch-call-number.txt | cut -d":" -f 2 &gt; utoronto-gerstein-call-number.txt
+$ sort utoronto-robarts-call-number.txt | uniq -c | sort -rn | head -1
+    9574 PG 3476
+$ sort utoronto-gerstein-call-number.txt | uniq -c | sort -rn | head -1
+    9482 QA 76  
+$ convert-lc-to-numbers.rb utoronto-robarts-call-number.txt &gt; utoronto-robarts-mountain-data.txt
+$ convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt &gt; utoronto-gerstein-mountain-data.txt
+$ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "U Toronto: Robarts"
+$ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "U Toronto: Gerstein"
+$ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branches.png
+</code></pre>
+
+<p><a href="images/utoronto-branches.png"><img src="images/utoronto-branches-smaller.png" alt="Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein" title="Mountain dentographs of U Toronto branches Robarts and Gerstein" /></a></p>
+
+<p class="caption">Figure 11. U Toronto's Robarts and Gerstein branches compared</p>
+
+<p>Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (mathematics) at 939).  </p>
+
+<h2>Comparing libraries</h2>
+
+<p>Next we'll use an R script to compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call number files for both are in the repository.)  </p>
 
 <p>After running the script on the three sets of data you can view each dentograph on its own as a large image. Two ImageMagick commands will put them together into the smaller side-by-side comparison seen in the introduction.</p>
+
+<p>The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. </p>
 
 <pre><code>$ dentograph.R utoronto-mountain-data.txt utoronto-mountain-scaled.png "U Toronto"
 $ dentograph.R york-mountain-data.txt york-mountain-scaled.png "York"
@@ -435,33 +468,7 @@ $ convert -resize 800 mountain-comparison-horizontal.png mountain-comparison-hor
 
 <p><img src="images/mountain-comparison-horizontal-smaller.png" alt="Mountain dentographs of U Toronto, York U and U Prince Edward Island" title="Mountain dentographs of U Toronto, York U and U Prince Edward Island" /></p>
 
-<p class="caption">Figure 9. U Toronto, York U and U PEI compared</p>
-
-<h2>Comparing branches</h2>
-
-<p><a href="http://www.library.utoronto.ca/">University of Toronto Libraries</a> is a large system, with over fifty branches. The two biggest are Robarts, for arts, humanities and social sciences, and Gerstein, for science.  Comparing those two will show how starkly different their holdings are.</p>
-
-<p>First we'll grep the Robarts and Gerstein holdings from the full list.  We'll need to edit dentograph.R to change the scale of the z-axis to suit these collections. The classic <code>sort | uniq -c | sort -rn</code> pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number if just under 10,000 in both branches, so change the zlim parameter to c(1,10000) to reflect that.  Instead of showing the holdings side-by-side, we'll turn them into an animated GIF.</p>
-
-<pre><code>$ grep ^ROBARTS utoronto-branch-call-number.txt | cut -d":" -f 2 &gt; utoronto-robarts-call-number.txt
-$ grep ^GERSTEIN utoronto-branch-call-number.txt | cut -d":" -f 2 &gt; utoronto-gerstein-call-number.txt
-$ sort utoronto-robarts-call-number.txt | uniq -c | sort -rn | head -1
-    9574 PG 3476
-$ sort utoronto-gerstein-call-number.txt | uniq -c | sort -rn | head -1
-    9482 QA 76  
-$ # Edit dentograph.R to change the zlim parameter to c(1,10000)
-$ convert-lc-to-numbers.rb utoronto-robarts-call-number.txt &gt; utoronto-robarts-mountain-data.txt
-$ convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt &gt; utoronto-gerstein-mountain-data.txt
-$ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "U Toronto: Robarts"
-$ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "U Toronto: Gerstein"
-$ convert -loop 0 -delay 150 utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branch-comparison.gif
-</code></pre>
-
-<p><img src="images/utoronto-branch-comparison-smaller.gif" alt="Animated comparison of mountain dentographs of U Toronto branches Robarts and Gerstein" title="Mountain dentographs of U Toronto branches Robarts and Gerstein" /></p>
-
-<p class="caption">Figure 10. U Toronto's Robarts and Gerstein branches compared</p>
-
-<p>Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (Q stops at 510 and QA (mathematics) at 939, for example).  </p>
+<p class="caption">Figure 10. U Toronto, York U and U PEI compared</p>
 
 <h1>Future directions</h1>
 
