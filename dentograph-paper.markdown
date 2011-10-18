@@ -400,6 +400,8 @@ The next two examples will be easier with an R script that we can run at the com
       points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", pch = xpoints$Label[i], cex = 1)
     }
 
+`axes = F` means no axes are drawn, which means that there is no scale on the z-axis to show how many items are in the collection.  It's easy enough to enable axes if needed, but it doesn't seem necessary to have them to simply give a quick impression of how two collections compare.
+
 ## Comparing branches
 
 [University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The two biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two will show how starkly different their holdings are.
@@ -422,19 +424,17 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
 
 <p class="caption">Figure 11. U Toronto's Robarts and Gerstein branches compared</p>
 
-Gerstein, the science library, is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (U Toronto also has medicine and engineering faculties with their own libraries.)  In Robarts there are many class letters that stretch all the way to the far end of the graph, such as P (linguistics and literature), which is very well covered across its entire range. Seven of the nineteen letters in the Ps go into the 9,000s. In Gerstein, on the other hand, everything is sitting very close to the x-axis because the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (mathematics) at 939).  
+The distinctness of the two collections is clear. Gerstein is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology).  (The medicine and engineering faculties have their own libraries.)  Robarts sprawls heavily throughout A-P, especially P (Linguistics and Literature). Because of how LCC works, the relatively small range of numbers used in Q and R is also easy to see. Seven of the nineteen letters in P go into the 9,000s, but the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q, stops at 510 and QA (mathematics) at 939).  
 
 ## Comparing libraries
 
-Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library's collection is in the Internet Archive, but call number files for both are in the repository.)  
+Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library's collection is in the Internet Archive, but call numbers for both are in the data files.)  Used this way dentographs should tell us at a glance how the collections compare, even without numbers to show how large they are.
 
 First some basic numbers about the universities and their libraries.  (Enrolment numbers are total students as of fall 2010, taken from the [Association of Universities and Colleges of Canada's Enrolment by University page](http://www.aucc.ca/canadian-universities/facts-and-stats/tuition-by-university/?page_id=6210)):
 
 * University of Toronto is the biggest university in Canada with 78,900 students, and its library system is also the biggest, with [about 11,350,000 "bookform" items in its collection](http://www.library.utoronto.ca/library/aboutlibraries/annualreport/2010/table2b.pdf) as of April 2010.
-* York University has 54,600 students and its library reports [almost 2,500,000 print volumes in its collection](http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf) as of April 2010.
+* York University (one of the other three universities in Toronto) has 54,600 students and its library reports [almost 2,500,000 print volumes in its collection](http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf) as of April 2010.
 * University of Prince Edward Island has 4,590 students, and its [2007-2008 library annual report](http://library.upei.ca/sites/all/files/Library%20Annual%20Report%202007-2008%20_1.pdf) says it had about 370,000 books and ebooks (print books are not separated out).
-
-Two large universities with large collections and one small one with a smaller collection.  If we generate dentographs for them, what will we be able to tell at a glance?
 
 The following commands will generate the dentographs. Before running them, not that the maximum value in U Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
 
@@ -450,6 +450,10 @@ The following commands will generate the dentographs. Before running them, not t
 [![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")](images/mountain-comparison.png)
 
 <p class="caption">Figure 10. U Toronto, York U and U PEI compared</p>
+
+As expected, PEI's collection is sparse and shallow compared to the others, which is no reflection on anything other than its size.  It's unfair to compare it to much larger libraries except to serve some kind of illustration like this.  On the other hand, comparing Toronto and York, two large universities in the same city, is quite interesting.  Toronto is clearly broader and deeper than York:  its collection is larger and covers more subjects, apparently across the board. In B (Philosophy, Psychology, Religion) Toronto has more (both close to the x-axis and stretching out to the far side), probably because it has divinity programs.  M (Music) and N (Fine Arts) are both denser.  P is much richer than at York, with far more high spikes.  The science cluster in Q is also much denser.  
+
+University ranking reports usually have small sections about the libraries, giving some numbers about the size of the collections and student satisfaction.  Perhaps one day some sort of dentograph will also be included so that the reader can get a quick impression of collection sizes and strengths.
 
 # Future directions
 
