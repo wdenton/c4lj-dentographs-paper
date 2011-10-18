@@ -20,13 +20,11 @@ Without knowing anything more about dentographs, it is clear at a glance that wh
 
 When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) shows how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) (American literature in English), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. 
 
-Later I will describe is mountain dentographs, best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of the library collections of three Canadian universities: the University of Toronto, York University, and the University of Prince Edward Island.
+Later I will describe is mountain dentographs, best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of the collections of two branches of Canada's largest university library system, at the University of Toronto:
 
-![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")
+[![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-!!!TODO Regenerate with bigger titles and visible letters.
-
-<p class="caption">Figure 2. Mountain dentographs of U Toronto, York U and U Prince Edward Island libraries</p>
+<p class="caption">Figure 2. Mountain dentographs of two U Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
 
 !!!TODO Handle Gabriel's comment: "Also, members of the committee grew more interested in the article as we discussed among ourselves the practical applications of dentograms for libraries -- especially within a consortial context, where one could use these visualizations to compare and attempt to dovetail collections. I'm sure you've envisioned a number of other uses well. Because dentograms are a new idea, I think we'll catch the eyes of more readers if we're explicit about ways in which they're (and problems they solve) up front, then get into the tech nitty-gritty afterward."
 
@@ -399,7 +397,7 @@ The next two examples will be easier with an R script that we can run at the com
 
 ## Comparing branches
 
-[University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The two biggest are Robarts, for arts, humanities and social sciences, and Gerstein, for science.  Comparing those two will show how starkly different their holdings are.
+[University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The two biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two will show how starkly different their holdings are.
 
 First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure `dentograph.R` knows the proper scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches, and that's what the script has in the version in the repository, so it is set to be used.
 
@@ -409,10 +407,10 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
         9574 PG 3476
     $ sort utoronto-gerstein-call-number.txt | uniq -c | sort -rn | head -1
         9482 QA 76  
-    $ convert-lc-to-numbers.rb utoronto-robarts-call-number.txt > utoronto-robarts-mountain-data.txt
-    $ convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt > utoronto-gerstein-mountain-data.txt
-    $ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "U Toronto: Robarts"
-    $ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "U Toronto: Gerstein"
+    $ ruby convert-lc-to-numbers.rb utoronto-robarts-call-number.txt > utoronto-robarts-mountain-data.txt
+    $ ruby convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt > utoronto-gerstein-mountain-data.txt
+    $ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "Robarts (arts/hum/soc sci)"
+    $ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "Gerstein (science)"
     $ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branches.png
 
 [![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
@@ -423,19 +421,22 @@ Gerstein, the science library, is almost entirely concentrated in Q (Science) an
 
 ## Comparing libraries
 
-Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call number files for both are in the repository.)  
+Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library's collection is in the Internet Archive, but call number files for both are in the repository.)  
 
-After running the script on the three sets of data you can view each dentograph on its own as a large image. Two ImageMagick commands will put them together into the smaller side-by-side comparison seen in the introduction.
+!!! Explain that U of T is the biggest in the country.  Give some numbers to show why the dentographs look the way they do.
 
-The maximum value in U Toronto's holdings is 19,748, so we'll force the graph to go to 20,000 on the z-axis, regardless of a library's holdings. 
+The maximum value in U Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
 
-    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain-scaled.png "U Toronto"
-    $ dentograph.R york-mountain-data.txt york-mountain-scaled.png "York"
-    $ dentograph.R upei-mountain-data.txt upei-mountain-scaled.png "U PEI"
-    $ convert +append utoronto-mountain-scaled.png york-mountain-scaled.png upei-mountain-scaled.png mountain-comparison-horizontal.png
-    $ convert -resize 800 mountain-comparison-horizontal.png mountain-comparison-horizontal-smaller.png
+    $ gunzip york-call-number.txt.gz upei-call-number.txt.gz
+    $ ruby convert-lc-to-numbers.rb york-call-number.txt > york-mountain-data.txt
+    $ ruby convert-lc-to-numbers.rb upei-call-number.txt > upei-mountain-data.txt
+    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain.png "U Toronto"
+    $ dentograph.R york-mountain-data.txt york-mountain.png "York U"
+    $ dentograph.R upei-mountain-data.txt upei-mountain.png "U PEI"
+    $ convert +append utoronto-mountain.png york-mountain.png upei-mountain.png mountain-comparison.png
+    $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
-[![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-horizontal-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")](images/mountain-comparison-horizontal.png)
+[![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")](images/mountain-comparison.png)
 
 <p class="caption">Figure 10. U Toronto, York U and U PEI compared</p>
 
