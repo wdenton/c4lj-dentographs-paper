@@ -20,7 +20,7 @@ A dentograph is a compact visualization of a library's holding, built on the ide
 
 <p>When you know that both libraries use the <a href="http://dewey.info/">Dewey Decimal Classification</a>, and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) shows how many items are the <a href="http://dewey.info/class/81/2009/08/about.en">810s</a> (American literature in English), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. </p>
 
-<p>Later I will describe is mountain dentographs, best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of the collections of two branches of Canada's largest university library system, at the University of Toronto:</p>
+<p>Mountain dentographs are best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of two branches of the University of Toronto, Canada's largest university library system:</p>
 
 <p><a href="images/utoronto-branches.png"><img src="images/utoronto-branches-smaller.png" alt="Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein" title="Mountain dentographs of U Toronto branches Robarts and Gerstein" /></a></p>
 
@@ -211,8 +211,6 @@ V1      0     1     2     3     4     5     6     7     8     9
 </code></pre>
 
 <p>Then in R:</p>
-
-<p>can be used just as above to generate <code>tpl-one-by-two.txt</code>, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:</p>
 
 <pre><code>&gt; tpl.one.by.two &lt;- read.table("tpl-one-by-two.txt")
 &gt; tpl.one.by.two.table &lt;- table(tpl.one.by.two)

@@ -196,8 +196,6 @@ The next step is to go further into the numbers. Let's make a one-by-two checker
 
 Then in R:
 
- can be used just as above to generate `tpl-one-by-two.txt`, and then a similar set of R commands will make a new dentograph.  The intermediate steps are the same; the data is loaded into tpl.one.by.two and then turned into tpl.one.by.two.table, and this command makes the visualization:
-
     > tpl.one.by.two <- read.table("tpl-one-by-two.txt")
     > tpl.one.by.two.table <- table(tpl.one.by.two)
     > levelplot(tpl.one.by.two.table, 
