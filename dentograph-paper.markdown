@@ -195,7 +195,7 @@ Now we can make a prettier dentograph. There is a huge number of ways to customi
 
 <p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
 
-!!!TODO Look at this graph a bit and talk about it.  Note the strong line up the 300s, and the comparatively weaker line up the 400s.
+Note the depth of the collection in the 300s and the relative paucity of the 400s, and watch for how the representation changes in the next two dentographs.
 
 ## One-by-two
 
