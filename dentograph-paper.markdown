@@ -52,7 +52,7 @@ To make a local copy of the repository, run this at the command line:
     $ git clone http://github.com/wdenton/c4lj-dentographs
     $ cd c4lj-dentographs
 
-The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Change Working Directory in the menu bar.
+The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Set Working Directory in the menu bar.
 
 # Call numbers
 
@@ -254,9 +254,7 @@ Where, at this level, are the most items, and how many are there?
     > max(tpl.two.by.two.table)
     [1] 29366
 
-There are 29,366 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9.  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.
-
-!!!TODO Look up what Dewey 823.9 is.  (823 is English fiction.)
+There are 29,366 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9 (!!! WHAT).  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.
 
 ## Comparing two Dewey collections
 
