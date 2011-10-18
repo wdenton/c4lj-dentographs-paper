@@ -43,22 +43,22 @@ Classification schemes are mathematical functions.  XXX defines a function as YY
 
 ## R
 
-All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.
+All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.  The examples below will all work with just R.
 
 ## The code
 
-All of the code in this paper is available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every command line or R code snippet is reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.  You can use your command line in a shell or terminal window on any Linux, Unix or Mac OSX system, or with Cygwin on Windows. 
+All of the scripts used in this paper is available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every shell or R command is fully reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.
 
 To make a local copy of the repository, run this at the command line:
 
     $ git clone http://github.com/wdenton/c4lj-dentographs
     $ cd c4lj-dentographs
 
-The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or, if you're using RStudio, use Tools | Set Working Directory in the menu bar.
+The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or if you're using RStudio use Tools | Set Working Directory in the menu bar.
 
 ## The data
 
-[Data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available in my library's institutional repository.  Download the !!! four files there to the `c4lj-dentographs` directory.  They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
+[Data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available.  Download the five files there to the `c4lj-dentographs` directory.  They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
 
     $ gunzip utoronto-949.txt.gz
 
@@ -73,7 +73,7 @@ To generate dentographs we need call numbers.  Data from one's own library is mo
 Two libraries supplied data to me on request, which I will use later to compare to U Toronto:
 
 * [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.
-* [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  (We use LCC.)
+* [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  We use LCC.
 
 ## Extracting data from MARC
 
@@ -81,7 +81,7 @@ Dealing with a large set of MARC records can be painful. There are so many ways 
 
 The goal of operating on the TPL catalogue records is to extract every numerical call number in the range (0 < number < 1000). This will leave us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
 
-Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, `tpl-090.txt` is one of the data files available, but to recreate it yourself you would get the files, run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt`.)
+Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, `tpl-090.txt` is one of the data files available, but to recreate it yourself you would get the files and run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt`.)
 
     $ wc -l tpl-090.txt
     2210126 tpl-090.txt
