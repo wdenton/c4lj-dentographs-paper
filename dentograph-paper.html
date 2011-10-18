@@ -407,7 +407,7 @@ d &lt;- read.table(datafile)
 table &lt;- table(d)
 x &lt;- 1:nrow(table)
 y &lt;- 1:ncol(table)
-res &lt;- persp(x, y, table, zlim = c(0,10000),
+res &lt;- persp(x, y, table, zlim = c(0,10000), # Change as necessary, or comment out
         theta = -5, phi = 20,
         scale = TRUE,
         border = NA,
@@ -428,7 +428,7 @@ for (i in 1:nrow(xpoints)) {
 
 <p><a href="http://www.library.utoronto.ca/">University of Toronto Libraries</a> is a large system, with over fifty branches. The two biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two will show how starkly different their holdings are.</p>
 
-<p>First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure <code>dentograph.R</code> knows the proper scale of the z-axis to suit these collections. The classic <code>sort | uniq -c | sort -rn</code> pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches, and that's what the script has in the version in the repository, so it is set to be used.</p>
+<p>First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure <code>dentograph.R</code> knows the proper scale of the z-axis to suit these collections. The classic <code>sort | uniq -c | sort -rn</code> pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches.  The script in the repository is set to use that number so it will work here without any edits.</p>
 
 <pre><code>$ grep ^ROBARTS utoronto-branch-call-number.txt | cut -d":" -f 2 &gt; utoronto-robarts-call-number.txt
 $ grep ^GERSTEIN utoronto-branch-call-number.txt | cut -d":" -f 2 &gt; utoronto-gerstein-call-number.txt
@@ -451,7 +451,9 @@ $ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png u
 
 <h2>Comparing libraries</h2>
 
-<p>Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library collection is in the Internet Archive, but call number files for both are in the repository.)  </p>
+<p>Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. (Neither library's collection is in the Internet Archive, but call number files for both are in the repository.)  </p>
+
+<p>!!! Explain that U of T is the biggest in the country.  Give some numbers to show why the dentographs look the way they do.</p>
 
 <p>The maximum value in U Toronto's holdings is 19,748 (this can be found with a <code>sort | uniq | sort</code> as above), so you will need to edit <code>dentograph.R</code> to change the <code>zlim</code> value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.</p>
 

@@ -20,7 +20,7 @@ Without knowing anything more about dentographs, it is clear at a glance that wh
 
 When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) shows how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) (American literature in English), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. 
 
-Later I will describe is mountain dentographs, best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of the collections of two branches of Canada's largest university library system, at the University of Toronto:
+Mountain dentographs are best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of two branches of the University of Toronto, Canada's largest university library system:
 
 [![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
@@ -379,7 +379,7 @@ The next two examples will be easier with an R script that we can run at the com
     table <- table(d)
     x <- 1:nrow(table)
     y <- 1:ncol(table)
-    res <- persp(x, y, table, zlim = c(0,10000),
+    res <- persp(x, y, table, zlim = c(0,10000), # Change as necessary, or comment out
             theta = -5, phi = 20,
             scale = TRUE,
             border = NA,
@@ -399,7 +399,7 @@ The next two examples will be easier with an R script that we can run at the com
 
 [University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The two biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two will show how starkly different their holdings are.
 
-First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure `dentograph.R` knows the proper scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches, and that's what the script has in the version in the repository, so it is set to be used.
+First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure `dentograph.R` knows the proper scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches.  The script in the repository is set to use that number so it will work here without any edits.
 
     $ grep ^ROBARTS utoronto-branch-call-number.txt | cut -d":" -f 2 > utoronto-robarts-call-number.txt
     $ grep ^GERSTEIN utoronto-branch-call-number.txt | cut -d":" -f 2 > utoronto-gerstein-call-number.txt
