@@ -477,7 +477,7 @@ Perhaps a two-dimensional representation of LCC would work better than three, wi
 
 A mapping like this reduces BX from 10,000 possibilities to five.  Five data points are much easier to understand than 10,000.  Differences within BX, such as at different kinds of theological schools or religious universities, would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.  They would we ragged because there would be different numbers of clusters per letter, so instead of a neat 10x10 or 100x100 visualization it would be 212 wide (more if law is included) by varying heights, but that doesn't matter.
 
-This mapping is just what the [OCLC Conspectus](http://www.oclc.org/collectionanalysis/support/conspectus.xls) does.  
+Such a mapping is already available: the [OCLC Conspectus](http://www.oclc.org/collectionanalysis/support/conspectus.xls).  
 
 !!! Conspectus stuff
 
