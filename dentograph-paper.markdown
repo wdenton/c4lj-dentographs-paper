@@ -467,7 +467,7 @@ Being three-dimensional, there are more possibilities for the mountain dentograp
         box = F, col = "cyan", shade = 0.5,
         main = "U Toronto")
 
-Perhaps a two-dimensional representation of LCC would work better than three, with something closer to a checkerboard.  LCC is so sprawling and varied a classification that it would probably work best not to map it directly but to make clusters and show the depth of the collection in each cluster.  For example, the University of Toronto dentographs show a strong line along BX (Christian Denominations).  Within that, there are actually only five main sections: 
+Perhaps a two-dimensional representation of LCC would work better than three, with something closer to a checkerboard.  LCC is so sprawling and varied a classification that it would probably work best not to map it directly but to make clusters and show the depth of the collection in each cluster.  For example, the University of Toronto dentographs show a strong line along BX (Christian Denominations), which has these subsections, as listed in [B - Philosophy. Psychology. Religion](http://www.loc.gov/aba/cataloging/classification/lcco/lcco_b.pdf) in the [Libary of Congress Classification Outline](http://www.loc.gov/catdir/cpso/lcco/):
 
 * 1-9.5: Church unity. Ecumenical movement. Interdenominational cooperation
 * 100-189: Eastern churches. Oriental churches
@@ -475,11 +475,32 @@ Perhaps a two-dimensional representation of LCC would work better than three, wi
 * 800-4795: Catholic Church
 * 4800-9999: Protestantism
 
-A mapping like this reduces BX from a range of 10,000 possibilities to just five, and the differences at different kinds of theological schools or religious universities would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.
+A mapping like this reduces BX from 10,000 possibilities to five.  Five data points are much easier to understand than 10,000.  Differences within BX, such as at different kinds of theological schools or religious universities, would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.  They would we ragged because there would be different numbers of clusters per letter, so instead of a neat 10x10 or 100x100 visualization it would be 212 wide (more if law is included) by varying heights, but that doesn't matter.
+
+This mapping is just what the [OCLC Conspectus](http://www.oclc.org/collectionanalysis/support/conspectus.xls) does.  
+
+!!! Conspectus stuff
 
 Conspectus lists.  Dentographs only measure how many books are in the collection, not their quality.  How to compare to conspectus lists?  What about comparing to lists of the necessary books to meet collections levels 0-5?  Could colour code to show whether or not a collection met undergraduate/grad/PhD levels.  That would require a list of books that make up the basic collection at those levels, and then you'd compare your library's holdings to that list.  So that's a different kind of dentograph.
 
 Conspectus slice idea: show where things meet a certain level or where they fall short
+
+OCLC Conspectus
+http://www.oclc.org/collectionanalysis/support/conspectus.xls
+
+Guidelines for a Collection Development Policy using the Conspectus Model [English]
+http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf
+
+Mary Bushing
+http://www.varastokirjasto.fi/kokoelmakartta/julkaisut/esitelmat/Mary_Bushing_Conspectus.pdf
+
+ALCTS: Collection Development Resources
+http://www.ala.org/ala/mgrps/divs/alcts/resources/collect/collmgt/collasmt.cfm
+
+Australian conspectus
+http://www.nla.gov.au/niac/conspectus/
+
+Divide holdings by circ, or some other thing, to show intensity of borrowing/usage
 
 ## Other forms of dentographs
 
