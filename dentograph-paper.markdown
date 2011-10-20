@@ -10,17 +10,15 @@ By William Denton &lt;wtd@pobox.com&gt;
 
 # Introduction
 
-These two checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries:
+These checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
 
 ![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
-Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
+When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) tells how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) ("American literature in English"), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. 
 
-When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) shows how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) (American literature in English), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. 
-
-Mountain dentographs are best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of two branches of the University of Toronto, Canada's largest university library system:
+Here is a comparison of two branches of the University of Toronto, Canada's largest university library system, done with mountain dentographs.  They are so called because they look like a series of mountain ranges, with one line of mountains per Library of Congress class letter.
 
 [![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
