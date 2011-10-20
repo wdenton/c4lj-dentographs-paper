@@ -2,7 +2,7 @@
 
 <div class="abstract">
 
-A dentograph is a compact visualization of a library's holding, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to compare two or more collections, within or across libraries. This paper describes how to build them, with examples and code.
+A dentograph is a visualization of a library's holding built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to visualize one library's collections or to compare two or more collections within or across libraries. This article describes how to build them, with examples and code, and discusses some problems and future directions.
 
 </div>
 
@@ -477,7 +477,7 @@ Perhaps a two-dimensional representation of LCC would work better than three, wi
 
 A mapping like this reduces BX from 10,000 possibilities to five.  Five data points are much easier to understand than 10,000.  Differences within BX, such as at different kinds of theological schools or religious universities, would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.  They would we ragged because there would be different numbers of clusters per letter, so instead of a neat 10x10 or 100x100 visualization it would be 212 wide (more if law is included) by varying heights, but that doesn't matter.
 
-Such a mapping is already available: the [OCLC Conspectus](http://www.oclc.org/collectionanalysis/support/conspectus.xls).  
+A mapping like this is already available: the [OCLC Conspectus](http://www.oclc.org/collectionanalysis/support/conspectus.xls).  
 
 !!! Conspectus stuff
 
