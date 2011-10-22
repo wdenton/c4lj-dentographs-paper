@@ -15,7 +15,7 @@
 
 <div class="abstract">
 
-A dentograph is a compact visualization of a library's holding, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to compare two or more collections, within or across libraries. This paper describes how to build them, with examples and code.
+A dentograph is a visualization of a library's holding built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to visualize one library's collections or to compare two or more collections within or across libraries. This article describes how to build them, with examples and code, and discusses some problems and future directions.
 
 </div>
 
@@ -23,17 +23,15 @@ A dentograph is a compact visualization of a library's holding, built on the ide
 
 <h1>Introduction</h1>
 
-<p>These two checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries:</p>
+<p>These checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.</p>
 
 <p><img src="images/comparison-tpl-to-sfpl.png" alt="TPL and SFPL comparison checkerboard dentograph" title="" /></p>
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
-<p>Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.</p>
+<p>When you know that both libraries use the <a href="http://dewey.info/">Dewey Decimal Classification</a>, and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) tells how many items are the <a href="http://dewey.info/class/81/2009/08/about.en">810s</a> ("American literature in English"), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. </p>
 
-<p>When you know that both libraries use the <a href="http://dewey.info/">Dewey Decimal Classification</a>, and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) shows how many items are the <a href="http://dewey.info/class/81/2009/08/about.en">810s</a> (American literature in English), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. </p>
-
-<p>Mountain dentographs are best used for the Library of Congress Classification.  They look like a series of mountain ranges, with one line of mountains per LC class letter.  Here is a comparison of two branches of the University of Toronto, Canada's largest university library system:</p>
+<p>Here is a comparison of two branches of the University of Toronto, Canada's largest university library system, done with mountain dentographs.  They are so called because they look like a series of mountain ranges, with one line of mountains per Library of Congress class letter.</p>
 
 <p><a href="images/utoronto-branches.png"><img src="images/utoronto-branches-smaller.png" alt="Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein" title="Mountain dentographs of U Toronto branches Robarts and Gerstein" /></a></p>
 
@@ -500,13 +498,13 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
 <p>As expected, PEI's collection is sparse and shallow compared to the others, which is no reflection on anything other than its size.  It's unfair to compare it to much larger libraries except to serve some kind of illustration like this.  On the other hand, comparing Toronto and York, two large universities in the same city, is quite interesting.  Toronto is clearly broader and deeper than York:  its collection is larger and covers more subjects, apparently across the board. In B (Philosophy, Psychology, Religion) Toronto has more (both close to the x-axis and stretching out to the far side), probably because it has divinity programs.  M (Music) and N (Fine Arts) are both denser.  P is much richer than at York, with far more high spikes.  The science cluster in Q is also much denser.  </p>
 
-<p>University ranking reports usually have small sections about the libraries, giving some numbers about the size of the collections and student satisfaction.  Perhaps one day some sort of dentograph will also be included so that the reader can get a quick impression of collection sizes and strengths.</p>
+<p>University ranking reports usually have small sections about the libraries, giving some numbers about the size of the collections and student satisfaction.  Perhaps one day a dentograph will also be included so that the reader can get a quick impression of collection sizes and strengths.</p>
 
 <h1>Future directions</h1>
 
 <p>!!! Introductory sentence.</p>
 
-<p>Being three-dimensional, there are more possibilities for the mountain dentographs.  Perhaps in some other language such as Processing, or on some kind of gaming platform, it would be possible to fly around inside the mountain dentograph, exploring the collection and seeing flags or labels on the mountains to identify what LC number or subject they represent.  In R some interactivity is possible with the <code>persp3d</code> command, which makes it possible to rotate and zoom the image.  The arguments are the same but the experience is very different from <code>persp</code>.  Run this to try it:</p>
+<p>Being three-dimensional, there are more possibilities for the mountain dentographs.  Perhaps it would be possible to fly around inside the mountain dentograph, exploring the collection and seeing flags or labels on the mountains to identify what LC number or subject they represent.  In R some interactivity is possible with the <code>persp3d</code> command, which makes it possible to rotate and zoom the image.  The arguments are the same but the experience is very different from <code>persp</code>.  Run this to try it:</p>
 
 <pre><code>&gt; library(rgl)
 &gt; persp3d(utoronto.table, theta = -5, phi = 20,
@@ -515,7 +513,7 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
     main = "U Toronto")
 </code></pre>
 
-<p>Perhaps a two-dimensional representation of LCC would work better than three, with something closer to a checkerboard.  LCC is so sprawling and varied a classification that it would probably work best not to map it directly but to make clusters and show the depth of the collection in each cluster.  For example, the University of Toronto dentographs show a strong line along BX (Christian Denominations), which has these subsections, as listed in <a href="http://www.loc.gov/aba/cataloging/classification/lcco/lcco_b.pdf">B - Philosophy. Psychology. Religion</a> in the <a href="http://www.loc.gov/catdir/cpso/lcco/">Libary of Congress Classification Outline</a>:</p>
+<p>A two-dimensional representation of LCC might be better than three.  LCC is so sprawling and varied a classification that it would probably work best not to map it directly but to make clusters and show the depth of the collection in each cluster.  For example, the University of Toronto dentographs show a strong line along BX (Christian Denominations), which has these subsections, as listed in <a href="http://www.loc.gov/aba/cataloging/classification/lcco/lcco_b.pdf">B - Philosophy. Psychology. Religion</a> in the <a href="http://www.loc.gov/catdir/cpso/lcco/">Libary of Congress Classification Outline</a>:</p>
 
 <ul>
 <li>1-9.5: Church unity. Ecumenical movement. Interdenominational cooperation</li>
@@ -525,36 +523,15 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 <li>4800-9999: Protestantism</li>
 </ul>
 
-<p>A mapping like this reduces BX from 10,000 possibilities to five.  Five data points are much easier to understand than 10,000.  Differences within BX, such as at different kinds of theological schools or religious universities, would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.  They would we ragged because there would be different numbers of clusters per letter, so instead of a neat 10x10 or 100x100 visualization it would be 212 wide (more if law is included) by varying heights, but that doesn't matter.</p>
+<p>A mapping like this reduces BX from 10,000 possibilities to five.  Five data points are much easier to understand than 10,000.  Differences within BX, such as at different kinds of theological schools or religious universities, would be far more apparent.  If the rest of LCC was similarly clustered and mapped it would be easy to generate checkerboard LCC dentographs.  They would we ragged because there would be different numbers of clusters per letter, so instead of a neat 10x10 or 100x100 visualization it would be 212 wide (more if law is included) by varying depths, but that doesn't matter.</p>
 
-<p>Such a mapping is already available: the <a href="http://www.oclc.org/collectionanalysis/support/conspectus.xls">OCLC Conspectus</a>.  </p>
+<p>A mapping like this is in fact already available: the <a href="http://www.oclc.org/collectionanalysis/support/conspectus.xls">OCLC Conspectus</a>.  This is old work, now abandoned, but perhaps useful here.  The OCLC Conspectus has 29 top-level subjects, such as Art and Architecture, History and Auxiliary Sciences, Medicine, and Philosophy and Religion. There are 378 narrower second-level subjects.  Philosophy and Religion has 18, such as "Philosophy - Ancient, Medieval, Renaissance," "Philosophy - Modern (1450/1600- )," and "Logic." Each subject is associated with LCC and DDC call number ranges (so it is possible to assess collections regardless of which classification scheme is used), and here BX is boiled down to three headings: "Eastern Christian Churches &amp; Ecumenism" from BX 0-765, "Roman Catholic Church" from BX 800-4795, and "Protestantism" from BX 4800-9999. It would be possible to use this representation of a collection to generate either checkerboard or mountain dentographs by mapping the top-level subjects on the x-axis and the second-level subjects on the y-axis.</p>
 
-<p>!!! Conspectus stuff</p>
+<p>The other aspect of the conspectus approach to collection development is that it gives a scale showing the depth to which the library collects a subject.  IFLA's <a href="http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf">Guidelines for a Collection Development Policy using the Conspectus Model</a> describes this: 0 means nothing is collected and 1 is "minimal,"  up to 4 for "reseach level" (doctoral programs in universities) and 5 for "comprehensive level" ("exhaustive" collections).  Libraries with collection policies that give desired collection depths for subjects could use conspectus-based dentographs to show how subject do not meet, meet, or exceed the desired depth. However, there is no automated way of assessing collection depth, it takes an enormous amount of work to do it by hand, and the whole approach is outdated and little used, so this does not seem to be a fruitful avenue of exploration.</p>
 
-<p>Conspectus lists.  Dentographs only measure how many books are in the collection, not their quality.  How to compare to conspectus lists?  What about comparing to lists of the necessary books to meet collections levels 0-5?  Could colour code to show whether or not a collection met undergraduate/grad/PhD levels.  That would require a list of books that make up the basic collection at those levels, and then you'd compare your library's holdings to that list.  So that's a different kind of dentograph.</p>
+<p>There are other ways a dentograph can show more than merely holding counts.  It could show the intensity of collection usage by dividing circulation numbers by item counts in given sections. In a checkerboard dentograph, the colours could show the usage intensity; in a mountain dentograph, the mountains could be coloured to show the usage or the mountain heights could show that ratio instead of holdings: the highest peaks would show where the collection is most used and the plains would show where the collection is unused.</p>
 
-<p>Conspectus slice idea: show where things meet a certain level or where they fall short</p>
-
-<p>OCLC Conspectus
-http://www.oclc.org/collectionanalysis/support/conspectus.xls</p>
-
-<p>Guidelines for a Collection Development Policy using the Conspectus Model [English]
-http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf</p>
-
-<p>Mary Bushing
-http://www.varastokirjasto.fi/kokoelmakartta/julkaisut/esitelmat/Mary<em>Bushing</em>Conspectus.pdf</p>
-
-<p>ALCTS: Collection Development Resources
-http://www.ala.org/ala/mgrps/divs/alcts/resources/collect/collmgt/collasmt.cfm</p>
-
-<p>Australian conspectus
-http://www.nla.gov.au/niac/conspectus/</p>
-
-<p>Divide holdings by circ, or some other thing, to show intensity of borrowing/usage</p>
-
-<h2>Other forms of dentographs</h2>
-
-<p>Treemaps.  See treemap history in R history, and documentation.</p>
+<p>Finally, there are undoubtedly other (and I hope better) forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other ways of visualizing collections emerge.</p>
 
 <h1>Known problems</h1>
 
