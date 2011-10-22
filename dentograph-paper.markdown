@@ -483,15 +483,24 @@ There are other ways a dentograph can show more than merely holding counts.  It 
 
 Finally, there are undoubtedly other (and I hope better) forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other ways of visualizing collections emerge.
 
-# Known problems
+# Problems
 
 If things in the collection aren't classified, they don't get shown.  For example none of York's eResources are classified properly, they're all ELECTRONIC, so they are completely missing.
 
 !!!TODO Check if it's none or just 99%.
 
+Deals only with print.  OTOH, that may be a good thing, because it's what's local that makes collections special now.  If everyone subcscribes to JSTOR, CKRN, etc., has access to the same electronic resources, then that's all a wash and you can subtract that out and just look at what's left over as a way of comparing collections.  If York and U of T subscribe to all the same electronic resources then their graphs really do compare something valid.  What about U PEI? What do they subscribe to?
+
+And to go along with this idea, is there a way to do dentographs of online collections of books or journals?  Could a dentograph of Google Books or Hathi Trust or something else be done?  Hmm ... how to get the call numbers from them?
+
 Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.
 
 FICTION ROB and other non-Dewey or LC classifications don't work.
+
+Has nothing to do with quality, it's just quantity.  How to fix this?  A badly built collection could look better than a good one.
+
+Conspectus approach has its problems: assessment to a depth level is probably bogus, or not done at all.
+
 
 # Tools and links
 
