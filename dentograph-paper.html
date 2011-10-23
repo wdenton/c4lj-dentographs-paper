@@ -137,6 +137,8 @@ $ head -3 tpl-one-by-one.txt
 
 <p>It only takes four commands in R to generate a raw, unadorned checkerboard dentograph.  One: load the <code>lattice</code> library, which provides the <code>levelplot</code> command. Two: load the data. Three: turn that data into a table.  Four: generate a levelplot from the table.</p>
 
+<script src="https://gist.github.com/1307706.js"> </script>
+
 <pre><code>&gt; library(lattice)
 &gt; tpl.one.by.one &lt;- read.table("tpl-one-by-one.txt")
 &gt; tpl.one.by.one.table &lt;- table(tpl.one.by.one)
