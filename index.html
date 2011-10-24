@@ -37,6 +37,8 @@ A dentograph is a visualization of a library's holdings, built on the idea that 
 
 <p class="caption">Figure 2. Mountain dentographs of two U Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
 
+<h1>What good is a dentograph?</h1>
+
 <p>!!!TODO Handle Gabriel's comment: "Also, members of the committee grew more interested in the article as we discussed among ourselves the practical applications of dentograms for libraries -- especially within a consortial context, where one could use these visualizations to compare and attempt to dovetail collections. I'm sure you've envisioned a number of other uses well. Because dentograms are a new idea, I think we'll catch the eyes of more readers if we're explicit about ways in which they're (and problems they solve) up front, then get into the tech nitty-gritty afterward."</p>
 
 <h1>Mathematics and LIS</h1>
@@ -98,6 +100,8 @@ $ cd c4lj-dentographs
 <li><a href="http://www.upei.ca/">University of Prince Edward Island</a> provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.</li>
 <li><a href="http://www.library.yorku.ca/">York University Libraries</a>, where I work, does not give open access to its MARC records, but I obtained a dump for this research.  We use LCC.</li>
 </ul>
+
+<p>(!!! A note about holdings counts: !!! Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.)</p>
 
 <h2>Extracting data from MARC</h2>
 
@@ -544,21 +548,11 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
 <p>The biggest problem with dentographs of holdings is that they show quantity but not quality.  There is no easy way, automated or manual, to assess the quality of the many parts of a collection.  One can only visualize the data available, so dentographs are limited.  However, as mentioned above, dentographs can also show usage, overlap or uniqueness, which in their own ways tell us something about a collection's quality.  </p>
 
-<p>Dentographs depend entirely on call numbers.  For print material, that is fine.  Everything on a library shelf will have some kind of call number.  If the call number is not LCC or Dewey, however, that is a problem.  Many kinds of collections that are special for their format or location will be overlooked, as may huge collection of fiction or children's books in public libraries.  Electronic resources are especially susceptible to lacking call numbers.  At my library, very few electronic books or journals have valid LCC call numbers: they are all assigned ELECTRONIC.  </p>
+<p>The other main problems is that dentographs depend entirely on call numbers from a standard classification (or, as in the OCLC Conspectus case, subject assignments to a controlled vocabulary).  For most print material, that is fine.  Everything on a library shelf will have some kind of call number.  If the call number is not LCC or Dewey, however, that is a problem.  Many kinds of collections that are special for their format or location will be overlooked, as may huge collections of fiction or children's books in public libraries.  Electronic resources are especially susceptible to lacking call numbers.  At my library, very few electronic books or journals have valid LCC call numbers: they are all assigned ELECTRONIC.</p>
 
-<p>However, the restriction to print or other physical resources may actually be a benefit.  Among academic libraries, if all libraries of a similar size in the same country subscribe to the same electronic resources (such as JSTOR and Project MUSE) then the electronic parts of their collection are basically the same.  The comparison of U Toronto to York U shows how much better U Toronto is with its print collection, but when it comes to electronic resources, the two are more or less the same (except for subjects U Toronto teaches that York doesn't, such as medicine and architecture).  With the </p>
+<p>However, restricting to print or other physical resources may actually be useful.  Among academic libraries, if all libraries of a similar size subscribe to the same electronic resources then comparing that part of their collections is pointless.  The comparison of U Toronto to York U shows how much better U Toronto is with its print collection, but when it comes to electronic resources, the two are more or less the same (except for subjects U Toronto teaches that York doesn't, such as medicine and architecture).  More and more, it is the local print material that is making collections special, and dentographs are good tools for that.  (On the other hand, as mentioned above, comparing a library's physical books to an ebook collection would be a good dentograph visualization.)</p>
 
-<p>Deals only with print.  OTOH, that may be a good thing, because it's what's local that makes collections special now.  If everyone subcscribes to JSTOR, CKRN, etc., has access to the same electronic resources, then that's all a wash and you can subtract that out and just look at what's left over as a way of comparing collections.  If York and U of T subscribe to all the same electronic resources then their graphs really do compare something valid.  What about U PEI? What do they subscribe to?</p>
-
-<p>And to go along with this idea, is there a way to do dentographs of online collections of books or journals?  Could a dentograph of Google Books or Hathi Trust or something else be done?  Hmm ... how to get the call numbers from them?</p>
-
-<p>Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.</p>
-
-<p>FICTION ROB and other non-Dewey or LC classifications don't work.</p>
-
-<p>Has nothing to do with quality, it's just quantity.  How to fix this?  A badly built collection could look better than a good one.</p>
-
-<p>Conspectus approach has its problems: assessment to a depth level is probably bogus, or not done at all.</p>
+<p>Finally, data quality and access to the data are problems.  Bad data can be worked around, but not every library makes regular catalogue dumps available.  They should. That data, and union and consortial catalogues, should be available under open licenses.</p>
 
 <h1>Tools and links</h1>
 
