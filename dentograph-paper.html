@@ -2,7 +2,7 @@
 
 <div class="abstract">
 
-A dentograph is a visualization of a library's holding built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to visualize one library's collections or to compare two or more collections within or across libraries. This article describes how to build them, with examples and code, and discusses some problems and future directions.
+A dentograph is a visualization of a library's holdings, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
 
 </div>
 
@@ -10,15 +10,15 @@ A dentograph is a visualization of a library's holding built on the idea that a 
 
 <h1>Introduction</h1>
 
-<p>These checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.</p>
+<p>These <strong>checkerboard dentographs</strong> compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.</p>
 
 <p><img src="images/comparison-tpl-to-sfpl.png" alt="TPL and SFPL comparison checkerboard dentograph" title="" /></p>
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
-<p>When you know that both libraries use the <a href="http://dewey.info/">Dewey Decimal Classification</a>, and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) tells how many items are the <a href="http://dewey.info/class/81/2009/08/about.en">810s</a> ("American literature in English"), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. </p>
+<p>When you know that both libraries use the <a href="http://dewey.info/">Dewey Decimal Classification</a>, that the hundreds digit is shown along the x-axis and the tens along the y-axis, and that the colour of the square at (8,1) tells how many items are the <a href="http://dewey.info/class/81/2009/08/about.en">810s</a> ("American literature in English"), you can see how TPL and SFPL collect much the same kind of material, but TPL has much more of it.</p>
 
-<p>Here is a comparison of two branches of the University of Toronto, Canada's largest university library system, done with mountain dentographs.  They are so called because they look like a series of mountain ranges, with one line of mountains per Library of Congress class letter.</p>
+<p>Here are <strong>mountain dentographs</strong> used to compare two branches of the University of Toronto, Canada's largest university library system.  They are so called because they look like mountain ranges, with one line of mountains per Library of Congress class letter.</p>
 
 <p><a href="images/utoronto-branches.png"><img src="images/utoronto-branches-smaller.png" alt="Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein" title="Mountain dentographs of U Toronto branches Robarts and Gerstein" /></a></p>
 
@@ -41,9 +41,14 @@ A dentograph is a visualization of a library's holding built on the idea that a 
 
 <h1>Getting ready</h1>
 
-<h2>R</h2>
+<h2>Installing R</h2>
 
 <p>All of the graphics here will be generated with <a href="http://www.r-project.org/">R</a>, which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing <a href="http://www.rstudio.org/">RStudio</a>, a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.  The examples below will all work with just R.</p>
+
+<ul>
+<li><a href="http://www.r-project.org/">Change link to installing R</a></li>
+<li><a href="http://www.rstudio.org/">Change link to installing RStudio</a></li>
+</ul>
 
 <h2>The code</h2>
 
@@ -55,7 +60,7 @@ A dentograph is a visualization of a library's holding built on the idea that a 
 $ cd c4lj-dentographs
 </code></pre>
 
-<p>The last step is to set your R working directory to this same <code>c4lj-dentographs</code> directory. Either run R at the command line in that directory, or if you're using RStudio use Tools | Set Working Directory in the menu bar.</p>
+<p>The last step is to set your R working directory to this same <code>c4lj-dentographs</code> directory. Either run R at the command line in that directory, or if you're using RStudio use Tools > Set Working Directory in the menu bar.</p>
 
 <h2>The data</h2>
 
@@ -136,8 +141,6 @@ $ head -3 tpl-one-by-one.txt
 <p>Now, finally, the preprocessing is done and we are ready to begin our work in R.  This is often how work with R is done: another language is used to clean and prepare the data before it is loaded. R has text manipulation tools, but that is not its main strength, and if you are comfortable in a scripting language then you will probably find it easier to massage your data with it.</p>
 
 <p>It only takes four commands in R to generate a raw, unadorned checkerboard dentograph.  One: load the <code>lattice</code> library, which provides the <code>levelplot</code> command. Two: load the data. Three: turn that data into a table.  Four: generate a levelplot from the table.</p>
-
-<script src="https://gist.github.com/1307706.js"> </script>
 
 <pre><code>&gt; library(lattice)
 &gt; tpl.one.by.one &lt;- read.table("tpl-one-by-one.txt")
@@ -465,7 +468,7 @@ $ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png u
 
 <ul>
 <li>University of Toronto is the biggest university in Canada with 78,900 students, and its library system is also the biggest, with <a href="http://www.library.utoronto.ca/library/aboutlibraries/annualreport/2010/table2b.pdf">about 11,350,000 "bookform" items in its collection</a> as of April 2010.</li>
-<li>York University (one of the other three universities in Toronto) has 54,600 students and its library reports <a href="http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf">almost 2,500,000 print volumes in its collection</a> as of April 2010.</li>
+<li>York University (also in Toronto) has 54,600 students and its library reports <a href="http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf">almost 2,500,000 print volumes in its collection</a> as of April 2010.</li>
 <li>University of Prince Edward Island has 4,590 students, and its <a href="http://library.upei.ca/sites/all/files/Library%20Annual%20Report%202007-2008%20_1.pdf">2007-2008 library annual report</a> says it had about 370,000 books and ebooks (print books are not separated out).</li>
 </ul>
 

@@ -2,7 +2,7 @@
 
 <div class="abstract">
 
-A dentograph is a visualization of a library's holding built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can be used to visualize one library's collections or to compare two or more collections within or across libraries. This article describes how to build them, with examples and code, and discusses some problems and future directions.
+A dentograph is a visualization of a library's holdings, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
 
 </div>
 
@@ -10,15 +10,15 @@ By William Denton &lt;wtd@pobox.com&gt;
 
 # Introduction
 
-These checkerboard dentographs compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
+These **checkerboard dentographs** compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is that SFPL has, TPL has more.
 
 ![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
-When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), and that the hundreds digit is shown along the x-axis and the tens along the y-axis, so that the colour of the square at (8,1) tells how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) ("American literature in English"), you know even more about the TPL's collection of this subject and how much it outweighs SFPL's. 
+When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), that the hundreds digit is shown along the x-axis and the tens along the y-axis, and that the colour of the square at (8,1) tells how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) ("American literature in English"), you can see how TPL and SFPL collect much the same kind of material, but TPL has much more of it.
 
-Here is a comparison of two branches of the University of Toronto, Canada's largest university library system, done with mountain dentographs.  They are so called because they look like a series of mountain ranges, with one line of mountains per Library of Congress class letter.
+Here are **mountain dentographs** used to compare two branches of the University of Toronto, Canada's largest university library system.  They are so called because they look like mountain ranges, with one line of mountains per Library of Congress class letter.
 
 [![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
@@ -39,9 +39,12 @@ Classification schemes are mathematical functions.  XXX defines a function as YY
 
 # Getting ready
 
-## R
+## Installing R
 
 All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.  The examples below will all work with just R.
+
+* [Change link to installing R](http://www.r-project.org/)
+* [Change link to installing RStudio](http://www.rstudio.org/)
 
 ## The code
 
@@ -52,7 +55,7 @@ To make a local copy of the repository, run this at the command line:
     $ git clone http://github.com/wdenton/c4lj-dentographs
     $ cd c4lj-dentographs
 
-The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or if you're using RStudio use Tools | Set Working Directory in the menu bar.
+The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or if you're using RStudio use Tools > Set Working Directory in the menu bar.
 
 ## The data
 
@@ -431,7 +434,7 @@ Finally, let's compare the U Toronto collection to the libraries of two other Ca
 First some basic numbers about the universities and their libraries.  (Enrolment numbers are total students as of fall 2010, taken from the [Association of Universities and Colleges of Canada's Enrolment by University page](http://www.aucc.ca/canadian-universities/facts-and-stats/tuition-by-university/?page_id=6210)):
 
 * University of Toronto is the biggest university in Canada with 78,900 students, and its library system is also the biggest, with [about 11,350,000 "bookform" items in its collection](http://www.library.utoronto.ca/library/aboutlibraries/annualreport/2010/table2b.pdf) as of April 2010.
-* York University (one of the other three universities in Toronto) has 54,600 students and its library reports [almost 2,500,000 print volumes in its collection](http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf) as of April 2010.
+* York University (also in Toronto) has 54,600 students and its library reports [almost 2,500,000 print volumes in its collection](http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf) as of April 2010.
 * University of Prince Edward Island has 4,590 students, and its [2007-2008 library annual report](http://library.upei.ca/sites/all/files/Library%20Annual%20Report%202007-2008%20_1.pdf) says it had about 370,000 books and ebooks (print books are not separated out).
 
 The following commands will generate the dentographs. Before running them, not that the maximum value in U Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
@@ -481,9 +484,13 @@ The other aspect of the conspectus approach to collection development is that it
 
 There are other ways a dentograph can show more than merely holding counts.  It could show the intensity of collection usage by dividing circulation numbers by item counts in given sections. In a checkerboard dentograph, the colours could show the usage intensity; in a mountain dentograph, the mountains could be coloured to show the usage or the mountain heights could show that ratio instead of holdings: the highest peaks would show where the collection is most used and the plains would show where the collection is unused.
 
+!!! Consortia: Overlap / how to dovetail. Differences in circ. Last copy kind of thing?
+
 Finally, there are undoubtedly other (and I hope better) forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other ways of visualizing collections emerge.
 
 # Problems
+
+The biggest problem with dentographs as described here is that they show quantity but not quality.  
 
 If things in the collection aren't classified, they don't get shown.  For example none of York's eResources are classified properly, they're all ELECTRONIC, so they are completely missing.
 
