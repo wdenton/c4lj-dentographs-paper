@@ -490,7 +490,9 @@ Finally, there are undoubtedly other (and I hope better) forms of dentographs.  
 
 # Problems
 
-The biggest problem with dentographs as described here is that they show quantity but not quality.  
+The biggest problem with dentographs is that they show quantity but not quality.  
+
+
 
 If things in the collection aren't classified, they don't get shown.  For example none of York's eResources are classified properly, they're all ELECTRONIC, so they are completely missing.
 
