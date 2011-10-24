@@ -76,6 +76,8 @@ Two libraries supplied data to me on request, which I will use later to compare 
 * [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.
 * [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  We use LCC.
 
+(!!! A note about holdings counts: !!! Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.)
+
 ## Extracting data from MARC
 
 Dealing with a large set of MARC records can be painful. There are so many ways that a library can customize its data for its individual needs that writing one script to extract call numbers from any of the Open Library dumps became tedious and complicated.  In the end I found it was much easier and faster to run `yaz-marcdump` on all the files, pick out the one MARC field I needed, and then process those lines to pick out the call numbers and store them in a text file. I'll show how I did this with the Toronto Public Library (TPL) data.
@@ -490,26 +492,13 @@ Finally, there are undoubtedly other (and I hope better) forms of dentographs.  
 
 # Problems
 
-The biggest problem with dentographs is that they show quantity but not quality.  
+The biggest problem with dentographs of holdings is that they show quantity but not quality.  There is no easy way, automated or manual, to assess the quality of the many parts of a collection.  One can only visualize the data available, so dentographs are limited.  However, as mentioned above, dentographs can also show usage, overlap or uniqueness, which in their own ways tell us something about a collection's quality.  
 
+The other main problems is that dentographs depend entirely on call numbers from a standard classification (or, as in the OCLC Conspectus case, subject assignments to a controlled vocabulary).  For most print material, that is fine.  Everything on a library shelf will have some kind of call number.  If the call number is not LCC or Dewey, however, that is a problem.  Many kinds of collections that are special for their format or location will be overlooked, as may huge collections of fiction or children's books in public libraries.  Electronic resources are especially susceptible to lacking call numbers.  At my library, very few electronic books or journals have valid LCC call numbers: they are all assigned ELECTRONIC.
 
+However, restricting to print or other physical resources may actually be useful.  Among academic libraries, if all libraries of a similar size subscribe to the same electronic resources then comparing that part of their collections is pointless.  The comparison of U Toronto to York U shows how much better U Toronto is with its print collection, but when it comes to electronic resources, the two are more or less the same (except for subjects U Toronto teaches that York doesn't, such as medicine and architecture).  More and more, it is the local print material that is making collections special, and dentographs are good tools for that.  (On the other hand, as mentioned above, comparing a library's physical books to an ebook collection would be a good dentograph visualization.)
 
-If things in the collection aren't classified, they don't get shown.  For example none of York's eResources are classified properly, they're all ELECTRONIC, so they are completely missing.
-
-!!!TODO Check if it's none or just 99%.
-
-Deals only with print.  OTOH, that may be a good thing, because it's what's local that makes collections special now.  If everyone subcscribes to JSTOR, CKRN, etc., has access to the same electronic resources, then that's all a wash and you can subtract that out and just look at what's left over as a way of comparing collections.  If York and U of T subscribe to all the same electronic resources then their graphs really do compare something valid.  What about U PEI? What do they subscribe to?
-
-And to go along with this idea, is there a way to do dentographs of online collections of books or journals?  Could a dentograph of Google Books or Hathi Trust or something else be done?  Hmm ... how to get the call numbers from them?
-
-Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.
-
-FICTION ROB and other non-Dewey or LC classifications don't work.
-
-Has nothing to do with quality, it's just quantity.  How to fix this?  A badly built collection could look better than a good one.
-
-Conspectus approach has its problems: assessment to a depth level is probably bogus, or not done at all.
-
+Finally, data quality and access to the data are problems.  Bad data can be worked around, but not every library makes regular catalogue dumps available.  They should. That data, and union and consortial catalogues, should be available under open licenses.
 
 # Tools and links
 
