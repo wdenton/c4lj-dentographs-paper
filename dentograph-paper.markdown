@@ -26,10 +26,13 @@ Here are **mountain dentographs** used to compare two branches of the University
 
 # Uses of dentographs
 
-In this article I will show, step by step, how to build several kinds of checkerboard and mountain dentographs to visualize and compare the holdings of different libraries.  With the code provided you will be able to generate your own with your own data. There are more potential uses for dentographs than just visualizing holdings counts, however:
+I hope that dentographs will find many uses.  I describe on particular one in detail in this article, but there are more to explore:
 
-* Collection usage: dividing circulation counts by holdings give usage ratios, which could be visualized so that the most- and least-used parts of a collection would be instantly visible. In a checkerboard dentograph, the colours could show the usage; in a mountain dentograph, the height.
-* Collection overlap and distinctness: what's described here is based on call numbers, but using standard numbers such as ISBNs or LC or OCLC numbers would give a way of calculating the overlap or distinctness between collections. Dentographs could show what percentages of their holdings libraries have in common in different subjects, or how much of one library's collection is unique and not held by other librararies.  This approach could be particularly useful in consortia, such as for "last copy" holding agreements.
+* Comparing collections: in this article I will show how to visualize and compare the holdings of different libraries.  With the code provided you will be able to generate your own with your own data.
+* Collection usage: dividing circulation counts by holdings give usage ratios, which could be visualized so that the most- and least-used parts of a collection are instantly visible. In a checkerboard dentograph, the colours could show the usage; in a mountain dentograph, the height.
+* Interlibrary loan lending and borrowing: this is another kind of usage.  The number of items borrowed or lent out could be visualized; borrowing could be subtracted from lending to show net intake or outake in a given call number range, which would show where a library's collection was most lacking and where it was better than other libraries.  Visualizations like this could be most useful in networks of libraries with strong interlibrary loan relationships.
+* Collection overlap or distinctness: what's described here is based on call numbers, but using standard numbers such as ISBNs or LC or OCLC numbers would give a way of calculating the overlap or distinctness between collections. Dentographs could show what percentages of their holdings libraries have in common in different subjects, or how much of one library's collection is unique and not held by other librararies.  This approach could be particularly useful in consortia, such as for "last copy" holding agreements, or, at the other end of the scale, for small specialized collections to show that in their specific area they have better holdings than large libraries or consortia.
+* University ranking reports: these usually have small sections about the libraries, giving some numbers about the size of the collections and student satisfaction.  Dentographs could also be included so that the reader can get a quick impression of collection sizes and strengths.
 
 # Mathematics and LIS
 
@@ -62,9 +65,20 @@ To make a local copy of the repository, run this at the command line:
 
 The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or if you're using RStudio use Tools > Set Working Directory in the menu bar.
 
-## The data
+## Call numbers and data files
 
-[Data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available.  Download the five files there to the `c4lj-dentographs` directory:
+To generate dentographs we need call numbers.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a good data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three here:
+
+* [San Francisco Public Library MARC records](http://www.archive.org/details/SanFranPL01) (1 of 16; search for the others) (Dewey Decimal Classification)
+* [Toronto Public Library MARC records](http://www.archive.org/details/marc_toronto_public_library) (DDC)
+* [University of Toronto MARC records](http://www.archive.org/details/marc_university_of_toronto) (Library of Congress Classification)
+
+Two libraries supplied data to me on request:
+
+* [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.
+* [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  We use LCC.
+
+To save time, I processed the records and [data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available.  Download the five files there to the `c4lj-dentographs` directory:
 
 * [sfpl-ddc-call-numbers.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-ddc-call-numbers.txt)
 * [tpl-090.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/tpl-090.txt.gz)
@@ -76,26 +90,13 @@ They are all compressed with `gzip` so you will need to uncompress each before i
 
     $ gunzip utoronto-949.txt.gz
 
-# Call numbers
-
-To generate dentographs we need call numbers.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a very large and easily accessible open data source on the web: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three here:
-
-* [San Francisco Public Library MARC records](http://www.archive.org/details/SanFranPL01) (1 of 16; search for the others) (Dewey Decimal Classification)
-* [Toronto Public Library MARC records](http://www.archive.org/details/marc_toronto_public_library) (DDC)
-* [University of Toronto MARC records](http://www.archive.org/details/marc_university_of_toronto) (Library of Congress Classification)
-
-Two libraries supplied data to me on request, which I will use later to compare to U Toronto:
-
-* [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi of U PEI for doing this.
-* [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  We use LCC.
-
 (!!! A note about holdings counts: !!! Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.)
 
 ## Extracting data from MARC
 
 Dealing with a large set of MARC records can be painful. There are so many ways that a library can customize its data for its individual needs that writing one script to extract call numbers from any of the Open Library dumps became tedious and complicated.  In the end I found it was much easier and faster to run `yaz-marcdump` on all the files, pick out the one MARC field I needed, and then process those lines to pick out the call numbers and store them in a text file. I'll show how I did this with the Toronto Public Library (TPL) data.
 
-The goal of operating on the TPL catalogue records is to extract every numerical call number in the range (0 < number < 1000). This will leave us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
+The goal of operating on the TPL catalogue records was to extract every numerical call number in the range (0 < number < 1000). This leaves us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
 
 Visual inspection of the TPL MARC records from the Internet Archive is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, `tpl-090.txt` is one of the data files available, but to recreate it yourself you would get the files and run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt`.)
 
@@ -120,7 +121,7 @@ Visual inspection of the TPL MARC records from the Internet Archive is easily do
 
 Of course, any direct method of pulling DDC numbers from a library management system would be much easier than all this, but some processing and cleanup will probably still be necessary, AACR and MARC being what they are.
 
-Extracting LC call numbers from the University of Toronto records is much the same, as we will see below, but with the advantage that fiction is also classified, so we will end up with a list of call numbers covering everything in the collection. Everything, that is, with a proper LC call number: special schemes for government documents, audio and video, maps, and the like must be left out.
+Extracting LCC call numbers from the University of Toronto records is much the same, as we will see below, but with the advantage that fiction is also classified, so we end up with call numbers covering everything in the collection. Everything, that is, with a proper LCC call number: special schemes for government documents, audio, video, maps and so on must be left out.
 
 # Checkerboard dentographs
 
@@ -469,13 +470,11 @@ The following commands will generate the dentographs. Before running them, not t
 
 As expected, PEI's collection is sparse and shallow compared to the others, which is no reflection on anything other than its size.  It's unfair to compare it to much larger libraries except to serve some kind of illustration like this.  On the other hand, comparing Toronto and York, two large universities in the same city, is quite interesting.  Toronto is clearly broader and deeper than York:  its collection is larger and covers more subjects, apparently across the board. In B (Philosophy, Psychology, Religion) Toronto has more (both close to the x-axis and stretching out to the far side), probably because it has divinity programs.  M (Music) and N (Fine Arts) are both denser.  P is much richer than at York, with far more high spikes.  The science cluster in Q is also much denser.  
 
-University ranking reports usually have small sections about the libraries, giving some numbers about the size of the collections and student satisfaction.  Perhaps one day a dentograph will also be included so that the reader can get a quick impression of collection sizes and strengths.
-
 # Future directions
 
-I hope that readers will find the ideas here interesting and extend them beyond what I've described.  There are two possible lines of future work that I see, but I hope readers will find more.
+I hope that readers will find the ideas here interesting and extend them beyond what I've described.  Aside from the other possible uses described at the beginning of the paper, there are two lines of future work that I see, but I hope readers will find more.
 
-First, being three-dimensional, there are more possibilities for the mountain dentographs.  Perhaps it would be possible to fly around inside the mountain dentograph, exploring the collection and seeing flags or labels on the mountains to identify what LC number or subject they represent.  In R some interactivity is possible with the `persp3d` command, which makes it possible to rotate and zoom the image.  The arguments are the same but the experience is very different from `persp`.  Run this to try it:
+First, there are more ways to use the three dimensions of mountain dentographs.  Perhaps it would be possible to fly around inside the mountain dentograph, exploring the collection and seeing flags or labels on the mountains to identify what LC number or subject they represent.  In R some interactivity is possible with the `persp3d` command, which makes it possible to rotate and zoom the image.  The arguments are the same but the experience is very different from `persp`.  Run this to try it:
 
     > library(rgl)
     > persp3d(utoronto.table, theta = -5, phi = 20,
@@ -495,7 +494,7 @@ Five data points are much easier to understand than 10,000. If the rest of LCC w
 
 A mapping somewhat like this is in fact already available: the [OCLC Conspectus](http://www.oclc.org/collectionanalysis/support/conspectus.xls).  This is old work, [now abandoned](http://www.oclc.org/research/activities/past/rlg/conspectus.htm), but perhaps still useful here.  The OCLC Conspectus has 29 top-level subjects, such as Art and Architecture, Medicine, and Philosophy and Religion. There are 378 narrower second-level subjects.  Philosophy and Religion has 18, such as "Philosophy - Ancient, Medieval, Renaissance," "Philosophy - Modern (1450/1600- )," and "Logic." Each subject is associated with LCC and DDC call number ranges (so it is possible to assess collections regardless of classification scheme), and here BX is boiled down to three headings: "Eastern Christian Churches & Ecumenism" from BX 0-765, "Roman Catholic Church" from BX 800-4795, and "Protestantism" from BX 4800-9999. It would be possible to use this representation of a collection to generate either checkerboard or mountain dentographs by mapping the top-level subjects on the x-axis and the second-level subjects on the y-axis.
 
-The other aspect of the conspectus approach to collection development is that it gives a scale showing the depth to which the library collects a subject.  IFLA's [Guidelines for a Collection Development Policy using the Conspectus Model](http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf) describes this: 0 means nothing is collected and 1 is "minimal," up to 4 for "reseach level" (doctoral programs in universities) and 5 for "comprehensive level" ("exhaustive" collections).  Libraries with collection policies that give desired collection depths for subjects could use conspectus-based dentographs to show how subject do not meet, meet, or exceed the desired depth. However, there is no automated way of assessing collection depth, it takes an enormous amount of work to do it by hand, and the whole approach is outdated and little used, so this approach is probably fruitless.
+<!-- The other aspect of the conspectus approach to collection development is that it gives a scale showing the depth to which the library collects a subject.  IFLA's [Guidelines for a Collection Development Policy using the Conspectus Model](http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf) describes this: 0 means nothing is collected and 1 is "minimal," up to 4 for "reseach level" (doctoral programs in universities) and 5 for "comprehensive level" ("exhaustive" collections).  Libraries with collection policies that give desired collection depths for subjects could use conspectus-based dentographs to show how subject do not meet, meet, or exceed the desired depth. However, there is no automated way of assessing collection depth, it takes an enormous amount of work to do it by hand, and the whole approach is outdated and little used, so this approach is probably fruitless. -->
 
 Finally, there are undoubtedly other, and I hope better, forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other people find other kinds.
 
