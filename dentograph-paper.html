@@ -24,8 +24,6 @@ A dentograph is a visualization of a library's collection, built on the idea tha
 
 <p class="caption">Figure 2. Mountain dentographs of two U Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
 
-<h1>Uses of dentographs</h1>
-
 <p>I hope that dentographs will find many uses.  In this article I show one in detail: how to visualize and compare the holdings of different libraries. With the code provided you will be able to generate your own with your own data.  There are a number of other uses:</p>
 
 <ul>
@@ -35,7 +33,7 @@ A dentograph is a visualization of a library's collection, built on the idea tha
 <li>University ranking reports: these usually have small sections about the libraries, giving some numbers about the size of the collections and student satisfaction.  Dentographs could also be included so that the reader can get a quick impression of collection sizes and strengths.</li>
 </ul>
 
-<h1>Mathematics and LIS</h1>
+<h1>The mathematics: classification schemes are functions</h1>
 
 <p>Classification schemes are mathematical functions.  XXX defines a function as YYY.  </p>
 
@@ -48,7 +46,7 @@ A dentograph is a visualization of a library's collection, built on the idea tha
 <li>DDC : {universe of knowledge} --> (0,1000)</li>
 </ul>
 
-<h1>Getting ready</h1>
+<h1>Getting ready to make dentographs</h1>
 
 <h2>Installing R</h2>
 
@@ -59,7 +57,7 @@ A dentograph is a visualization of a library's collection, built on the idea tha
 <li><a href="http://www.rstudio.org/download/">Download RStudio Desktop</a></li>
 </ul>
 
-<h2>The code</h2>
+<h2>Getting the code</h2>
 
 <p>All of the scripts used in this paper is available at <a href="http://github.com/wdenton/c4lj-dentographs">http://github.com/wdenton/c4lj-dentographs</a>. Every shell or R command is fully reproducible. There are two kinds of snippets of code below: <code>$</code> is at the command line and <code>&gt;</code> is in R.</p>
 
@@ -71,7 +69,7 @@ $ cd c4lj-dentographs
 
 <p>The last step is to set your R working directory to this same <code>c4lj-dentographs</code> directory. Either run R at the command line in that directory, or if you're using RStudio use Tools > Set Working Directory in the menu bar.</p>
 
-<h2>Call numbers and data files</h2>
+<h2>Getting data files of call numbers</h2>
 
 <p>To generate dentographs we need call numbers.  Data from one's own library is most interesting, however that may not be possible, since not all institutions have the time, resources, or inclination to supply such data for research. Luckily there is a good data source on the web: <a href="http://www.archive.org/details/ol_data">MARC records some libraries have uploaded to the Internet Archive</a> to help the <a href="http://openlibrary.org/">Open Library</a>. A number of libraries have made their data available, and I use three here:</p>
 
@@ -105,7 +103,7 @@ $ cd c4lj-dentographs
 
 <p>(!!! A note about holdings counts: !!! Holdings and item counts may or may not be represented in the Internet Archive dumps.  Maybe one dump has ten 090s or 949s for a record with ten copies while another has one.  Should all items be represented?  Counting ten copies of one thing leads to a different kind of dentograph.)</p>
 
-<h2>Extracting data from MARC</h2>
+<h2>How to extract data from MARC records</h2>
 
 <p>Dealing with a large set of MARC records can be painful. There are so many ways that a library can customize its data for its individual needs that writing one script to extract call numbers from any of the Open Library dumps became tedious and complicated.  In the end I found it was much easier and faster to run <code>yaz-marcdump</code> on all the files, pick out the one MARC field I needed, and then process those lines to pick out the call numbers and store them in a text file. I'll show how I did this with the Toronto Public Library (TPL) data.</p>
 
@@ -540,11 +538,11 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
 <p>Finally, there are undoubtedly other, and I hope better, forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other people find other kinds.</p>
 
-<h1>Problems</h1>
+<h1>Three problems</h1>
 
 <p>The biggest problem with dentographs of holdings is that they show quantity but not quality.  There is no easy way, automated or manual, to assess the quality of the many parts of a collection.  One can only visualize the data available, so dentographs are limited.  However, as mentioned above, dentographs can also show usage, overlap or uniqueness, which in their own ways tell us something about a collection's quality.  </p>
 
-<p>The other main problems is that dentographs depend entirely on call numbers from a standard classification (or, as in the OCLC Conspectus case, subject assignments to a controlled vocabulary).  For most print material, that is fine.  Everything on a library shelf will have some kind of call number.  If the call number is not LCC or Dewey, however, that is a problem.  Many kinds of collections that are special for their format or location will be overlooked, as may huge collections of fiction or children's books in public libraries.  Electronic resources are especially susceptible to lacking call numbers.  At my library, very few electronic books or journals have valid LCC call numbers: they are all assigned ELECTRONIC.</p>
+<p>The other main problem is that dentographs depend entirely on call numbers from a standard classification (or, as in the OCLC Conspectus case, subject assignments to a controlled vocabulary).  For most print material, that is fine.  Everything on a library shelf will have some kind of call number.  If the call number is not LCC or Dewey, however, that is a problem.  Many kinds of collections that are special for their format or location will be overlooked, as may huge collections of fiction or children's books in public libraries.  Electronic resources are especially susceptible to lacking call numbers.  At my library, very few electronic books or journals have valid LCC call numbers: they are all assigned ELECTRONIC.</p>
 
 <p>However, restricting to print or other physical resources may actually be useful.  Among academic libraries, if all libraries of a similar size subscribe to the same electronic resources then comparing that part of their collections is pointless.  The comparison of U Toronto to York U shows how much better U Toronto is with its print collection, but when it comes to electronic resources, the two are more or less the same (except for subjects U Toronto teaches that York doesn't, such as medicine and architecture).  More and more, it is the local print material that is making collections special, and dentographs are good tools for that.  (On the other hand, as mentioned above, comparing a library's physical books to an ebook collection would be a good dentograph visualization.)</p>
 
@@ -563,7 +561,7 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
 <ul>
 <li><a href="http://cran.r-project.org/doc/manuals/R-intro.pdf">An Introduction to R</a> by W.N. Venables, D.M. Smith, and the R Development Core Team.</li>
-<li>There are many R books available. I found two from O'Reilly, <a href="http://oreilly.com/catalog/9780596809164">R Cookbook</a> by Paul Teetor and <a href="http://oreilly.com/catalog/9780596801717">R In a Nutshell</a> by Joseph Adler, very useful.</li>
+<li>Of the many books about R, I found two from O'Reilly particularly useful: <a href="http://oreilly.com/catalog/9780596809164">R Cookbook</a> by Paul Teetor and <a href="http://oreilly.com/catalog/9780596801717">R In a Nutshell</a> by Joseph Adler.</li>
 <li><a href="http://en.wikibooks.org/wiki/R_Programming">R Programming Wikibook</a> is under development.</li>
 <li><a href="http://journal.r-project.org/">The R Journal</a>.</li>
 <li><a href="http://stackoverflow.com/questions/tagged/r">Questions tagged with R at StackOverflow</a> are a great place to look for answers to problems.</li>
