@@ -2,7 +2,7 @@
 
 <div class="abstract">
 
-A dentograph is a visualization of a library's holdings, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
+A dentograph is a visualization of a library's collection, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
 
 </div>
 
@@ -497,7 +497,7 @@ A mapping somewhat like this is in fact already available: the [OCLC Conspectus]
 
 The other aspect of the conspectus approach to collection development is that it gives a scale showing the depth to which the library collects a subject.  IFLA's [Guidelines for a Collection Development Policy using the Conspectus Model](http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf) describes this: 0 means nothing is collected and 1 is "minimal," up to 4 for "reseach level" (doctoral programs in universities) and 5 for "comprehensive level" ("exhaustive" collections).  Libraries with collection policies that give desired collection depths for subjects could use conspectus-based dentographs to show how subject do not meet, meet, or exceed the desired depth. However, there is no automated way of assessing collection depth, it takes an enormous amount of work to do it by hand, and the whole approach is outdated and little used, so this approach is probably fruitless.
 
-Finally, there are undoubtedly other, and I hope better, forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other ways of visualizing collections emerge.
+Finally, there are undoubtedly other, and I hope better, forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other people find other kinds.
 
 # Problems
 
@@ -509,19 +509,21 @@ However, restricting to print or other physical resources may actually be useful
 
 Finally, data quality and access to the data are problems.  Bad data can be worked around, but not every library makes regular catalogue dumps available.  They should. That data, and union and consortial catalogues, should be available under open licenses.
 
-# Tools and links
+# Tools used
 
 * [R](http://www.r-project.org/)
 * [RStudio](http://www.rstudio.org/)
-* `yaz-marcdump` from the [YAZ](https://www.indexdata.com/yaz) toolkit
+* `yaz-marcdump` from the [YAZ toolkit](https://www.indexdata.com/yaz)
 * `convert` and `resize` from [ImageMagick](http://www.imagemagick.org/)
 
-# References
+# Further reading about R
 
-* [How to Learn R](http://www.inside-r.org/howto/how-learn-r)
-* Collection of links: http://jeromyanglim.blogspot.com/2009/06/learning-r-for-researchers-in.html
-* [R Cookbook](http://oreilly.com/catalog/9780596809164) by Paul Teetor and [R In a Nutshell](http://oreilly.com/catalog/9780596801717) by Joseph Adler, both from O'Reilly Media
-* [R Programming](http://en.wikibooks.org/wiki/R_Programming) wikibook is under development
+* [An Introduction to R](http://cran.r-project.org/doc/manuals/R-intro.pdf) by W.N. Venables, D.M. Smith, and the R Development Core Team.
+* There are many R books available. I found two from O'Reilly, [R Cookbook](http://oreilly.com/catalog/9780596809164) by Paul Teetor and [R In a Nutshell](http://oreilly.com/catalog/9780596801717) by Joseph Adler, very useful.
+* [R Programming Wikibook](http://en.wikibooks.org/wiki/R_Programming) is under development.
+* [The R Journal](http://journal.r-project.org/).
+* [Questions tagged with R at StackOverflow](http://stackoverflow.com/questions/tagged/r) are a great place to look for answers to problems.
+* Blogs: [Revolutions](http://blog.revolutionanalytics.com/) has great coverage, and is part of [R-bloggers](http://www.r-bloggers.com/), which collects many R-related blogs into one place, in a more readable way than [Planet R](http://planetr.stderr.org/). 
 
 
 

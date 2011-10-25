@@ -2,7 +2,7 @@
 
 <div class="abstract">
 
-A dentograph is a visualization of a library's holdings, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
+A dentograph is a visualization of a library's collection, built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
 
 </div>
 
@@ -53,8 +53,8 @@ A dentograph is a visualization of a library's holdings, built on the idea that 
 <p>All of the graphics here will be generated with <a href="http://www.r-project.org/">R</a>, which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing <a href="http://www.rstudio.org/">RStudio</a>, a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.  The examples below will all work with just R.</p>
 
 <ul>
-<li><a href="http://www.r-project.org/">Change link to installing R</a></li>
-<li><a href="http://www.rstudio.org/">Change link to installing RStudio</a></li>
+<li><a href="http://cran.r-project.org/mirrors.html">Download R at your nearest CRAN mirror</a></li>
+<li><a href="http://www.rstudio.org/download/">Download RStudio Desktop</a></li>
 </ul>
 
 <h2>The code</h2>
@@ -71,7 +71,17 @@ $ cd c4lj-dentographs
 
 <h2>The data</h2>
 
-<p><a href="http://hdl.handle.net/10315/10024">Data files to replicate the examples</a> are all available.  Download the five files there to the <code>c4lj-dentographs</code> directory.  They are all compressed with <code>gzip</code> so you will need to uncompress each before it can be used, for example:</p>
+<p><a href="http://hdl.handle.net/10315/10024">Data files to replicate the examples</a> are all available.  Download the five files there to the <code>c4lj-dentographs</code> directory:</p>
+
+<ul>
+<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-ddc-call-numbers.txt">sfpl-ddc-call-numbers.txt.gz</a></li>
+<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/tpl-090.txt.gz">tpl-090.txt.gz</a></li>
+<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/upei-call-number.txt.gz">upei-call-number.txt.gz</a></li>
+<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/utoronto-949.txt.gz">utoronto-949.txt.gz</a></li>
+<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/york-call-number.txt.gz">york-call-number.txt.gz</a></li>
+</ul>
+
+<p>They are all compressed with <code>gzip</code> so you will need to uncompress each before it can be used, for example:</p>
 
 <pre><code>$ gunzip utoronto-949.txt.gz
 </code></pre>
@@ -530,7 +540,7 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
 <p>The other aspect of the conspectus approach to collection development is that it gives a scale showing the depth to which the library collects a subject.  IFLA's <a href="http://www.ifla.org/files/acquisition-collection-development/publications/gcdp-en.pdf">Guidelines for a Collection Development Policy using the Conspectus Model</a> describes this: 0 means nothing is collected and 1 is "minimal," up to 4 for "reseach level" (doctoral programs in universities) and 5 for "comprehensive level" ("exhaustive" collections).  Libraries with collection policies that give desired collection depths for subjects could use conspectus-based dentographs to show how subject do not meet, meet, or exceed the desired depth. However, there is no automated way of assessing collection depth, it takes an enormous amount of work to do it by hand, and the whole approach is outdated and little used, so this approach is probably fruitless.</p>
 
-<p>Finally, there are undoubtedly other, and I hope better, forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other ways of visualizing collections emerge.</p>
+<p>Finally, there are undoubtedly other, and I hope better, forms of dentographs.  Checkerboards and mountains are the first identified, but I hope other people find other kinds.</p>
 
 <h1>Problems</h1>
 
@@ -542,20 +552,22 @@ $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
 <p>Finally, data quality and access to the data are problems.  Bad data can be worked around, but not every library makes regular catalogue dumps available.  They should. That data, and union and consortial catalogues, should be available under open licenses.</p>
 
-<h1>Tools and links</h1>
+<h1>Tools used</h1>
 
 <ul>
 <li><a href="http://www.r-project.org/">R</a></li>
 <li><a href="http://www.rstudio.org/">RStudio</a></li>
-<li><code>yaz-marcdump</code> from the <a href="https://www.indexdata.com/yaz">YAZ</a> toolkit</li>
+<li><code>yaz-marcdump</code> from the <a href="https://www.indexdata.com/yaz">YAZ toolkit</a></li>
 <li><code>convert</code> and <code>resize</code> from <a href="http://www.imagemagick.org/">ImageMagick</a></li>
 </ul>
 
-<h1>References</h1>
+<h1>Further reading about R</h1>
 
 <ul>
-<li><a href="http://www.inside-r.org/howto/how-learn-r">How to Learn R</a></li>
-<li>Collection of links: http://jeromyanglim.blogspot.com/2009/06/learning-r-for-researchers-in.html</li>
-<li><a href="http://oreilly.com/catalog/9780596809164">R Cookbook</a> by Paul Teetor and <a href="http://oreilly.com/catalog/9780596801717">R In a Nutshell</a> by Joseph Adler, both from O'Reilly Media</li>
-<li><a href="http://en.wikibooks.org/wiki/R_Programming">R Programming</a> wikibook is under development</li>
+<li><a href="http://cran.r-project.org/doc/manuals/R-intro.pdf">An Introduction to R</a> by W.N. Venables, D.M. Smith, and the R Development Core Team.</li>
+<li>There are many R books available. I found two from O'Reilly, <a href="http://oreilly.com/catalog/9780596809164">R Cookbook</a> by Paul Teetor and <a href="http://oreilly.com/catalog/9780596801717">R In a Nutshell</a> by Joseph Adler, very useful.</li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming">R Programming Wikibook</a> is under development.</li>
+<li><a href="http://journal.r-project.org/">The R Journal</a>.</li>
+<li><a href="http://stackoverflow.com/questions/tagged/r">Questions tagged with R at StackOverflow</a> are a great place to look for answers to problems.</li>
+<li>Blogs: <a href="http://blog.revolutionanalytics.com/">Revolutions</a> has great coverage, and is part of <a href="http://www.r-bloggers.com/">R-bloggers</a>, which collects many R-related blogs into one place, in a more readable way than <a href="http://planetr.stderr.org/">Planet R</a>. </li>
 </ul>
