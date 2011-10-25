@@ -48,8 +48,8 @@ Classification schemes are mathematical functions.  XXX defines a function as YY
 
 All of the graphics here will be generated with [R](http://www.r-project.org/), which is described on its web site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that runs on top of R and provides an very powerful and much friendlier interface. Install R first, then RStudio. They both run on all major platforms.  The examples below will all work with just R.
 
-* [Change link to installing R](http://www.r-project.org/)
-* [Change link to installing RStudio](http://www.rstudio.org/)
+* [Download R at your nearest CRAN mirror](http://cran.r-project.org/mirrors.html)
+* [Download RStudio Desktop](http://www.rstudio.org/download/)
 
 ## The code
 
@@ -64,7 +64,15 @@ The last step is to set your R working directory to this same `c4lj-dentographs`
 
 ## The data
 
-[Data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available.  Download the five files there to the `c4lj-dentographs` directory.  They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
+[Data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available.  Download the five files there to the `c4lj-dentographs` directory:
+
+* [sfpl-ddc-call-numbers.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-ddc-call-numbers.txt)
+* [tpl-090.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/tpl-090.txt.gz)
+* [upei-call-number.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/upei-call-number.txt.gz)
+* [utoronto-949.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/utoronto-949.txt.gz)
+* [york-call-number.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/york-call-number.txt.gz)
+
+They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
 
     $ gunzip utoronto-949.txt.gz
 
