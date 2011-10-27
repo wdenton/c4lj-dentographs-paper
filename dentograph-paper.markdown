@@ -326,13 +326,15 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
 
 <p class="caption">Figure 7. Comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
 
-They can also be turned into an animated GIF, which makes it easier to see the differences on a screen:
+<!-- They can also be turned into an animated GIF, which makes it easier to see the differences on a screen:
 
     $ convert -loop 0 -delay 100 comparison-tpl.png comparison-sfpl.png comparison-tpl-to-sfpl-animated.gif
 
 [![Animated TPL/SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl-animated-smaller.gif)](images/comparison-tpl-to-sfpl-animated.gif)
 
 <p class="caption">Figure 8. Animated comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
+
+--> 
 
 # Mountain dentographs
 
