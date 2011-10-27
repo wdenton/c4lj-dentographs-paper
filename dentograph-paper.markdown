@@ -10,7 +10,7 @@ By [William Denton](#author)
 
 # Introduction
 
-These **checkerboard dentographs** compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever San Francisco it is has, Toronto has more.
+These **checkerboard dentographs** compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is San Francisco has, Toronto has more.
 
 ![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
 
