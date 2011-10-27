@@ -2,7 +2,7 @@
 
 <div class="abstract">
 
-A dentograph is a visualization of a library's collection built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code, and discusses some problems and future directions.
+A dentograph is a visualization of a library's collection built on the idea that a classification scheme is a mathematical function mapping one set of things (books or the universe of knowledge) onto another (a set of numbers and letters).  Dentographs can visualize aspects of just one collection or can be used to compare two or more collections. This article describes how to build them, with examples and code using Ruby and R, and discusses some problems and future directions.
 
 </div>
 
@@ -31,16 +31,15 @@ In this article I will show in detail how to generate both checkerboard and moun
 * Collection overlap or distinctness: what's described in this article is based on call numbers, but using standard numbers such as ISBNs or LC or OCLC numbers would give a way of calculating the overlap or distinctness between collections. Dentographs could show what percentages of their holdings libraries have in common in different subjects, or how much of one library's collection is unique and not held by other librararies.  This approach could be particularly useful in consortia, such as for "last copy" holding agreements, or, at the other end of the scale, for small specialized collections to show that in their specific area they have better holdings than large libraries or consortia.  With regard to ebooks, a library could compare its print collection to an ebook vendor's offerings to see where it would benefit most.
 * University ranking reports: these usually have small sections about the libraries, giving some numbers about study space or student satisfaction.  Dentographs could be included to give the reader a quick impression of collection size and strength.
 
-# The mathematics: classification schemes are functions
+# Theoretical digression on mathematics: classification schemes are functions
 
-Classification schemes are mathematical functions.  XXX defines a function as YYY.  
+Dentographs are a practical implementation of the idea that classification schemes are functions. It may be years since the reader last thought of mathematical functions, so I will only briefly describe my thinking here. A full explanation will come in a subsequent paper that goes into the theory.
 
-!!!TODO Expand, briefly, on this.  I intend to write a complete paper about this.
+In grossly simplified terms, a function is a formula that, given some input, will generate some output.  Functions such as f(x) = 3x + 4 take a number and turn it into another number by applying a simple rule: "multiply by three and add four." [Wolfram Alpha defines a function](http://www.wolframalpha.com/input/?i=function&a=*C.function-_*MathWorld-) as a "relation that uniquely associates members of one set with members of another set. More formally, a function from A to B is an object f such that every a &#8712; A is uniquely associated with an object f(a) &#8712; B."
 
-* Classification schemes as mathematical functions
-* What kinds of functions are LC and DDC
-* LC : {books at Library of Congress} --> [A--ZA 1--9999]
-* DDC : {universe of knowledge} --> (0,1000)
+The Library of Congress and Dewey Decimal Classifications are functions that map the universe of knowledge onto combinations of numbers and letters.  It's possible to quibble with the "uniquely associated" part of the definition, but for our purposes, we can think of classification schemes as functions.  And when we have a function, a natural next step is to ask: can we graph it?  [f(x) = 3x + 4](http://www.wolframalpha.com/input/?i=3x+%2B+4) is easily graphed on the x-y plane as a straight line.  Dewey numbers are in the range (0 < n < 1000): how can they be graphed? LCC call numbers are made up of letters from AC to ZA and numbers from 1 to 9999: how can they be graphed?  
+
+Dentographs combine call numbers with holdings counts and graph the result to visually represent a library's collection.
 
 # Getting ready to make dentographs
 
@@ -57,7 +56,12 @@ All of the graphics will be generated with [R](http://www.r-project.org/), descr
 
 All of the scripts used in this paper is available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every shell or R command is fully reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.
 
-To make a local copy of the repository, make sure `git` is installed, then run this at the command line:
+To get the code you need `git`, and to run the scripts need Ruby.
+
+* [Download git](git-scm.com/download)
+* [Download Ruby](http://www.ruby-lang.org/en/downloads/)
+
+Once `git` is installed, to make a local copy of the repository run this at the command line:
 
     $ git clone http://github.com/wdenton/c4lj-dentographs
     $ cd c4lj-dentographs
@@ -509,6 +513,7 @@ Finally, quality and access are always problems with cataloguing records.  Bad d
 * [RStudio](http://www.rstudio.org/)
 * [git](http://git-scm.com/)
 * `convert` and `resize` from [ImageMagick](http://www.imagemagick.org/)
+* [Ruby](http://www.ruby-lang.org/)
 * `yaz-marcdump` from the [YAZ toolkit](https://www.indexdata.com/yaz)
 
 # Further reading about R
