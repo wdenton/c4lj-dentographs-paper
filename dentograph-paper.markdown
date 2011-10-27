@@ -6,7 +6,7 @@ A dentograph is a visualization of a library's collection built on the idea that
 
 </div>
 
-By William Denton &lt;wtd@pobox.com&gt;
+By William Denton &lt;wdenton@yorku.ca&gt;, York University, Toronto, Canada
 
 # Introduction
 

@@ -1,0 +1,44 @@
+body {
+	background-color: #ffffff;
+	color: #000000;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 10px;
+	margin: 0;
+}
+
+#page {
+	min-width: 1em;
+  max-width: none;
+}
+
+#meta, #archives, #footer #login, .comments #respond, .comments #commentform, .article .aboutcomments, .article .subscriptionlinks {
+	display: none;
+	visibility: hidden;
+}
+
+#content {
+	width: 95%;
+	border-width: 0;
+	border-style: none;
+	margin: 0 1%;
+  min-width: 1em;
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#content .entry pre {
+	overflow-x: visible;
+	page-break-inside: avoid;
+}
+
+img {
+	page-break-inside: avoid;
+}
+
+#footer {
+	width: 95%;
+	margin: 0.5em 1% 0;
+  padding-left: 0;
+  padding-right: 0;
+}
