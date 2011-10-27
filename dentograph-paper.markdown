@@ -16,7 +16,7 @@ These **checkerboard dentographs** compare the holdings of the Toronto and San F
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
-When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), that the hundreds digit is shown along the x-axis and the tens along the y-axis, and that the colour of the square at (8,1) tells how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) ("American literature in English"), you can see how though Toronto and San Francisco collect much the same kind of material, Toronto's collection is much deeper.
+When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), that the hundreds digit is shown along the x-axis and the tens along the y-axis, and that the colour of the square at (8,1) tells how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) ("American literature in English"), you can see how though Toronto and San Francisco collect the same kind of material, Toronto's collection is much deeper.
 
 **Mountain dentographs** are better for the Library of Congress Classification. They are so called because they look like mountain ranges, with one line of mountains for each LCC class.  Here are mountain dentographs that compare two branches of the University of Toronto.  The split between the arts, humanities and social sciences at Robarts and science at Gerstein is clear.
 
