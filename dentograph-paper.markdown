@@ -56,7 +56,7 @@ All of the graphics will be generated with [R](http://www.r-project.org/), descr
 
 All of the scripts used in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every shell or R command is fully reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.
 
-To get the code you need `git`, and to run the scripts need Ruby.
+To get the code you need `git`, and to run the scripts you need Ruby.
 
 * [Download git](git-scm.com/download)
 * [Download Ruby](http://www.ruby-lang.org/en/downloads/)
