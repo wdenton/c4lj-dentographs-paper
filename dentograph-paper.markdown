@@ -261,8 +261,6 @@ Then in R, again the data is loaded in and levelplot run.  Here, to make it a li
           panel.abline(v=seq(11,99, by=10), lty="dashed", col="light grey") }
        )
 
-!!! TODO Regenerate so it says "Ones and decimals on y-axis"
-
 ![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png)
 
 <p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
