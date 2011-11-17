@@ -20,9 +20,9 @@ When you know that both libraries use the [Dewey Decimal Classification](http://
 
 **Mountain dentographs** are better for the Library of Congress Classification. They are so called because they look like mountain ranges, with one line of mountains for each LCC class.  Here are mountain dentographs that compare two branches of the University of Toronto.  The split between the arts, humanities and social sciences at Robarts and science at Gerstein is clear.
 
-[![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
+[![Comparison of mountain dentographs of University of Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of University of Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-<p class="caption">Figure 2. Mountain dentographs of two U Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
+<p class="caption">Figure 2. Mountain dentographs of two University of Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
 
 In this article I will show in detail how to generate both checkerboard and mountain dentographs to visualize and compare the holdings of different libraries.  This is one of many possible uses for dentographs.  Others include:
 
@@ -354,7 +354,7 @@ For the first examples we'll get call numbers from the University of Toronto MAR
     ROBARTS:AC 1
     E_RESOURCE:AC 1
 
-Let's look first at U Toronto's entire collection. For this, we want all the call numbers regardless of branch, and it's easy to pull that out with `cut`.  Then we need to prepare the data for R. We want to make a 3D graph where the class letters (AC, AE, AG, ..., ZA) run along the x-axis, the numbers run along the y-axis, and the z-axis shows the number of items at each call number. To do this the class letters need to be turned into numbers. `convert-lc-to-numbers.rb` does this by mapping AC -> 1, AE -> 2, ..., ZA -> 212. This forces the x-axis to always run from 1 to 212, so it will be the same width for all libraries. The script also adds points along the y-axis from (0,0) to (0,10000) to ensure that the graph has the same depth for all collections. If the width and depth were not forced it would be impossible to compare collections reliably: F or Q could end up in different places, or one chart might only go to 500 while another goes to 9,000.
+Let's look first at University of Toronto's entire collection. For this, we want all the call numbers regardless of branch, and it's easy to pull that out with `cut`.  Then we need to prepare the data for R. We want to make a 3D graph where the class letters (AC, AE, AG, ..., ZA) run along the x-axis, the numbers run along the y-axis, and the z-axis shows the number of items at each call number. To do this the class letters need to be turned into numbers. `convert-lc-to-numbers.rb` does this by mapping AC -> 1, AE -> 2, ..., ZA -> 212. This forces the x-axis to always run from 1 to 212, so it will be the same width for all libraries. The script also adds points along the y-axis from (0,0) to (0,10000) to ensure that the graph has the same depth for all collections. If the width and depth were not forced it would be impossible to compare collections reliably: F or Q could end up in different places, or one chart might only go to 500 while another goes to 9,000.
 
     $ cut -d ":" -f 2 utoronto-branch-call-number.txt > utoronto-call-number.txt
     $ ruby convert-lc-to-numbers.rb utoronto-call-number.txt > utoronto-mountain-data.txt
@@ -366,7 +366,7 @@ Now we can visualize this with `persp` in R (theta and phi set the angles the gr
     > persp(utoronto.table, theta = -5, phi = 20,
         scale = TRUE, border = NA, axes = F,
         box = F, col = "cyan", shade = 0.5,
-        main = "U Toronto")
+        main = "University of Toronto")
     > max(utoronto.table)
     [1] 19748
     > which(utoronto.table == max(utoronto.table), arr.ind=TRUE)
@@ -434,15 +434,15 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
     $ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "Gerstein (science)"
     $ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branches.png
 
-[![Comparison of mountain dentographs of U Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of U Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
+[![Comparison of mountain dentographs of University of Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of University of Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-<p class="caption">Figure 11. U Toronto's Robarts and Gerstein branches compared</p>
+<p class="caption">Figure 11. University of Toronto's Robarts and Gerstein branches compared</p>
 
 The distinctness of the two collections is clear. Gerstein is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology). Robarts sprawls heavily throughout A-P, especially P (Linguistics and Literature). Because of how LCC works, the relatively small range of numbers used in Q and R is also easy to see. Seven of the nineteen letters in P go into the 9,000s, but the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (Mathematics) at 939).  
 
 ## Comparing libraries
 
-Finally, let's compare the U Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. These dentographs tell us at a glance how the collections compare, even without numbers to show how large they are.
+Finally, let's compare the University of Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. These dentographs tell us at a glance how the collections compare, even without numbers to show how large they are.
 
 First, as a bit of background, some basic facts about the universities and their libraries.  (Enrolment numbers are total students as of fall 2010, taken from the [Association of Universities and Colleges of Canada's Enrolment by University page](http://www.aucc.ca/canadian-universities/facts-and-stats/tuition-by-university/?page_id=6210)):
 
@@ -450,20 +450,20 @@ First, as a bit of background, some basic facts about the universities and their
 * York University (also in Toronto) has 54,600 students and its library reports [almost 2,500,000 print volumes in its collection](http://www.library.yorku.ca/binaries/Home/Assessment/Reports/YULannualreport09-10.pdf) as of April 2010.
 * University of Prince Edward Island has 4,590 students, and its [2007-2008 library annual report](http://library.upei.ca/sites/all/files/Library%20Annual%20Report%202007-2008%20_1.pdf) says it had about 370,000 books and ebooks (print books are not separated out).
 
-The following commands will generate the dentographs. Before running them, note that the maximum value in U Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
+The following commands will generate the dentographs. Before running them, note that the maximum value in University of Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
 
     $ gunzip york-call-number.txt.gz upei-call-number.txt.gz
     $ ruby convert-lc-to-numbers.rb york-call-number.txt > york-mountain-data.txt
     $ ruby convert-lc-to-numbers.rb upei-call-number.txt > upei-mountain-data.txt
-    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain.png "U Toronto"
-    $ dentograph.R york-mountain-data.txt york-mountain.png "York U"
-    $ dentograph.R upei-mountain-data.txt upei-mountain.png "U PEI"
+    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain.png "University of Toronto"
+    $ dentograph.R york-mountain-data.txt york-mountain.png "York University"
+    $ dentograph.R upei-mountain-data.txt upei-mountain.png "University of PEI"
     $ convert +append utoronto-mountain.png york-mountain.png upei-mountain.png mountain-comparison.png
     $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
-[![Mountain dentographs of U Toronto, York U and U Prince Edward Island](images/mountain-comparison-smaller.png "Mountain dentographs of U Toronto, York U and U Prince Edward Island")](images/mountain-comparison.png)
+[![Mountain dentographs of University of Toronto, York University and University of Prince Edward Island](images/mountain-comparison-smaller.png "Mountain dentographs of University of Toronto, York University and University of Prince Edward Island")](images/mountain-comparison.png)
 
-<p class="caption">Figure 10. U Toronto, York U and U PEI compared</p>
+<p class="caption">Figure 10. University of Toronto, York University and University of PEI compared</p>
 
 PEI's collection is sparse and shallow compared to the others, which is no reflection on anything other than its size.  It's unfair to compare it to much larger libraries except to serve some kind of illustration like this.  On the other hand, comparing Toronto and York, two large universities in the same city, is quite interesting.  Toronto is clearly broader and deeper than York:  its collection is larger and covers more subjects, apparently across the board. In B (Philosophy, psychology, religion) Toronto has more (both close to the x-axis and stretching out to the far side), probably because it has divinity programs.  M (Music) and N (Fine Arts) are both denser.  P is much richer than at York, with far more high spikes.  The science cluster in Q is also much denser.  
 
@@ -477,7 +477,7 @@ First, there are more ways to use the three dimensions of mountain dentographs. 
     > persp3d(utoronto.table, theta = -5, phi = 20,
         scale = TRUE, border = NA, axes = F,
         box = F, col = "cyan", shade = 0.5,
-        main = "U Toronto")
+        main = "University of Toronto")
 
 Second, perhaps three dimensions for LCC isn't best, and a two-dimensional representation would work better.  LCC is so sprawling and varied a classification that it would probably work best not to map it directly but to make clusters.  For example, the University of Toronto dentographs show a strong line along BX (Christian denominations), which has these subsections, as listed in [B - Philosophy. Psychology. Religion](http://www.loc.gov/aba/cataloging/classification/lcco/lcco_b.pdf) in the [Library of Congress Classification Outline](http://www.loc.gov/catdir/cpso/lcco/):
 
@@ -501,7 +501,7 @@ The biggest problem with dentographs of holdings is that they show quantity but 
 
 The other main problem is that dentographs depend entirely on call numbers from a standard classification (or, with the OCLC Conspectus, subject assignments to a controlled vocabulary).  For most print material, that is fine.  Everything on a library shelf will have some kind of call number.  If the call number is not LCC or Dewey, however, that is a problems. Collections that are special for their format or location will be overlooked, as may huge collections of fiction or children's books in public libraries.  Electronic resources are especially susceptible to lacking call numbers.  At my library, very few electronic books or journals have valid LCC call numbers: they are all assigned ELECTRONIC.
 
-However, restricting to print or other physical resources may actually be useful.  Among academic libraries, if all libraries of a similar size subscribe to the same electronic resources then comparing that part of their collections is pointless.  The comparison of U Toronto to York U shows how much better U Toronto is with its print collection, but when it comes to electronic resources, the two are more or less the same (except for subjects U Toronto teaches that York doesn't, such as medicine and architecture).  More and more, it is the local print material that is making collections special, and dentographs are good tools for that.
+However, restricting to print or other physical resources may actually be useful.  Among academic libraries, if all libraries of a similar size subscribe to the same electronic resources then comparing that part of their collections is pointless.  The comparison of University of Toronto to York University shows how much better University of Toronto is with its print collection, but when it comes to electronic resources, the two are more or less the same (except for subjects University of Toronto teaches that York doesn't, such as medicine and architecture).  More and more, it is the local print material that is making collections special, and dentographs are good tools for that.
 
 Finally, quality and access are always problems with cataloguing records.  Bad data can be worked around, but not every library makes regular catalogue dumps available.  They should. That data, and union and consortial catalogues, should be available under open licenses.
 
