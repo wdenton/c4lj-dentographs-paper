@@ -279,7 +279,7 @@ There are 29,366 items at (83, 40) in the table, but the way R counts rows and c
 
 ## Comparing two Dewey collections
 
-Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Online it's also possible to turn them into an animated GIF, flickering back and forth from one collection to the other, so the differences in breadth and depth become even more obvious.  Next we will create the Toronto and San Francisco Public Libraries comparison shown in the Introduction.  We already have `tpl.one.by.one.table` in memory, so we begin by generating the data from the `sfpl-ddc-call-numbers.txt` data file.
+Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Next we will create the Toronto and San Francisco Public Libraries comparison shown in the Introduction.  We already have `tpl.one.by.one.table` in memory, so we begin by generating the data from the `sfpl-ddc-call-numbers.txt` data file.
 
     $ ruby make-one-by-one-data.rb sfpl-ddc-call-numbers.txt > sfpl-one-by-one.txt
 
