@@ -101,7 +101,7 @@ Dealing with a large set of MARC records can be painful. There are so many ways 
 
 The goal of operating on the TPL catalogue records was to extract every numerical call number in the range (0 < number < 1000). This leaves us with all nonfiction material and any fiction (or drama, poetry, etc.) that was classified with a number.  Anything without a number will be ignored.  This is a problem in fairly assessing public library collections, where fiction is often classified as FIC or something similar. The dentograph will only accurately represent the nonfiction collection.
 
-Visual inspection of the TPL MARC records is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, `tpl-090.txt` is one of the data files available, but to recreate it yourself you would get the files and run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt`.)
+Visual inspection of the TPL MARC records is easily done with `yaz-marcdump`.  The Dewey number is stored in the 090 field (probably for historical reasons, because it is now obsolete: see [MARC Bibliographic definition of 09x](http://www.loc.gov/marc/bibliographic/bd09x.html)), and it was easy to extract all 2,210,126 to a file. (To save you the trouble of doing all the downloading, `tpl-090.txt` is one of the data files available, but to recreate it yourself you would get the files and run `yaz-marcdump OL.20100104.* | grep ^090 > tpl-090.txt`.)
 
     $ wc -l tpl-090.txt
     2210126 tpl-090.txt
