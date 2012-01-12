@@ -12,7 +12,7 @@ By [William Denton](#author)
 
 These **checkerboard dentographs** compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is San Francisco has, Toronto has more.
 
-![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
+[![Checkerboard dentographs of the Toronto and San Francisco Public Libraries](images/comparison-tpl-to-sfpl.png "Checkerboard dentographs of the Toronto and San Francisco Public Libraries")](images/comparison-tpl-to-sfpl-large.png)
 
 <p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
@@ -316,9 +316,9 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
     $ convert +append comparison-tpl.png comparison-sfpl.png comparison-tpl-to-sfpl-large.png
     $ convert -resize 800 comparison-tpl-to-sfpl-large.png comparison-tpl-to-sfpl.png
 
-![TPL and SFPL comparison checkerboard dentograph](images/comparison-tpl-to-sfpl.png)
+[![Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs](images/comparison-tpl-to-sfpl.png "Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs")](images/comparison-tpl-to-sfpl-large.png)
 
-<p class="caption">Figure 7. Comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
+<p class="caption">Figure 7. Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs</p>
 
 <!-- They can also be turned into an animated GIF, which makes it easier to see the differences on a screen:
 
