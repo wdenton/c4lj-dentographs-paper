@@ -375,9 +375,9 @@ Now we can visualize this with `persp` in R (theta and phi set the angles the gr
         row col
     140 141  77
 
-![Unlabelled mountain dentograph of the University of Toronto](images/utoronto-mountain-unlabelled.png)
+![Unlabelled mountain dentograph of the University of Toronto](images/utoronto-mountain-unlabelled.png "Unlabelled mountain dentograph of the University of Toronto")
 
-<p class="caption">Figure 9. Unlabelled mountain dentograph of the University of Toronto</p>
+<p class="caption">Figure 8. Unlabelled mountain dentograph of the University of Toronto</p>
 
 You'll see one standout high peak. As shown with `max`, we can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: a number so familiar to readers I need hardly mention it is where computer science is found. LCC is incredibly limited in how it can accommodate books on that subject. This is the highest peak in every library I've graphed.
 
@@ -439,7 +439,7 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
 
 [![Comparison of mountain dentographs of University of Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of University of Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-<p class="caption">Figure 11. University of Toronto's Robarts and Gerstein branches compared</p>
+<p class="caption">Figure 9. University of Toronto's Robarts and Gerstein branches compared</p>
 
 The distinctness of the two collections is clear. Gerstein is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology). Robarts sprawls heavily throughout A-P, especially P (Linguistics and Literature). Because of how LCC works, the relatively small range of numbers used in Q and R is also easy to see. Seven of the nineteen letters in P go into the 9,000s, but the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (Mathematics) at 939).  
 
