@@ -89,7 +89,7 @@ To save time, I processed the records and made available [data files to replicat
 * [utoronto-949.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/utoronto-949.txt.gz)
 * [york-call-number.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/york-call-number.txt.gz)
 
-They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
+They are all compressed with `gzip` so you will need to uncompress each before it can be used.  For example:
 
     $ gunzip utoronto-949.txt.gz
 
