@@ -231,7 +231,7 @@ Then in R:
         scales=(x=list(at=seq(1, 10, by = 2), labels=seq(0, 9, by =2),  
         y=list(rot = 0, at=seq(11, 100, by=10), labels=paste (seq(1, 9), "0", sep="")))))
 
-![Toronto Public Library one-by-two checkerboard dentograph](images/tpl-one-by-two-dentograph.png)
+![Toronto Public Library one-by-two checkerboard dentograph "Toronto Public Library one-by-two checkerboard dentograph"](images/tpl-one-by-two-dentograph.png)
 
 <p class="caption">Figure 5. Toronto Public Library one-by-two checkerboard dentograph</p>
 
@@ -259,7 +259,7 @@ Then in R, again the data is loaded in and levelplot run.  Here, to make it a li
           panel.abline(v=seq(11,99, by=10), lty="dashed", col="light grey") }
        )
 
-![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png)
+![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png "Toronto Public Library two-by-two checkerboard dentograph")
 
 <p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
 
