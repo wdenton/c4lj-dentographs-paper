@@ -345,8 +345,10 @@ For the first examples we'll get call numbers from the University of Toronto MAR
     $ wc -l utoronto-949.txt 
     6787653 utoronto-949.txt
     $ head -2 utoronto-949.txt
-    949    $a AC1 .H32 N4 $w LC $c 1 $i 31761016601411 $d 17/4/2003 $e 17/4/2003 $l STACKS $m ROBARTS $n 2 $r Y $s Y $t BOOK $u 26/8/1992
-    949    $a AC1 [Online resource 47903] $w LC $c 1 $i 2-2001 $l ONLINE $m E_RESOURCE $r Y $s Y $t E_RESOURCE $u 7/2/2008
+    949    $a AC1 .H32 N4 $w LC $c 1 $i 31761016601411 $d 17/4/2003 $e 17/4/2003 $l 
+    STACKS $m ROBARTS $n 2 $r Y $s Y $t BOOK $u 26/8/1992
+    949    $a AC1 [Online resource 47903] $w LC $c 1 $i 2-2001 $l ONLINE $m E_RESOUR
+    CE $r Y $s Y $t E_RESOURCE $u 7/2/2008
     $ ruby 949-extractifier.rb utoronto-949.txt > utoronto-branch-call-number.txt
     $ wc -l utoronto-branch-call-number.txt
     5414215 utoronto-branch-call-number.txt
@@ -411,7 +413,8 @@ The next two examples will be easier with an R script we can run at the command 
     # Label x-axis with class letters
     xpoints = read.csv("x-axis-labels.csv")
     for (i in 1:nrow(xpoints)) {
-      points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", pch = xpoints$Label[i], cex = 1)
+      points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", 
+            pch = xpoints$Label[i], cex = 1)
     }
 
 `axes = F` means no axes are drawn, which means that there is no scale on the z-axis to show how many items are in the collection.  It's easy enough to enable axes if needed, but it doesn't seem necessary to have them to simply give a quick impression of how two collections compare. The `persp` object is stored in `res` so that we have access to its layout later in order to label the x-axis.  The script reads from a file a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph slightly easier to read.
