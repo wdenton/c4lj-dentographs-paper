@@ -28,7 +28,7 @@ In this article I will show in detail how to generate both checkerboard and moun
 
 * Collection usage: dividing circulation by holdings gives usage ratios. In a checkerboard dentograph the colours could show the usage; in a mountain dentograph, the height.
 * Interlibrary loan lending and borrowing: this is another kind of usage.  The number of items borrowed or lent could be visualized: borrowing could be subtracted from lending to show net intake or outtake in a given call number range, and this could be shown either by colour or positive and negative mountains.
-* Collection overlap or distinctness: what's described in this article is based on call numbers, but using standard numbers such as ISBNs or LC or OCLC numbers would give a way of calculating the overlap or distinctness between collections. Dentographs could show what percentages of their holdings libraries have in common in different subjects, or how much of one library's collection is unique and not held by other libraries.  This approach could be particularly useful in consortia, such as for "last copy" holding agreements, or, at the other end of the scale, for small specialized collections to show that in their specific area they have better holdings than large libraries or consortia.  With regard to ebooks, a library could compare its print collection to an ebook vendor's offerings to see where it would benefit most.
+* Collection overlap or distinctness: the examples in this article are all based on call numbers, but other standard identifiers such as ISBN or OCLC numbers may also be used to calculate the overlap or distinctness between collections.  Dentographs could show what percentages of their holdings libraries have in common in different subjects, or how much of one library's collection is unique and not held by other libraries.  This approach could be particularly useful in consortia, such as for "last copy" holding agreements, or, at the other end of the scale, for small specialized collections to show that in their specific area they have better holdings than large libraries or consortia.  With regard to ebooks, a library could compare its print collection to an ebook vendor's offerings to see where it would benefit most.
 * University ranking reports: these usually have small sections about the libraries, giving some numbers about study space or student satisfaction.  Dentographs could be included to give the reader a quick impression of collection size and strength.
 
 # Theoretical digression on mathematics: classification schemes are functions
@@ -58,7 +58,7 @@ All of the scripts used in this paper are available at [http://github.com/wdento
 
 To get the code you need `git`, and to run the scripts you need Ruby.
 
-* [Download git](git-scm.com/download)
+* [Download git](http://git-scm.com/download)
 * [Download Ruby](http://www.ruby-lang.org/en/downloads/)
 
 Once `git` is installed, to make a local copy of the repository run this at the command line:
@@ -81,15 +81,15 @@ Two libraries supplied data to me on request:
 * [University of Prince Edward Island](http://www.upei.ca/) provided a list of call numbers (LCC) and locations. My thanks to Melissa Belvadi for this.
 * [York University Libraries](http://www.library.yorku.ca/), where I work, does not give open access to its MARC records, but I obtained a dump for this research.  We use LCC.
 
-To save time, I processed the records and [data files to replicate the examples](http://hdl.handle.net/10315/10024) are all available.  Download the five files there to the `c4lj-dentographs` directory:
+To save time, I processed the records and made available [data files to replicate the examples](http://hdl.handle.net/10315/10024).  Download the five files there to the `c4lj-dentographs` directory:
 
-* [sfpl-ddc-call-numbers.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-ddc-call-numbers.txt)
+* [sfpl-ddc-call-numbers.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-ddc-call-numbers.txt.gz)
 * [tpl-090.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/tpl-090.txt.gz)
 * [upei-call-number.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/upei-call-number.txt.gz)
 * [utoronto-949.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/utoronto-949.txt.gz)
 * [york-call-number.txt.gz](http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/york-call-number.txt.gz)
 
-They are all compressed with `gzip` so you will need to uncompress each before it can be used, for example:
+They are all compressed with `gzip` so you will need to uncompress each before it can be used.  For example:
 
     $ gunzip utoronto-949.txt.gz
 
@@ -328,7 +328,7 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
 
 <p class="caption">Figure 8. Animated comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
 
---> 
+<!--end comment--> 
 
 (A note about holdings counts in the Toronto and San Francisco Public Libraries MARC records.  SFPL used one 945 field for each item it holds, so three copies of the same edition of a book means three 945s in one record.  Three copies would show three times in the data file.  TPL put its call number in the 090 and then used special codes in the 906 to show how many copies are at different branches.  Three copies would show once in the data file.  This made the data analysis much simpler, but the San Francisco Public Libary is overrepresented in the dentographs.)
 
@@ -345,8 +345,10 @@ For the first examples we'll get call numbers from the University of Toronto MAR
     $ wc -l utoronto-949.txt 
     6787653 utoronto-949.txt
     $ head -2 utoronto-949.txt
-    949    $a AC1 .H32 N4 $w LC $c 1 $i 31761016601411 $d 17/4/2003 $e 17/4/2003 $l STACKS $m ROBARTS $n 2 $r Y $s Y $t BOOK $u 26/8/1992
-    949    $a AC1 [Online resource 47903] $w LC $c 1 $i 2-2001 $l ONLINE $m E_RESOURCE $r Y $s Y $t E_RESOURCE $u 7/2/2008
+    949    $a AC1 .H32 N4 $w LC $c 1 $i 31761016601411 $d 17/4/2003 $e 17/4/2003 $l 
+    STACKS $m ROBARTS $n 2 $r Y $s Y $t BOOK $u 26/8/1992
+    949    $a AC1 [Online resource 47903] $w LC $c 1 $i 2-2001 $l ONLINE $m E_RESOUR
+    CE $r Y $s Y $t E_RESOURCE $u 7/2/2008
     $ ruby 949-extractifier.rb utoronto-949.txt > utoronto-branch-call-number.txt
     $ wc -l utoronto-branch-call-number.txt
     5414215 utoronto-branch-call-number.txt
@@ -411,7 +413,8 @@ The next two examples will be easier with an R script we can run at the command 
     # Label x-axis with class letters
     xpoints = read.csv("x-axis-labels.csv")
     for (i in 1:nrow(xpoints)) {
-      points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", pch = xpoints$Label[i], cex = 1)
+      points(trans3d(xpoints$Point[i], 5, 0, pmat = res), col = "#000000", 
+            pch = xpoints$Label[i], cex = 1)
     }
 
 `axes = F` means no axes are drawn, which means that there is no scale on the z-axis to show how many items are in the collection.  It's easy enough to enable axes if needed, but it doesn't seem necessary to have them to simply give a quick impression of how two collections compare. The `persp` object is stored in `res` so that we have access to its layout later in order to label the x-axis.  The script reads from a file a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph slightly easier to read.
