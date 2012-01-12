@@ -58,7 +58,7 @@ All of the scripts used in this paper are available at [http://github.com/wdento
 
 To get the code you need `git`, and to run the scripts you need Ruby.
 
-* [Download git](git-scm.com/download)
+* [Download git](http://git-scm.com/download)
 * [Download Ruby](http://www.ruby-lang.org/en/downloads/)
 
 Once `git` is installed, to make a local copy of the repository run this at the command line:
