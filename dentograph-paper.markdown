@@ -207,7 +207,7 @@ Now we can make a prettier dentograph. There are a vast number of ways to custom
           y=list(rot=0, at=seq(1, 10), labels=10*seq(0, 9))))
       )
 
-![Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-dentograph.png)
+![Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-dentograph.png "Toronto Public Library one-by-one checkerboard dentograph")
 
 <p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
 
