@@ -149,7 +149,7 @@ It only takes four commands in R to generate a raw, unadorned checkerboard dento
     > tpl.one.by.one.table <- table(tpl.one.by.one)
     > levelplot(tpl.one.by.one.table)
 
-![Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-smaller.png)
+[![Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-smaller.png "Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph")](images/tpl-one-by-one.png)
 
 <p class="caption">Figure 3. Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph</p>
 
