@@ -328,7 +328,7 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
 
 <p class="caption">Figure 8. Animated comparison of TPL and SFPL one-by-one checkerboard dentographs</p>
 
---> 
+<!--end comment--> 
 
 (A note about holdings counts in the Toronto and San Francisco Public Libraries MARC records.  SFPL used one 945 field for each item it holds, so three copies of the same edition of a book means three 945s in one record.  Three copies would show three times in the data file.  TPL put its call number in the 090 and then used special codes in the 906 to show how many copies are at different branches.  Three copies would show once in the data file.  This made the data analysis much simpler, but the San Francisco Public Libary is overrepresented in the dentographs.)
 
