@@ -207,7 +207,7 @@ Now we can make a prettier dentograph. There are a vast number of ways to custom
           y=list(rot=0, at=seq(1, 10), labels=10*seq(0, 9))))
       )
 
-![Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-dentograph.png "Toronto Public Library one-by-one checkerboard dentograph")
+[![Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-dentograph.png "Toronto Public Library one-by-one checkerboard dentograph")](images/tpl-one-by-one-dentograph-large.png)
 
 <p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
 
@@ -231,7 +231,7 @@ Then in R:
         scales=(x=list(at=seq(1, 10, by = 2), labels=seq(0, 9, by =2),  
         y=list(rot = 0, at=seq(11, 100, by=10), labels=paste (seq(1, 9), "0", sep="")))))
 
-![Toronto Public Library one-by-two checkerboard dentograph "Toronto Public Library one-by-two checkerboard dentograph"](images/tpl-one-by-two-dentograph.png)
+[![Toronto Public Library one-by-two checkerboard dentograph "Toronto Public Library one-by-two checkerboard dentograph"](images/tpl-one-by-two-dentograph.png)](images/tpl-one-by-two-dentograph-large.png)
 
 <p class="caption">Figure 5. Toronto Public Library one-by-two checkerboard dentograph</p>
 
@@ -259,7 +259,7 @@ Then in R, again the data is loaded in and levelplot run.  Here, to make it a li
           panel.abline(v=seq(11,99, by=10), lty="dashed", col="light grey") }
        )
 
-![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png "Toronto Public Library two-by-two checkerboard dentograph")
+[![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png "Toronto Public Library two-by-two checkerboard dentograph")](images/tpl-two-by-two-dentograph-large.png)
 
 <p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
 
@@ -375,7 +375,7 @@ Now we can visualize this with `persp` in R (theta and phi set the angles the gr
         row col
     140 141  77
 
-![Unlabelled mountain dentograph of the University of Toronto](images/utoronto-mountain-unlabelled.png "Unlabelled mountain dentograph of the University of Toronto")
+[![Unlabelled mountain dentograph of the University of Toronto](images/utoronto-mountain-unlabelled.png "Unlabelled mountain dentograph of the University of Toronto")](images/utoronto-mountain-unlabelled-large.png)
 
 <p class="caption">Figure 8. Unlabelled mountain dentograph of the University of Toronto</p>
 
