@@ -108,7 +108,7 @@ $ cd c4lj-dentographs
 <p>To save time, I processed the records and made available <a href="http://hdl.handle.net/10315/10024">data files to replicate the examples</a>.  Download the five files there to the <code>c4lj-dentographs</code> directory:</p>
 
 <ul>
-<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-ddc-call-numbers.txt.gz">sfpl-ddc-call-numbers.txt.gz</a></li>
+<li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/sfpl-092.txt.gz">sfpl-092.txt.gz</a></li>
 <li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/tpl-090.txt.gz">tpl-090.txt.gz</a></li>
 <li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/upei-call-number.txt.gz">upei-call-number.txt.gz</a></li>
 <li><a href="http://pi.library.yorku.ca/dspace/bitstream/handle/10315/10024/utoronto-949.txt.gz">utoronto-949.txt.gz</a></li>
@@ -317,9 +317,9 @@ V1      0     1     2     3     4     5     6     7     8     9
 
 <h2>Comparing two Dewey collections</h2>
 
-<p>Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Next we will create the Toronto and San Francisco Public Libraries comparison shown in the Introduction.  We already have <code>tpl.one.by.one.table</code> in memory, so we begin by generating the data from the <code>sfpl-ddc-call-numbers.txt</code> data file.</p>
+<p>Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Next we will create the Toronto and San Francisco Public Libraries comparison shown in the Introduction.  We already have <code>tpl.one.by.one.table</code> in memory, so we begin by generating the data from the <code>sfpl-092.txt</code> data file.</p>
 
-<pre><code>$ ruby make-one-by-one-data.rb sfpl-ddc-call-numbers.txt &gt; sfpl-one-by-one.txt
+<pre><code>$ ruby make-one-by-one-data.rb sfpl-092.txt &gt; sfpl-one-by-one.txt
 </code></pre>
 
 <p>And then in R:</p>
@@ -364,7 +364,7 @@ $ convert -resize 800 comparison-tpl-to-sfpl-large.png comparison-tpl-to-sfpl.pn
 
 <p class="caption">Figure 7. Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs</p>
 
-<p>(A note about holdings counts in the Toronto and San Francisco Public Libraries MARC records.  SFPL used one 945 field for each item it holds, so three copies of the same edition of a book means three 945s in one record.  Three copies would show three times in the data file.  TPL put its call number in the 090 and then used special codes in the 906 to show how many copies are at different branches.  Three copies would show once in the data file.  This made the data analysis much simpler, but the San Francisco Public Libary is overrepresented in the dentographs.)</p>
+<p>(Note that holdings counts are ignored in both the Toronto and San Francisco Public Libraries data files. TPL's call numbers are taken from the 090 field in the MARC records, but special codes in the 906 show how many copies are at different branches.  SFPL's call numbers were taken from the 092, but multiple 945s are used for the holdings.)</p>
 
 <h1>Mountain dentographs</h1>
 
@@ -374,7 +374,7 @@ $ convert -resize 800 comparison-tpl-to-sfpl-large.png comparison-tpl-to-sfpl.pn
 
 <h2>Processing call numbers</h2>
 
-<p>For the first examples we'll get call numbers from the University of Toronto MARC records in the Internet Archive. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different.  The first step is to extract the 949s with <code>yaz-marcdump</code> as above (<code>yaz-marcdump uToronto.mrc | grep ^949 &gt; utoronto-949.txt</code>) but to save time I've done this and put the results in the <code>utoronto-949.txt</code> data file.  We'll run <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb"><code>949-extractifier.rb</code></a> to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.</p>
+<p>For the first examples we'll get call numbers from the University of Toronto MARC records in the Internet Archive. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different, and here we will use holdings counts.  The first step is to extract the 949s with <code>yaz-marcdump</code> as above (<code>yaz-marcdump uToronto.mrc | grep ^949 &gt; utoronto-949.txt</code>) but to save time I've done this and put the results in the <code>utoronto-949.txt</code> data file.  We'll run <a href="https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb"><code>949-extractifier.rb</code></a> to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.</p>
 
 <pre><code>$ wc -l utoronto-949.txt 
 6787653 utoronto-949.txt
