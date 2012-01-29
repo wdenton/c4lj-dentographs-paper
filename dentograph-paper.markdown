@@ -8,7 +8,7 @@ A dentograph is a visualization of a library's collection built on the idea that
 
 By [William Denton](#author)
 
-# Introduction
+## Introduction
 
 These **checkerboard dentographs** compare the holdings of the Toronto and San Francisco Public Libraries.  Without knowing anything more about dentographs, it is clear at a glance that whatever it is San Francisco has, Toronto has more.
 
@@ -31,7 +31,7 @@ In this article I will show in detail how to generate both checkerboard and moun
 * Collection overlap or distinctness: the examples in this article are all based on call numbers, but other standard identifiers such as ISBN or OCLC numbers may also be used to calculate the overlap or distinctness between collections.  Dentographs could show what percentages of their holdings libraries have in common in different subjects, or how much of one library's collection is unique and not held by other libraries.  This approach could be particularly useful in consortia, such as for "last copy" holding agreements, or, at the other end of the scale, for small specialized collections to show that in their specific area they have better holdings than large libraries or consortia.  With regard to ebooks, a library could compare its print collection to an ebook vendor's offerings to see where it would benefit most.
 * University ranking reports: these usually have small sections about the libraries, giving some numbers about study space or student satisfaction.  Dentographs could be included to give the reader a quick impression of collection size and strength.
 
-# Theoretical digression on mathematics: classification schemes are functions
+## Theoretical digression on mathematics: classification schemes are functions
 
 Dentographs are a practical implementation of the idea that classification schemes are functions. It may be years since the reader last thought of mathematical functions, so I will only briefly describe my thinking here. A full explanation will come in a subsequent paper that goes into the theory.
 
@@ -41,18 +41,18 @@ The Library of Congress and Dewey Decimal Classifications are functions that map
 
 Dentographs combine call numbers with holdings counts and graph the result to visually represent a library's collection.
 
-# Getting ready to make dentographs
+## Getting ready to make dentographs
 
 All of the examples in this paper are fully reproducible.  By downloading the code and data sets you will be able to follow along, line by line, and generate all of the graphics. If you have access to call numbers from your own library system you can easily adapt what is here to make dentographs for that data.
 
-## Installing R
+### Installing R
 
 All of the graphics will be generated with [R](http://www.r-project.org/), described on its site as "a language and environment for statistical computing and graphics." It's a powerful tool for advanced statistics, but it's also used for other purposes such as data mining and, as we'll be doing here, visualization.  R on its own has a fairly simple interface, so I recommend also installing [RStudio](http://www.rstudio.org/), a GUI that provides a powerful and friendlier interface. Install R first, then RStudio.
 
 * [Download R at your nearest CRAN mirror](http://cran.r-project.org/mirrors.html)
 * [Download RStudio Desktop](http://www.rstudio.org/download/)
 
-## Getting the code
+### Getting the code
 
 All of the scripts used in this paper are available at [http://github.com/wdenton/c4lj-dentographs](http://github.com/wdenton/c4lj-dentographs). Every shell or R command is fully reproducible. There are two kinds of snippets of code below: `$` is at the command line and `>` is in R.
 
@@ -68,7 +68,7 @@ Once `git` is installed, to make a local copy of the repository run this at the 
 
 The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or if you're using RStudio use Tools > Set Working Directory in the menu bar.
 
-## Getting data files of call numbers
+### Getting data files of call numbers
 
 To generate dentographs we need call numbers. Luckily there is a good source: [MARC records some libraries have uploaded to the Internet Archive](http://www.archive.org/details/ol_data) to help the [Open Library](http://openlibrary.org/). A number of libraries have made their data available, and I use three here:
 
@@ -93,7 +93,7 @@ They are all compressed with `gzip` so you will need to uncompress each before i
 
     $ gunzip utoronto-949.txt.gz
 
-## How to extract data from MARC records
+### How to extract data from MARC records
 
 Dealing with a large set of MARC records can be painful. There are so many ways that a library can customize its data for its individual needs that writing one script to extract call numbers from any of the Open Library dumps became tedious and complicated.  In the end I found it was much easier and faster to run `yaz-marcdump` on all the files, pick out the one MARC field I needed, and then process those lines to pick out the call numbers and store them in a text file. I'll show how I did this with the Toronto Public Library (TPL) data.
 
@@ -122,13 +122,13 @@ Visual inspection of the TPL MARC records is easily done with `yaz-marcdump`.  T
 
 Extracting LCC call numbers from the University of Toronto records is much the same, as we will see below, but with the advantage that fiction is also classified, so the call numbers cover everything in the collection. Everything, that is, with a proper LCC call number: special schemes for government documents, audio, video, maps and so on are left out.
 
-# Checkerboard dentographs
+## Checkerboard dentographs
 
 The Dewey Decimal Classification is nicely suited to visualization because of its rigidity.  The hundreds define the ten top-level classes: [Computer science, information and general works (0xx)](http://dewey.info/class/0/2009/08/about.en), [Philosophy and psychology (1xx)](http://dewey.info/class/1/2009/08/about.en), [Religion (2xx)](http://dewey.info/class/2/2009/08/about.en), [Social sciences (3xx)](http://dewey.info/class/3/2009/08/about.en), [Language (4xx)](http://dewey.info/class/4/2009/08/about.en), [Science (5xx)](http://dewey.info/class/5/2009/08/about.en), [Technology (6xx)](http://dewey.info/class/6/2009/08/about.en), [Arts and recreation (7xx)](http://dewey.info/class/7/2009/08/about.en), [Literature (8xx)](http://dewey.info/class/8/2009/08/about.en), and [History and geography (9xx)](http://dewey.info/class/9/2009/08/about.en).  Each hundred is divided into ten tens and each ten into ten ones, within which the decimal expansions can go much farther.
 
 We can divide up a Dewey collection into these hundreds, tens, ones, and even decimals, in various ways, and each leads to a dentograph of different granularity, complexity, and visual informativeness.  To do these Dewey dentographs we will use the `levelplot` command in R.
 
-## One-by-one
+### One-by-one
 
 The most basic Dewey dentograph shows the collection broken down to the tens: the ten hundreds are broken down into ten tens each, making a 10x10 grid with 100 squares.  I call this a one-by-one Dewey checkerboard dentograph, because it uses one number of importance on each side of the grid.
 
@@ -213,7 +213,7 @@ Now we can make a prettier dentograph. There are a vast number of ways to custom
 
 Note the depth of the collection in the 300s and the relative paucity of the 200s 400s, and watch for how the representation changes in the next two dentographs.
 
-## One-by-two
+### One-by-two
 
 The next step is to go further into the numbers. Let's make a one-by-two checkerboard dentograph, again with the hundreds on the x-axis but now tens and ones on the y-axis.  This will be a 10x100 matrix.  The process is the same as above, but  [`make-one-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-one-by-two-data.rb) prepares the data:
 
@@ -237,7 +237,7 @@ Then in R:
 
 It's interesting how the hundreds form columns that run up the image (the 300s stand out again, for example), but perhaps there is both too little and too much here to be very useful.
 
-## Two-by-two
+### Two-by-two
 
 Going one more level into the Dewey numbers, to make a two-by-two dentograph of a 100x100 matrix, is far more interesting.  [`make-two-by-two-data.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/make-two-by-two-data.rb) will generate the file of pairs of numbers we need:
 
@@ -275,7 +275,7 @@ Where are the most items, and how many are there?  Two commands tell us:
 
 There are 29,366 items at (83, 40) in the table, but the way R counts rows and columns does not equal how we are putting Dewey numbers into the table: row 1 of the table is 00, row 2 is 01, and so on; column 1 is 00, column 2 is 01, etc.  Row 83 in the table is for Dewey 82x, and column 40 is 39 within that, giving up the call number 823.9 (English fiction, 1900-).  Sure enough, if you look in the graph, count two lines over from 80 on the x-axis, and go up to one line below 40 on the y-axis, there it is, the darkest square.
 
-## Comparing two Dewey collections
+### Comparing two Dewey collections
 
 Comparing two Dewey collections is easily done by putting two one-by-one checkerboard dentographs beside each other. Next we will create the Toronto and San Francisco Public Libraries comparison shown in the Introduction.  We already have `tpl.one.by.one.table` in memory, so we begin by generating the data from the `sfpl-092.txt` data file.
 
@@ -322,13 +322,13 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
 
 (Note that holdings counts are ignored in both the Toronto and San Francisco Public Libraries data files. TPL's call numbers are taken from the 090 field in the MARC records, but special codes in the 906 show how many copies are at different branches.  SFPL's call numbers were taken from the 092, but multiple 945s are used for the holdings.)
 
-# Mountain dentographs
+## Mountain dentographs
 
 The Library of Congress Classification doesn't have Dewey's methodically rigid structure. LCC call numbers can begin with one, two or three letters, which is manageable, but instead of being laid out neatly from 0 to 999 the numbers can range from a maximum of 9 (in LH, College and school magazines and papers) to 9999 (six classes outside of law, the first being BX, Christian denominations). Instead of trying to fit LCC call numbers to some Procrustean bed to make a checkerboard dentograph, we can leave them as they are in a mountain dentograph. Mountain dentographs are three-dimensional, with the LCC class letters on the x-axis, the numbers on the y-axis, and the item counts on the z-axis.  They look like very orderly mountain ranges.
 
 To keep things simple I am going to ignore everything in K ("Law"), which has 156 subdivisions, ending at KZD (Space law, law of outer space). My apologies to any law librarians reading this.
 
-## Processing call numbers
+### Processing call numbers
 
 For the first examples we'll get call numbers from the University of Toronto MARC records in the Internet Archive. I want to keep the branch information to generate branch-specific dentographs, so the call number extraction will be a little different, and here we will use holdings counts.  The first step is to extract the 949s with `yaz-marcdump` as above (`yaz-marcdump uToronto.mrc | grep ^949 > utoronto-949.txt`) but to save time I've done this and put the results in the `utoronto-949.txt` data file.  We'll run [`949-extractifier.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/949-extractifier.rb) to pull out the branch and call number of each item. There are 6,787,653 949s in the MARC file, and after processing 5,414,215 proper LC call numbers are left in a very simplified listing.
 
@@ -371,7 +371,7 @@ Now we can visualize this with `persp` in R (theta and phi set the angles the gr
 
 You'll see one standout high peak. As shown with `max`, we can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: a number so familiar to readers I need hardly mention it is where computer science is found. LCC is incredibly limited in how it can accommodate books on that subject. This is the highest peak in every library I've graphed.
 
-## A script for mountain dentographs
+### A script for mountain dentographs
 
 The next two examples will be easier with an R script we can run at the command line: [`dentograph.R`](https://github.com/wdenton/c4lj-dentographs/blob/master/dentograph.R) is in the repository.  It takes arguments on the command line that set the data file it's reading, the filename of the image it will output, and the title to use on that image. The dimensions of the output image are set with `png`. `persp` is run again, but with `zlim` to force the z-axis to the same scale across collections (just as we did with the Dewey checkerboard dentographs). 
 
@@ -409,7 +409,7 @@ The next two examples will be easier with an R script we can run at the command 
 
 `axes = F` means no axes are drawn, which means that there is no scale on the z-axis to show how many items are in the collection.  It's easy enough to enable axes if needed, but it doesn't seem necessary to have them to simply give a quick impression of how two collections compare. The `persp` object is stored in `res` so that we have access to its layout later in order to label the x-axis.  The script reads from a file a list of x-axis positions and ASCII codes such as (1, 65) and (11, 66). This puts "A" (65) at 1 on the x-axis and "B" (66) and 11 on the x-axis, skipping over "AC" at 2, "AE" at 3, and so on.  It makes the graph slightly easier to read.
 
-## Comparing branches
+### Comparing branches
 
 [University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two shows different their holdings are.
 
@@ -433,7 +433,7 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
 
 The distinctness of the two collections is clear. Gerstein is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology). Robarts sprawls heavily throughout A-P, especially P (Linguistics and Literature). Because of how LCC works, the relatively small range of numbers used in Q and R is also easy to see. Seven of the nineteen letters in P go into the 9,000s, but the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (Mathematics) at 939).  
 
-## Comparing libraries
+### Comparing libraries
 
 Finally, let's compare the University of Toronto collection to the libraries of two other Canadian universities, York University and the University of Prince Edward Island. These dentographs tell us at a glance how the collections compare, even without numbers to show how large they are.
 
@@ -459,7 +459,7 @@ The following commands will generate the dentographs. Before running them, note 
 
 PEI's collection is sparse and shallow compared to the others, which is no reflection on anything other than its size.  It's unfair to compare it to much larger libraries except to serve some kind of illustration like this.  On the other hand, comparing Toronto and York, two large universities in the same city, is quite interesting.  Toronto is clearly broader and deeper than York:  its collection is larger and covers more subjects, apparently across the board. In B (Philosophy, psychology, religion) Toronto has more (both close to the x-axis and stretching out to the far side), probably because it has divinity programs.  M (Music) and N (Fine Arts) are both denser.  P is much richer than at York, with far more high spikes.  The science cluster in Q is also much denser.  
 
-# Future directions
+## Future directions
 
 I hope readers find the ideas here interesting and will extend them beyond what I've described.  Aside from the possible uses described at the beginning of the paper, there are two lines of future work that I see, but I hope readers will find more.
 
@@ -485,7 +485,7 @@ A mapping somewhat like this is in fact already available: the [OCLC Conspectus]
 
 Finally, there are undoubtedly other, and I hope better, forms of dentographs than checkerboards and mountains.
 
-# Three problems
+## Three problems
 
 The biggest problem with dentographs of holdings is that they show quantity but not quality.  There is no easy way, automated or manual, to assess the quality of a collection.  We can only visualize available data, so dentographs are limited.  However, as mentioned above, dentographs can also show usage, overlap or uniqueness, which in their own ways tell us something about a collection's quality.  
 
@@ -497,7 +497,7 @@ A side effect of using standard classifications such as Dewey and LCC is that th
 
 Thirdly, quality and access are always problems with cataloguing records.  Bad data can be worked around, but not every library makes regular catalogue dumps available.  They should. That data, and union and consortial catalogues, should be available under open licenses.
 
-# Tools used
+## Tools used
 
 * [R](http://www.r-project.org/)
 * [RStudio](http://www.rstudio.org/)
@@ -506,7 +506,7 @@ Thirdly, quality and access are always problems with cataloguing records.  Bad d
 * [Ruby](http://www.ruby-lang.org/)
 * `yaz-marcdump` from the [YAZ toolkit](https://www.indexdata.com/yaz)
 
-# Further reading about R
+## Further reading about R
 
 * [An Introduction to R](http://cran.r-project.org/doc/manuals/R-intro.pdf) by W.N. Venables, D.M. Smith, and the R Development Core Team.
 * Of the many books about R, I found two from O'Reilly particularly useful: [R Cookbook](http://oreilly.com/catalog/9780596809164) by Paul Teetor and [R In a Nutshell](http://oreilly.com/catalog/9780596801717) by Joseph Adler.
