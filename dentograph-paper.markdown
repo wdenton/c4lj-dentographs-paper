@@ -66,7 +66,7 @@ Once `git` is installed, to make a local copy of the repository run this at the 
     $ git clone http://github.com/wdenton/c4lj-dentographs
     $ cd c4lj-dentographs
 
-The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or if you're using RStudio use Tools > Set Working Directory in the menu bar.
+The last step is to set your R working directory to this same `c4lj-dentographs` directory. Either run R at the command line in that directory, or in RStudio use Tools > Set Working Directory in the menu bar.  (If you use RStudio, use its Export button to save images instead of the savePlot command in the code below.)
 
 ### Getting data files of call numbers
 
