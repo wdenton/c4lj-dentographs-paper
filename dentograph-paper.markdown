@@ -515,7 +515,7 @@ Thirdly, quality and access are always problems with cataloguing records.  Bad d
 * [Questions tagged with R at StackOverflow](http://stackoverflow.com/questions/tagged/r) are a great place to look for answers to problems.
 * Blogs: [Revolutions](http://blog.revolutionanalytics.com/) has great coverage, and is part of [R-bloggers](http://www.r-bloggers.com/), which collects many R-related blogs into one place, in a more readable way than [Planet R](http://planetr.stderr.org/). 
 
-<h1 id="author">About the author</h1>
+<h2 id="author">About the author</h2>
 
 William Denton &lt;[wdenton@yorku.ca](mailto:wdenton@yorku.ca)&gt; is Web Librarian at York University in Toronto, Canada.  He has a B.Sc in Mathematics and an MISt from the University of Toronto.  His web site is [Miskatonic University Press](http://www.miskatonic.org/).
 
