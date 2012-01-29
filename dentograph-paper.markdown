@@ -112,10 +112,10 @@ Visual inspection of the TPL MARC records is easily done with `yaz-marcdump`.  T
 
 [`extract-tpl-ddc-from-090.rb`](https://github.com/wdenton/c4lj-dentographs/blob/master/extract-tpl-ddc-from-090.rb) pulls out the numerical Dewey call numbers, ignoring everything else, such as FICTION AIK.  645,244 090 fields are thrown out..
 
-    $ ruby extract-tpl-ddc-from-090.rb < tpl-090.txt > tpl-ddc-numbers.txt
+    $ ruby extract-tpl-ddc-from-090.rb tpl-090.txt > tpl-ddc-numbers.txt
     $ wc -l tpl-ddc-numbers.txt
     1564882 tpl-ddc-numbers.txt
-    $ head -3 tpl-ddc-number.txt
+    $ head -3 tpl-ddc-numbers.txt
     614.59939 
     614.59939 
     598.29729 
@@ -187,7 +187,7 @@ The table command "uses the cross-classifying factors to build a contingency tab
 For example, the value of the (3, 5) entry in this table is 32,259.  This means that "3 5" appeared 32,259 times in the data file.  We can confirm this at the command line:
 
     $ grep -c "3 5" tpl-one-by-one.txt 
-    32268
+    32259
 
 The Toronto Public Library has 32,259 items classified in the 350s ("Public administration and military science").
 
@@ -423,8 +423,8 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
         9482 QA 76  
     $ ruby convert-lc-to-numbers.rb utoronto-robarts-call-number.txt > utoronto-robarts-mountain-data.txt
     $ ruby convert-lc-to-numbers.rb utoronto-gerstein-call-number.txt > utoronto-gerstein-mountain-data.txt
-    $ dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "Robarts (arts/hum/soc sci)"
-    $ dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "Gerstein (science)"
+    $ ./dentograph.R utoronto-robarts-mountain-data.txt utoronto-robarts-mountain.png "Robarts (arts/hum/soc sci)"
+    $ ./dentograph.R utoronto-gerstein-mountain-data.txt utoronto-gerstein-mountain.png "Gerstein (science)"
     $ convert +append utoronto-robarts-mountain.png utoronto-gerstein-mountain.png utoronto-branches.png
 
 [![Comparison of mountain dentographs of University of Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of University of Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
@@ -445,12 +445,11 @@ First, as a bit of background, some basic facts about the universities and their
 
 The following commands will generate the dentographs. Before running them, note that the maximum value in University of Toronto's holdings is 19,748 (this can be found with a `sort | uniq | sort` as above), so you will need to edit `dentograph.R` to change the `zlim` value to 20,000 to force the z-axis to be the same in all graphs. If you don't edit it, some spikes will run out the top of the dentographs.
 
-    $ gunzip york-call-number.txt.gz upei-call-number.txt.gz
     $ ruby convert-lc-to-numbers.rb york-call-number.txt > york-mountain-data.txt
     $ ruby convert-lc-to-numbers.rb upei-call-number.txt > upei-mountain-data.txt
-    $ dentograph.R utoronto-mountain-data.txt utoronto-mountain.png "University of Toronto"
-    $ dentograph.R york-mountain-data.txt york-mountain.png "York University"
-    $ dentograph.R upei-mountain-data.txt upei-mountain.png "University of PEI"
+    $ ./dentograph.R utoronto-mountain-data.txt utoronto-mountain.png "University of Toronto"
+    $ ./dentograph.R york-mountain-data.txt york-mountain.png "York University"
+    $ ./dentograph.R upei-mountain-data.txt upei-mountain.png "University of PEI"
     $ convert +append utoronto-mountain.png york-mountain.png upei-mountain.png mountain-comparison.png
     $ convert -resize 800 mountain-comparison.png mountain-comparison-smaller.png
 
