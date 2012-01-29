@@ -14,7 +14,7 @@ These **checkerboard dentographs** compare the holdings of the Toronto and San F
 
 [![Checkerboard dentographs of the Toronto and San Francisco Public Libraries](images/comparison-tpl-to-sfpl.png "Checkerboard dentographs of the Toronto and San Francisco Public Libraries")](images/comparison-tpl-to-sfpl-large.png)
 
-<p class="caption">Figure 1. Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
+<p class="caption"><strong>Figure 1.</strong> Checkerboard dentographs of the Toronto and San Francisco Public Libraries</p>
 
 When you know that both libraries use the [Dewey Decimal Classification](http://dewey.info/), that the hundreds digit is shown along the x-axis and the tens along the y-axis, and that the colour of the square at (8,1) tells how many items are the [810s](http://dewey.info/class/81/2009/08/about.en) ("American literature in English"), you can see that Toronto and San Francisco collect the same kind of material, but Toronto's collection is much deeper.
 
@@ -22,7 +22,7 @@ When you know that both libraries use the [Dewey Decimal Classification](http://
 
 [![Comparison of mountain dentographs of University of Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of University of Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-<p class="caption">Figure 2. Mountain dentographs of two University of Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
+<p class="caption"><strong>Figure 2.</strong> Mountain dentographs of two University of Toronto branches: Robarts (arts, humanities and social sciences) and Gerstein (science)</p>
 
 In this article I will show in detail how to generate both checkerboard and mountain dentographs to visualize and compare the holdings of different libraries.  This is one of many possible uses for dentographs.  Others include:
 
@@ -151,7 +151,7 @@ It only takes four commands in R to generate a raw, unadorned checkerboard dento
 
 [![Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-smaller.png "Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph")](images/tpl-one-by-one.png)
 
-<p class="caption">Figure 3. Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph</p>
+<p class="caption"><strong>Figure 3.</strong> Raw, unadorned Toronto Public Library one-by-one checkerboard dentograph</p>
 
 We'll make that look nicer, but first let's look into the data structures.  The `head` command in R is much as in Unix, but instead of showing the first few lines in a file it shows the first few elements in a data structure.  The numbers here are the same as above, but R has converted them into two columns and many rows.
 
@@ -209,7 +209,7 @@ Now we can make a prettier dentograph. There are a vast number of ways to custom
 
 [![Toronto Public Library one-by-one checkerboard dentograph](images/tpl-one-by-one-dentograph.png "Toronto Public Library one-by-one checkerboard dentograph")](images/tpl-one-by-one-dentograph-large.png)
 
-<p class="caption">Figure 4. Toronto Public Library one-by-one checkerboard dentograph</p>
+<p class="caption"><strong>Figure 4.</strong> Toronto Public Library one-by-one checkerboard dentograph</p>
 
 Note the depth of the collection in the 300s and the relative paucity of the 200s 400s, and watch for how the representation changes in the next two dentographs.
 
@@ -233,7 +233,7 @@ Then in R:
 
 [![Toronto Public Library one-by-two checkerboard dentograph "Toronto Public Library one-by-two checkerboard dentograph"](images/tpl-one-by-two-dentograph.png)](images/tpl-one-by-two-dentograph-large.png)
 
-<p class="caption">Figure 5. Toronto Public Library one-by-two checkerboard dentograph</p>
+<p class="caption"><strong>Figure 5.</strong> Toronto Public Library one-by-two checkerboard dentograph</p>
 
 It's interesting how the hundreds form columns that run up the image (the 300s stand out again, for example), but perhaps there is both too little and too much here to be very useful.
 
@@ -261,7 +261,7 @@ Then in R, again the data is loaded in and levelplot run.  Here, to make it a li
 
 [![Toronto Public Library two-by-two checkerboard dentograph](images/tpl-two-by-two-dentograph.png "Toronto Public Library two-by-two checkerboard dentograph")](images/tpl-two-by-two-dentograph-large.png)
 
-<p class="caption">Figure 6. Toronto Public Library two-by-two checkerboard dentograph</p>
+<p class="caption"><strong>Figure 6.</strong> Toronto Public Library two-by-two checkerboard dentograph</p>
 
 Here again we see the 300s as much stronger than the 200s and 400s.  The darkest colours, representing the deepest parts of the collections, are even more visible now in the 800s. Three strong lines in the 900s have emerged: the 910s (Geography and travel), 940s (History of Europe) and 970s (History of North America), which matches the deep colouration those squares have in the one-by-one dentograph.
 
@@ -318,7 +318,7 @@ Back at the command line, `convert` from ImageMagick turns the two images into o
 
 [![Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs](images/comparison-tpl-to-sfpl.png "Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs")](images/comparison-tpl-to-sfpl-large.png)
 
-<p class="caption">Figure 7. Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs</p>
+<p class="caption"><strong>Figure 7.</strong> Comparison of Toronto Public Library and San Francisco Public Library one-by-one checkerboard dentographs</p>
 
 (Note that holdings counts are ignored in both the Toronto and San Francisco Public Libraries data files. TPL's call numbers are taken from the 090 field in the MARC records, but special codes in the 906 show how many copies are at different branches.  SFPL's call numbers were taken from the 092, but multiple 945s are used for the holdings.)
 
@@ -367,7 +367,7 @@ Now we can visualize this with `persp` in R (theta and phi set the angles the gr
 
 [![Unlabelled mountain dentograph of the University of Toronto](images/utoronto-mountain-unlabelled.png "Unlabelled mountain dentograph of the University of Toronto")](images/utoronto-mountain-unlabelled-large.png)
 
-<p class="caption">Figure 8. Unlabelled mountain dentograph of the University of Toronto</p>
+<p class="caption"><strong>Figure 8.</strong> Unlabelled mountain dentograph of the University of Toronto</p>
 
 You'll see one standout high peak. As shown with `max`, we can locate it at (141, 77). 141 on the x-axis is QA, and 77 on the y-axis is 76 in call numbers (the y-axis starts at 0), so that peak is at QA 76: a number so familiar to readers I need hardly mention it is where computer science is found. LCC is incredibly limited in how it can accommodate books on that subject. This is the highest peak in every library I've graphed.
 
@@ -429,7 +429,7 @@ First we'll grep the Robarts and Gerstein holdings from the full list.  Then we 
 
 [![Comparison of mountain dentographs of University of Toronto branches Robarts and Gerstein](images/utoronto-branches-smaller.png "Mountain dentographs of University of Toronto branches Robarts and Gerstein")](images/utoronto-branches.png)
 
-<p class="caption">Figure 9. University of Toronto's Robarts and Gerstein branches compared</p>
+<p class="caption"><strong>Figure 9.</strong> University of Toronto's Robarts and Gerstein branches compared</p>
 
 The distinctness of the two collections is clear. Gerstein is almost entirely concentrated in Q (Science) and R (Medicine) with some in S (Agriculture) and T (Technology). Robarts sprawls heavily throughout A-P, especially P (Linguistics and Literature). Because of how LCC works, the relatively small range of numbers used in Q and R is also easy to see. Seven of the nineteen letters in P go into the 9,000s, but the maximum number possible for any of the letters in the Qs is under 1,000 (for example Q stops at 510 and QA (Mathematics) at 939).  
 
@@ -455,7 +455,7 @@ The following commands will generate the dentographs. Before running them, note 
 
 [![Mountain dentographs of University of Toronto, York University and University of Prince Edward Island](images/mountain-comparison-smaller.png "Mountain dentographs of University of Toronto, York University and University of Prince Edward Island")](images/mountain-comparison.png)
 
-<p class="caption">Figure 10. University of Toronto, York University and University of PEI compared</p>
+<p class="caption"><strong>Figure 10.</strong> University of Toronto, York University and University of PEI compared</p>
 
 PEI's collection is sparse and shallow compared to the others, which is no reflection on anything other than its size.  It's unfair to compare it to much larger libraries except to serve some kind of illustration like this.  On the other hand, comparing Toronto and York, two large universities in the same city, is quite interesting.  Toronto is clearly broader and deeper than York:  its collection is larger and covers more subjects, apparently across the board. In B (Philosophy, psychology, religion) Toronto has more (both close to the x-axis and stretching out to the far side), probably because it has divinity programs.  M (Music) and N (Fine Arts) are both denser.  P is much richer than at York, with far more high spikes.  The science cluster in Q is also much denser.  
 
