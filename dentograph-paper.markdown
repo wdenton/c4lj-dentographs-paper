@@ -35,7 +35,7 @@ In this article I will show in detail how to generate both checkerboard and moun
 
 Dentographs are a practical implementation of the idea that classification schemes are functions. It may be years since the reader last thought of mathematical functions, so I will only briefly describe my thinking here. A full explanation will come in a subsequent paper that goes into the theory.
 
-In grossly simplified terms, a function is a formula that given some input will generate some output.  Functions such as f(x) = 3x + 4 take a number and turn it into another number by applying a simple rule: "multiply by three and add four." [Wolfram Alpha defines a function](http://www.wolframalpha.com/input/?i=function&a=*C.function-_*MathWorld-) as a "relation that uniquely associates members of one set with members of another set. More formally, a function from A to B is an object f such that every a &#8712; A is uniquely associated with an object f(a) &#8712; B."
+In grossly simplified terms, a function is a formula that, given some input, will generate some output.  Functions such as f(x) = 3x + 4 take a number and turn it into another number by applying a simple rule: "multiply by three and add four." [Wolfram Alpha defines a function](http://www.wolframalpha.com/input/?i=function&a=*C.function-_*MathWorld-) as a "relation that uniquely associates members of one set with members of another set. More formally, a function from A to B is an object f such that every a &#8712; A is uniquely associated with an object f(a) &#8712; B."
 
 The Library of Congress and Dewey Decimal Classifications are functions that map the universe of knowledge onto combinations of numbers and letters.  It's possible to quibble with the "uniquely associated" part of the definition, but for our purposes, we can think of classification schemes as functions.  And when we have a function, a natural next step is to ask: can we graph it?  [f(x) = 3x + 4](http://www.wolframalpha.com/input/?i=3x+%2B+4) is easily graphed on the x-y plane as a straight line.  Dewey numbers are in the range (0 < n < 1000): how can they be graphed? LCC call numbers are made up of letters from AC to ZA and numbers from 1 to 9999: how can they be graphed?  
 
@@ -411,7 +411,7 @@ The next two examples will be easier with an R script we can run at the command 
 
 ### Comparing branches
 
-[University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two shows different their holdings are.
+[University of Toronto Libraries](http://www.library.utoronto.ca/) is a large system, with over fifty branches. The biggest are Robarts (holding arts, humanities and social sciences) and Gerstein (science).  Comparing those two shows how different their holdings are.
 
 First we'll grep the Robarts and Gerstein holdings from the full list.  Then we need to make sure `dentograph.R` knows the proper scale of the z-axis to suit these collections. The classic `sort | uniq -c | sort -rn` pipeline on Robarts and Gerstein holdings shows us that the highest number of holdings at one call number is just under 10,000 in both branches.  The script in the repository is already set to use that number so it will work here without any edits.
 
